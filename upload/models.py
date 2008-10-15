@@ -27,12 +27,8 @@ class FileUpload(models.Model):
     def is_image(self):
         return self.content_type == 'image'
 
-    def get_absolute_url(self):
-        return self.get_upload_url()
-
     def save(self):
-        file_path = os.path.join(settings.MEDIA_ROOT, self.upload)
-        (mime_type, encoding) = mimetypes.guess_type(file_path)
+        (mime_type, encoding) = mimetypes.guess_type(self.upload.path)
         try:
             [self.content_type, self.sub_type] = mime_type.split('/')
         except:

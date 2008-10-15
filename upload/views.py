@@ -6,25 +6,33 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 import urllib, urlparse, datetime
 
+def _render_to_response(request, template, data):
+    data['flickr'] = hasattr(settings, 'FLICKR_USER')
+    data['youtube'] = hasattr(settings, 'YOU_TUBE_USER')
+    return render_to_response(template, data, context_instance=RequestContext(request))
+
 @staff_member_required
 def all(request):
     files = FileUpload.objects.all().order_by('-upload_date')
-    return render_to_response('upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']}, context_instance=RequestContext(request))
+    return _render_to_response(request, 'upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']})
 
 @staff_member_required
 def images(request):
     files = FileUpload.objects.filter(content_type = 'image').order_by('-upload_date')
-    return render_to_response('upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']}, context_instance=RequestContext(request))
+    return _render_to_response(request, 'upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']})
 
 @staff_member_required
 def files(request):
     not_files = ['video', 'image']
     files = FileUpload.objects.exclude(content_type__in = not_files).order_by('-upload_date')
-    return render_to_response('upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']}, context_instance=RequestContext(request))
+    return _render_to_response(request, 'upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']})
 
 @staff_member_required
 def youtube(request):
-    import elementtree.ElementTree as ET
+    try:
+        import xml.etree.ElementTree as ET
+    except ImportError:
+        import elementtree.ElementTree as ET
     try:
         user = settings.YOU_TUBE_USER
         needs_user_setting = False
@@ -45,7 +53,7 @@ def youtube(request):
         video['image'] = media.findall('{http://search.yahoo.com/mrss/}thumbnail')[-1].attrib['url']
         video['url'] = media.find('{http://search.yahoo.com/mrss/}content').attrib['url']
         videos.append(video)
-    return render_to_response('upload/youtube.html', {'videos': videos, 'textarea_id': request.GET['textarea'], 'needs_user_setting': needs_user_setting}, context_instance=RequestContext(request))
+    return _render_to_response(request, 'upload/youtube.html', {'videos': videos, 'textarea_id': request.GET['textarea'], 'needs_user_setting': needs_user_setting})
 
 @staff_member_required
 def flickr(request):
@@ -66,7 +74,7 @@ def flickr(request):
         photo['title'] = f._Photo__title
         photo['upload_date'] = datetime.datetime.fromtimestamp(float(f._Photo__dateposted))
         photos.append(photo)
-    return render_to_response('upload/flickr.html', {'photos': photos, 'textarea_id': request.GET['textarea']}, context_instance=RequestContext(request))
+    return _render_to_response(request, 'upload/flickr.html', {'photos': photos, 'textarea_id': request.GET['textarea']})
 
 @staff_member_required
 def download(request):

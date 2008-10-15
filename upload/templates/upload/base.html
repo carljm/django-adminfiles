@@ -1,11 +1,12 @@
 {% extends "admin/base.html" %}
+{% load thumbnail %}
 {% block extrastyle %}
-    <link rel="stylesheet" href="{{MEDIA_URL}}upload_media/upload.css" type="text/css" media="screen" charset="utf-8" />
-    <script type="text/javascript" src="{{MEDIA_URL}}upload_media/jquery.js"></script>
+    <link rel="stylesheet" href="{{MEDIA_URL}}upload/upload.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" src="{{MEDIA_URL}}upload/jquery.js"></script>
     <script type="text/javascript" charset="utf-8">
         var ta = parent.document.getElementById('{{textarea_id}}');
     </script>
-    <script type="text/javascript" src="{{MEDIA_URL}}upload_media/upload.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}upload/upload.js"></script>
 
 {% endblock %}
 {% block bodyclass %}uploads{% endblock %}
@@ -16,29 +17,32 @@
     <a href="/uploads/?textarea={{textarea_id}}">All Uploads</a><br />
     <a href="/uploads/files/?textarea={{textarea_id}}">Files</a><br />
     <a href="/uploads/images/?textarea={{textarea_id}}">Images</a><br />
+{% if youtube %}
     <a href="/uploads/youtube/?textarea={{textarea_id}}">You Tube</a><br />
+{% endif %}
+{% if flickr %}
     <a href="/uploads/flickr/?textarea={{textarea_id}}">Flickr</a><br />
+{% endif %}
     <br />
     <hr />
     <br />
-    <a href="/admin/upload/fileupload/add/" class="add-another" id="add_id_uploads" onclick="return showAddAnotherPopup(this);"><img src="{{MEDIA_URL}}upload_media/icon_addlink.gif" width="10" height="10" alt="Add Another"/> Upload</a><br />
-    <a id="refresh" href="#"><img src="{{MEDIA_URL}}upload_media/icon_refreshlink.gif" /> Refresh</a>
+    <a href="/admin/upload/fileupload/add/" class="addlink" id="add_id_uploads" onclick="return showAddAnotherPopup(this);">Upload</a><br />
+    <a id="refresh" href="#"><img src="{{MEDIA_URL}}upload/icon_refreshlink.gif" /> Refresh</a>
 </div>
 <ul id="uploads">
 {% block files %}
 {% for f in files %}
-   <li class="item {{f.content_type}} {{f.sub_type}}"
-   {% if f.is_image %}style="background-image:url({{f.get_absolute_url}})"{% endif %}>
+   <li class="item {{f.content_type}} {{f.sub_type}}" {% if f.is_image %}style="background-image:url({% thumbnail f.upload 144x150 %})"{% endif %}>
        <div class="popup">
            <a href="#" class="close" title="Close">X</a>
            <ul>
             {% if f.is_image %}
-                <li><a class="insert" href="{{f.get_absolute_url}}" title="{{f.title}}">Insert</a></li>
-                <li><a class="insert" href="{{f.get_absolute_url}}" rel="left" title="{{f.title}}">Insert (align left)</a></li>
-                <li><a class="insert" href="{{f.get_absolute_url}}" rel="right" title="{{f.title}}">Insert (align right)</a></li>
+                <li><a class="insert" href="{{f.upload.url}}" title="{{f.title}}">Insert</a></li>
+                <li><a class="insert" href="{{f.upload.url}}" rel="left" title="{{f.title}}">Insert (align left)</a></li>
+                <li><a class="insert" href="{{f.upload.url}}" rel="right" title="{{f.title}}">Insert (align right)</a></li>
             <li class="link">... and link to:<br /> <input type="text" name="link" value="" class="link" /></li>
             {% else %}
-            <li><a class="insert" href="{{f.get_absolute_url}}" title="{{f.title}}">Insert Link</a></li>
+            <li><a class="insert" href="{{f.upload.url}}" title="{{f.title}}">Insert Link</a></li>
             {% endif %}
             </ul>
             {# TODO - Clean up this popup #}
