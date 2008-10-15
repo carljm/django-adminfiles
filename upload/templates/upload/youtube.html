@@ -1,0 +1,22 @@
+{% extends "upload/base.html" %}
+{% block files %}
+    {% if needs_user_setting %}
+        <li style="color:red">To see your own videos, set YOU_TUBE_USER in your settings file.</li>
+    {% endif %}
+    {% for v in videos %}
+        <li class="item youtube" style="background-image:url({{ v.thumb }})">
+            <div class="popup">
+                <a href="#" class="close" title="Close">X</a>
+                <ul>
+                    <li><a class="insert" rel="{{ v.image }}" href="{{ v.url }}" title="{{ v.title }}">Insert Video</a></li>
+                 </ul>
+                 {# TODO - Clean up this popup #}
+                 <a href="/admin/upload/fileupload/{{f.id}}/delete/" class="deletelink" onclick="return showAddAnotherPopup(this);">Delete</a>
+            </div>
+            <div class="upload-title">{{ v.title }}<br />
+                   <small>{{ v.upload_date }}</small><br />
+                   <!-- {{ v.description }} -->
+            </div>
+        </li>
+    {% endfor %}
+{% endblock %}
