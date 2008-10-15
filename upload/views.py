@@ -6,26 +6,23 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 import urllib, urlparse, datetime
 
-#@staff_member_required
+@staff_member_required
 def all(request):
     files = FileUpload.objects.all().order_by('-upload_date')
     return render_to_response('upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']}, context_instance=RequestContext(request))
-all = staff_member_required(all)
 
-#@staff_member_required
+@staff_member_required
 def images(request):
     files = FileUpload.objects.filter(content_type = 'image').order_by('-upload_date')
     return render_to_response('upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']}, context_instance=RequestContext(request))
-images = staff_member_required(images)
 
-#@staff_member_required
+@staff_member_required
 def files(request):
     not_files = ['video', 'image']
     files = FileUpload.objects.exclude(content_type__in = not_files).order_by('-upload_date')
     return render_to_response('upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']}, context_instance=RequestContext(request))
-files = staff_member_required(files)
 
-#@staff_member_required
+@staff_member_required
 def youtube(request):
     import elementtree.ElementTree as ET
     try:
@@ -49,9 +46,8 @@ def youtube(request):
         video['url'] = media.find('{http://search.yahoo.com/mrss/}content').attrib['url']
         videos.append(video)
     return render_to_response('upload/youtube.html', {'videos': videos, 'textarea_id': request.GET['textarea'], 'needs_user_setting': needs_user_setting}, context_instance=RequestContext(request))
-youtube = staff_member_required(youtube)
 
-#@staff_member_required
+@staff_member_required
 def flickr(request):
     import flickr
     try:
@@ -71,9 +67,8 @@ def flickr(request):
         photo['upload_date'] = datetime.datetime.fromtimestamp(float(f._Photo__dateposted))
         photos.append(photo)
     return render_to_response('upload/flickr.html', {'photos': photos, 'textarea_id': request.GET['textarea']}, context_instance=RequestContext(request))
-flickr = staff_member_required(flickr)
 
-#@staff_member_required
+@staff_member_required
 def download(request):
     '''Saves image from URL and returns ID for use with AJAX script'''
     f = FileUpload()
@@ -85,4 +80,3 @@ def download(request):
     f.save_upload_file(file_name, file_content)
     f.save()
     return HttpResponse('%s' % (f.id))
-download = staff_member_required(download)
