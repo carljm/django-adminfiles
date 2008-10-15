@@ -41,23 +41,27 @@ function dismissAddAnotherPopup(win, newId, newRepr) {
 //change the following 3 functions to insert HTML, Markdown, whatever
 function buildImage(image_url, alt_text, align, link, use_html) {
     textile = ' !';
+    markdown = ' ![';
     html = '<img ';
     if (align == 'left') {
         textile += '<';
         html += 'class="left" align="left" ';
     }
-     else if (align == 'right')
-         textile += '>';
-         html += 'class="right" align="right"';
-     textile += image_url + '(' + alt_text + ')!';
-     html += 'src="'+image_url+'" alt="'+alt_text+'" />';
-     if (link)
-         textile += ':' + link;
-         html = '<a href="'+link+'">'+html+'</a>';
+    else if (align == 'right')
+        textile += '>';
+        html += 'class="right" align="right"';
+    textile += image_url + '(' + alt_text + ')!';
+    markdown += alt_text + '](' + image_url + ')';
+    html += 'src="'+image_url+'" alt="'+alt_text+'" />';
+    if (link) {
+        textile += ':' + link;
+        markdown = '[' + markdown + '](' + link + ')';
+        html = '<a href="'+link+'">'+html+'</a>';
+    }
     if (use_html)
         return html + ' ';
     else
-        return textile + ' ';
+        return markdown + ' ';
 }
 //this needs some help via a templatetag
 function buildVideoLink(video_url, title, thumb, use_html) {
@@ -69,7 +73,9 @@ function buildVideoLink(video_url, title, thumb, use_html) {
 function buildLink(link_url, title, use_html) {
     if (use_html)
         return ' <a href="'+link_url+'" title="'+title+'">'+title+'</a> ';
-    return ' "'+title+'":'+link_url+' ';
+    textile = ' "'+title+'":'+link_url+' ';
+    markdown = ' [' + title + '](' + link_url + ') ';
+    return markdown;
 }
 
 

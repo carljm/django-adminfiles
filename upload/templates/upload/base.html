@@ -38,8 +38,10 @@
            <ul>
             {% if f.is_image %}
                 <li><a class="insert" href="{{f.upload.url}}" title="{{f.title}}">Insert</a></li>
+<!--
                 <li><a class="insert" href="{{f.upload.url}}" rel="left" title="{{f.title}}">Insert (align left)</a></li>
                 <li><a class="insert" href="{{f.upload.url}}" rel="right" title="{{f.title}}">Insert (align right)</a></li>
+-->
             <li class="link">... and link to:<br /> <input type="text" name="link" value="" class="link" /></li>
             {% else %}
             <li><a class="insert" href="{{f.upload.url}}" title="{{f.title}}">Insert Link</a></li>
