@@ -16,14 +16,17 @@ if (typeof TinyMCE_Engine=='function') {
     });
 }
 $(function(){
-    $('textarea').each(function(){
-        //exclude common plain text fields
-        if (!this.id.match('excerpt') && !this.id.match('teaser') && !this.id.match('comment') && !this.id.match('mission')) {
-            $(this).after('<iframe frameborder="0" style="border:none; width:755px; height:210px;" src="/uploads/?textarea='+this.id+'"></iframe>');
-            if (typeof TinyMCE_Engine=='function')
-                tinyMCE.execCommand("mceAddControl", true, this.id); 
-            //toggle WYSIWYG mode
-            //tinyMCE.execCommand("mceToggleEditor", true, this.id);
-        }
+	$('.fileuploadpicker').each(function(){
+		var href = '/uploads/?textarea='+this.id;
+		if (this.options) {
+		    $(this).siblings('a.add-another').remove();
+		    href += '&select=1';
+		}
+		$(this).after('<iframe frameborder="0" style="border:none; width:755px; height:210px;" src="' + href + '"></iframe>');
+		if (typeof TinyMCE_Engine=='function') {
+		    tinyMCE.execCommand("mceAddControl", true, this.id); 
+		    //toggle WYSIWYG mode
+		    //tinyMCE.execCommand("mceToggleEditor", true, this.id);
+		}
+	    });
     });
-});

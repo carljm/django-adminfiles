@@ -9,6 +9,7 @@ import urllib, urlparse, datetime
 def _render_to_response(request, template, data):
     data['flickr'] = hasattr(settings, 'FLICKR_USER')
     data['youtube'] = hasattr(settings, 'YOU_TUBE_USER')
+    data['is_select'] = bool(request.GET.get('select', False))
     return render_to_response(template, data, context_instance=RequestContext(request))
 
 @staff_member_required

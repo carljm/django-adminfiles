@@ -17,11 +17,9 @@ function insertAtCursor(myField, myValue) {
     }
 }
 
-//Django js function
-function showAddAnotherPopup(triggeringLink) {
-    var name = triggeringLink.id.replace(/^add_/, '');
-    name = name.replace(/\./g, '___');
-    href = triggeringLink.href
+function showEditPopup(triggeringLink) {
+    var name = 'edit_popup';
+    var href = triggeringLink.href;
     if (href.indexOf('?') == -1) {
         href += '?_popup=1';
     } else {
@@ -32,8 +30,7 @@ function showAddAnotherPopup(triggeringLink) {
     return false;
 }
 
-//Override Django js function
-function dismissAddAnotherPopup(win, newId, newRepr) {
+function dismissEditPopup(win) {
     location.reload(true);
     win.close();
 }
@@ -45,11 +42,14 @@ function buildImage(image_url, alt_text, align, link, use_html) {
     html = '<img ';
     if (align == 'left') {
         textile += '<';
+        markdown += '{@class=left}';
         html += 'class="left" align="left" ';
     }
-    else if (align == 'right')
+    else if (align == 'right') {
         textile += '>';
+	markdown += '{@class=right}';
         html += 'class="right" align="right"';
+    }
     textile += image_url + '(' + alt_text + ')!';
     markdown += alt_text + '](' + image_url + ')';
     html += 'src="'+image_url+'" alt="'+alt_text+'" />';
@@ -82,41 +82,48 @@ function buildLink(link_url, title, use_html) {
 
 $(function(){
     $('#uploads li').click(function(){
-        $(this).children('.popup').show();
-    });
+	    $(this).children('.popup').show();
+	});
     $('.popup .close').click(function(){
-        $(this).parent('.popup').hide();
-        return false;
-    });
+	    $(this).parent('.popup').hide();
+	    return false;
+	});
+    $('.popup .select').click(function(){
+	    for (i=0; i<ta.options.length; i++) {
+		if (ta.options[i].value == this.rel) { ta.options[i].selected = true; }
+	    }
+	    $(this).parents('.popup').hide();
+	    return false;
+	});
     $('.popup .insert').click(function(){
-        if (typeof parent.TinyMCE_Engine == 'function') {
-           var mce_instance = $(ta).siblings('span').attr('id').replace('_parent','');
-           var use_html = true;
-        }
-        else
-            use_html = false;
-        var title = $(this).attr('title');
-        if ($(this).parents('.image').length) {
-            var align = $(this).attr('rel');
-            var link = $(this).parents('li').siblings('li.link').children('input.link').val();
-            var code = buildImage(this.href, title, align, link, use_html);
-        }
-        else if ($(this).parents('.youtube').length) {
-            var code = buildVideoLink(this.href, title, this.rel, use_html);
-        }
-        else {
-            var code = buildLink(this.href, title, use_html);
-        }
-        
-        if (typeof parent.TinyMCE_Engine == 'function')
-           parent.tinyMCE.execInstanceCommand(mce_instance ,"mceInsertContent", false, code);
-        else
-            insertAtCursor(ta, code);
-        $(this).parents('.popup').hide();
-        return false;
-    });
+	    if (typeof parent.TinyMCE_Engine == 'function') {
+		var mce_instance = $(ta).siblings('span').attr('id').replace('_parent','');
+		var use_html = true;
+	    }
+	    else
+		use_html = false;
+	    var title = $(this).attr('title');
+	    if ($(this).parents('.image').length) {
+		var align = $(this).attr('rel');
+		var link = $(this).parents('li').siblings('li.link').children('input.link').val();
+		var code = buildImage(this.href, title, align, link, use_html);
+	    }
+	    else if ($(this).parents('.youtube').length) {
+		var code = buildVideoLink(this.href, title, this.rel, use_html);
+	    }
+	    else {
+		var code = buildLink(this.href, title, use_html);
+	    }
+	    
+	    if (typeof parent.TinyMCE_Engine == 'function')
+		parent.tinyMCE.execInstanceCommand(mce_instance ,"mceInsertContent", false, code);
+	    else
+		insertAtCursor(ta, code);
+	    $(this).parents('.popup').hide();
+	    return false;
+	});
     $('#refresh').click(function(){
-        location.reload(true);
-        return false;
-    });
+	    location.reload(true);
+	    return false;
+	});
 });
