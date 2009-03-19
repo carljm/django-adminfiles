@@ -21,6 +21,12 @@ class FileUploadAdmin(admin.ModelAdmin):
             return HttpResponse(
                 '<script type="text/javascript">opener.dismissEditPopup(window);</script>')
         return response
+
+    def response_add(self, request, obj, post_url_continue='../%s/'):
+        if request.POST.has_key('_popup'):
+            return HttpResponse('<script type="text/javascript">opener.dismissAddUploadPopup(window);</script>')
+        return super(FileUploadAdmin, self).response_add(request, obj, post_url_continue)
+            
         
 class FileUploadPickerAdmin(admin.ModelAdmin):
     upload_fields = ()

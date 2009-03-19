@@ -26,7 +26,7 @@
     <br />
     <hr />
     <br />
-    <a href="/admin/upload/fileupload/add/" class="addlink" id="add_id_uploads" onclick="return showAddAnotherPopup(this);">Upload</a><br />
+    <a href="/admin/upload/fileupload/add/" class="addlink" id="add_id_uploads" onclick="return showAddUploadPopup(this);">Upload</a><br />
     <a id="refresh" href="#"><img src="{{MEDIA_URL}}upload/icon_refreshlink.gif" /> Refresh</a>
 </div>
 <ul id="uploads">
@@ -56,7 +56,7 @@
        </div>
        <div class="upload-title">{{f.title}}<br />
          <small>{{f.upload_date|date:"F j, Y"}}</small><br />
-         {{f.description}}<br /></div>
+         <span class="description">{{f.description}}</span><br /></div>
        
    </li>
    {% endfor %}
