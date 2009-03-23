@@ -9,3 +9,9 @@ if not UPLOAD_MEDIA_URL:
     UPLOAD_MEDIA_URL = '%supload_media/' % media_url
 
 UPLOAD_RELATIVE_PATH = getattr(settings, 'UPLOAD_RELATIVE_PATH', 'uploads')
+
+UPLOAD_THUMB_ORDERING = getattr(settings, 'UPLOAD_THUMB_ORDERING', ('-upload_date',))
+
+FLICKR_USER = getattr(settings, 'FLICKR_USER', None)
+FLICKR_API_KEY = getattr(settings, 'FLICKR_API_KEY', None)
+YOU_TUBE_USER = getattr(settings, 'YOU_TUBE_USER', None)

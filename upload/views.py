@@ -1,10 +1,12 @@
 from models import FileUpload
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
-from django.template import RequestContext
 from django.conf import settings
+from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
 import urllib, urlparse, datetime
+
+from upload.settings import UPLOAD_THUMB_ORDERING
 
 def _render_to_response(request, template, data):
     data['flickr'] = hasattr(settings, 'FLICKR_USER')
@@ -14,18 +16,18 @@ def _render_to_response(request, template, data):
 
 @staff_member_required
 def all(request):
-    files = FileUpload.objects.all().order_by('-upload_date')
+    files = FileUpload.objects.all().order_by(*UPLOAD_THUMB_ORDERING)
     return _render_to_response(request, 'upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']})
 
 @staff_member_required
 def images(request):
-    files = FileUpload.objects.filter(content_type = 'image').order_by('-upload_date')
+    files = FileUpload.objects.filter(content_type = 'image').order_by(*UPLOAD_THUMB_ORDERING)
     return _render_to_response(request, 'upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']})
 
 @staff_member_required
 def files(request):
     not_files = ['video', 'image']
-    files = FileUpload.objects.exclude(content_type__in = not_files).order_by('-upload_date')
+    files = FileUpload.objects.exclude(content_type__in = not_files).order_by(*UPLOAD_THUMB_ORDERING)
     return _render_to_response(request, 'upload/base.html', {'files': files, 'textarea_id': request.GET['textarea']})
 
 @staff_member_required
