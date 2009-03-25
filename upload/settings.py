@@ -1,6 +1,10 @@
 from os.path import join
 from django.conf import settings
 
+JQUERY_URL = getattr(
+    settings, 'JQUERY_URL',
+    'http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js')
+
 UPLOAD_MEDIA_URL = getattr(settings, 'UPLOAD_MEDIA_URL', None)
 if not UPLOAD_MEDIA_URL:
     media_url = settings.MEDIA_URL

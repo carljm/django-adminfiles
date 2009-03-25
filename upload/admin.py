@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.contrib import admin
 
 from upload.models import FileUpload
-from upload.settings import UPLOAD_MEDIA_URL
+from upload.settings import UPLOAD_MEDIA_URL, JQUERY_URL
 
 class FileUploadAdmin(admin.ModelAdmin):
     list_display = ('title','upload_date','upload', 'mime_type')
@@ -41,6 +41,6 @@ class FileUploadPickerAdmin(admin.ModelAdmin):
         return field
 
     class Media:
-        js = ('http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js', 'upload/model.js')
+        js = (JQUERY_URL, 'upload/model.js')
 
 admin.site.register(FileUpload, FileUploadAdmin)
