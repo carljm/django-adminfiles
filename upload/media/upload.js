@@ -54,7 +54,7 @@ function dismissAddUploadPopup(win) {
 }
 
 //change the following 3 functions to insert HTML, Markdown, whatever
-function buildImage(image_url, alt_text, align, link, use_html) {
+function buildImage(image_url, alt_text, width, height, align, link, use_html) {
     textile = ' !';
     markdown = ' ![';
     html = '<img ';
@@ -68,6 +68,7 @@ function buildImage(image_url, alt_text, align, link, use_html) {
 	markdown += '{@class=right}';
         html += 'class="right" align="right"';
     }
+    markdown += '{@width=' + width + '}{@height=' + height + '}';
     textile += image_url + '(' + alt_text + ')!';
     markdown += alt_text + '](' + image_url + ')';
     html += 'src="'+image_url+'" alt="'+alt_text+'" />';
@@ -122,9 +123,9 @@ $(function(){
 		use_html = false;
 	    var title = $(this).attr('title');
 	    if ($(this).parents('.image').length) {
-		var align = $(this).attr('rel');
+		var rel = $(this).attr('rel').split(':');
 		var link = $(this).parents('li').siblings('li.link').children('input.link').val();
-		var code = buildImage(this.href, title, align, link, use_html);
+		var code = buildImage(this.href, title, rel[0], rel[1], rel[2], link, use_html);
 	    }
 	    else if ($(this).parents('.youtube').length) {
 		var code = buildVideoLink(this.href, title, this.rel, use_html);

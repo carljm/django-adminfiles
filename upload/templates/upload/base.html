@@ -40,10 +40,10 @@
 	     <li><a class="select" href="{{f.upload.url}}" rel="{{f.id}}" title="{{f.title}}">Select</a></li>
 	     {% else %}
              {% if f.is_image %}
-             <li><a class="insert" href="{{f.upload.url}}" title="{{f.title}}">Insert</a></li>
+             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.width }}:{{ f.height }}" title="{{f.title}}">Insert</a></li>
 	     
-             <li><a class="insert" href="{{f.upload.url}}" rel="left" title="{{f.title}}">Insert (align left)</a></li>
-             <li><a class="insert" href="{{f.upload.url}}" rel="right" title="{{f.title}}">Insert (align right)</a></li>
+             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.width }}:{{ f.height }}:left" title="{{f.title}}">Insert (align left)</a></li>
+             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.width }}:{{ f.height }}:right" title="{{f.title}}">Insert (align right)</a></li>
 	     
              <li class="link">... and link to:<br /> <input type="text" name="link" value="" class="link" /></li>
              {% else %}
