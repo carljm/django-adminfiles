@@ -5,6 +5,11 @@ from django.template.defaultfilters import slugify
 from django.core.files.images import get_image_dimensions
 from upload.settings import UPLOAD_RELATIVE_PATH
 
+try:
+    from tagging.fields import TagField
+except ImportError:
+    TagField = None
+
 class FileUpload(models.Model):
     upload_date = models.DateTimeField(auto_now_add=True)
     upload = models.FileField(upload_to=UPLOAD_RELATIVE_PATH)
@@ -13,6 +18,9 @@ class FileUpload(models.Model):
     content_type = models.CharField(editable=False, max_length=100)
     sub_type = models.CharField(editable=False, max_length=100)
 
+    if TagField:
+        tags = TagField()
+    
     class Meta:
         ordering = ['upload_date', 'title']
 
