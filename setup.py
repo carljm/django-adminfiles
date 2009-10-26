@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
  
 setup(
     name='django-admin-uploads',
-    version='0.2.0',
+    version='0.2.1dev',
     description='file upload manager and picker for Django admin',
     author='sgt.hulka',
     author_email='sgt.hulka@gmail.com',
