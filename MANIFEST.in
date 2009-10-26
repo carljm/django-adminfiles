@@ -1,0 +1,2 @@
+recursive-include upload/media/upload *.png *.css *.js *.gif
+recursive-include upload/templates/upload *.html
