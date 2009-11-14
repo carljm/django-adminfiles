@@ -1,13 +1,14 @@
 import os
 import mimetypes
+from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.files.images import get_image_dimensions
 from upload.settings import UPLOAD_RELATIVE_PATH
 
-try:
+if 'tagging' in settings.INSTALLED_APPS:
     from tagging.fields import TagField
-except ImportError:
+else:
     TagField = None
 
 class FileUpload(models.Model):

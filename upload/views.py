@@ -6,12 +6,13 @@ from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
 import urllib, urlparse, datetime
 
-from upload.settings import UPLOAD_THUMB_ORDERING
+from upload.settings import UPLOAD_THUMB_ORDERING, UPLOAD_MEDIA_URL
 
 def _render_to_response(request, template, data):
     data['flickr'] = hasattr(settings, 'FLICKR_USER')
     data['youtube'] = hasattr(settings, 'YOU_TUBE_USER')
     data['is_select'] = bool(request.GET.get('select', False))
+    data['UPLOAD_MEDIA_URL'] = UPLOAD_MEDIA_URL
     return render_to_response(template, data, context_instance=RequestContext(request))
 
 @staff_member_required

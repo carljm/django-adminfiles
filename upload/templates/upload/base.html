@@ -1,12 +1,12 @@
 {% extends "admin/base.html" %}
 {% load thumbnail %}
 {% block extrastyle %}
-    <link rel="stylesheet" href="{{MEDIA_URL}}upload/upload.css" type="text/css" media="screen" charset="utf-8" />
-    <script type="text/javascript" src="{{MEDIA_URL}}upload/jquery.js"></script>
+    <link rel="stylesheet" href="{{UPLOAD_MEDIA_URL}}upload/upload.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" src="{{UPLOAD_MEDIA_URL}}upload/jquery.js"></script>
     <script type="text/javascript" charset="utf-8">
         var ta = parent.document.getElementById('{{textarea_id}}');
     </script>
-    <script type="text/javascript" src="{{MEDIA_URL}}upload/upload.js"></script>
+    <script type="text/javascript" src="{{UPLOAD_MEDIA_URL}}upload/upload.js"></script>
 
 {% endblock %}
 {% block bodyclass %}uploads{% endblock %}
@@ -27,7 +27,7 @@
     <hr />
     <br />
     <a href="/admin/upload/fileupload/add/" class="addlink" id="add_id_uploads" onclick="return showAddUploadPopup(this);">Upload</a><br />
-    <a id="refresh" href="#"><img src="{{MEDIA_URL}}upload/icon_refreshlink.gif" /> Refresh</a>
+    <a id="refresh" href="#"><img src="{{UPLOAD_MEDIA_URL}}upload/icon_refreshlink.gif" /> Refresh</a>
 </div>
 <ul id="uploads">
 {% block files %}
