@@ -1,42 +1,43 @@
 {% extends "admin/base.html" %}
 {% load thumbnail %}
 {% block extrastyle %}
-    <link rel="stylesheet" href="{{UPLOAD_MEDIA_URL}}upload/upload.css" type="text/css" media="screen" charset="utf-8" />
-    <script type="text/javascript" src="{{UPLOAD_MEDIA_URL}}upload/jquery.js"></script>
+    <link rel="stylesheet" href="{{ ADMINFILES_MEDIA_URL }}adminfiles/adminfiles.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" src="{{ JQUERY_URL }}"></script>
     <script type="text/javascript" charset="utf-8">
-        var ta = parent.document.getElementById('{{textarea_id}}');
+        var FIELD = parent.document.getElementById('{{field_id}}');
     </script>
-    <script type="text/javascript" src="{{UPLOAD_MEDIA_URL}}upload/upload.js"></script>
+    <script type="text/javascript" src="{{ ADMINFILES_MEDIA_URL }}adminfiles/adminfiles.js"></script>
 
 {% endblock %}
-{% block bodyclass %}uploads{% endblock %}
+{% block bodyclass %}adminfiles{% endblock %}
 {% block breadcrumbs %}{% endblock %}
 {% block userlinks %}{% endblock %}
 {% block content %}
-<div id="upload-filter">
-    <a href="/uploads/?textarea={{textarea_id}}">All Uploads</a><br />
-    <a href="/uploads/files/?textarea={{textarea_id}}">Files</a><br />
-    <a href="/uploads/images/?textarea={{textarea_id}}">Images</a><br />
-{% if youtube %}
-    <a href="/uploads/youtube/?textarea={{textarea_id}}">You Tube</a><br />
+<div id="adminfiles-filter">
+    <a href="{% url adminfiles_all %}?field={{field_id}}">All Uploads</a><br />
+    <a href="{% url adminfiles_files %}?field={{field_id}}">Files</a><br />
+    <a href="{% url adminfiles_images %}?field={{field_id}}">Images</a><br />
+{% if youtube_available %}
+    <a href="{% url adminfiles_youtube %}?field={{field_id}}">YouTube</a><br />
 {% endif %}
-{% if flickr %}
-    <a href="/uploads/flickr/?textarea={{textarea_id}}">Flickr</a><br />
+{% if flickr_available %}
+    <a href="{% url adminfiles_flickr %}?field={{field_id}}">Flickr</a><br />
 {% endif %}
     <br />
     <hr />
     <br />
-    <a href="/admin/upload/fileupload/add/" class="addlink" id="add_id_uploads" onclick="return showAddUploadPopup(this);">Upload</a><br />
-    <a id="refresh" href="#"><img src="{{UPLOAD_MEDIA_URL}}upload/icon_refreshlink.gif" /> Refresh</a>
+    <a href="{% url admin:adminfiles_fileupload_add %}" class="addlink" id="add_id_uploads" onclick="return showAddUploadPopup(this);">Upload</a><br />
+    <a id="refresh" href="#"><img src="{{ADMINFILES_MEDIA_URL}}adminfiles/icon_refreshlink.gif" /> Refresh</a>
 </div>
-<ul id="uploads">
+
+<ul id="adminfiles">
 {% block files %}
 {% for f in files %}
    <li class="item {{f.content_type}} {{f.sub_type}}" {% if f.is_image %}style="background-image:url({% thumbnail f.upload 144x150 %})"{% endif %}>
        <div class="popup">
            <a href="#" class="close" title="Close">X</a>
            <ul>
-	     {% if is_select %}
+	     {% ifequal field_type "select" %}
 	     <li><a class="select" href="{{f.upload.url}}" rel="{{f.id}}" title="{{f.title}}">Select</a></li>
 	     {% else %}
              {% if f.is_image %}
@@ -49,10 +50,10 @@
              {% else %}
              <li><a class="insert" href="{{f.upload.url}}" title="{{f.title}}">Insert Link</a></li>
              {% endif %}
-	     {% endif %}
+	     {% endifequal %}
            </ul>
-           <a href="/admin/upload/fileupload/{{f.id}}/delete/" class="deletelink" id="ddd" onclick="return showEditPopup(this);">Delete</a>
-           <a href="/admin/upload/fileupload/{{f.id}}/" class="editlink" id="eee" onclick="return showEditPopup(this);">Edit</a>
+           <a href="{% url admin:adminfiles_fileupload_delete f.id %}" class="deletelink" id="ddd" onclick="return showEditPopup(this);">Delete</a>
+           <a href="{% url admin:adminfiles_fileupload_change f.id %}" class="editlink" id="eee" onclick="return showEditPopup(this);">Edit</a>
        </div>
        <div class="upload-title">{{f.title}}<br />
          <small>{{f.upload_date|date:"F j, Y"}}</small><br />

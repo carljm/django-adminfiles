@@ -1,10 +1,12 @@
 import os
 import mimetypes
+
 from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.files.images import get_image_dimensions
-from upload.settings import UPLOAD_RELATIVE_PATH
+
+from adminfiles.settings import ADMINFILES_UPLOAD_TO
 
 if 'tagging' in settings.INSTALLED_APPS:
     from tagging.fields import TagField
@@ -13,8 +15,9 @@ else:
 
 class FileUpload(models.Model):
     upload_date = models.DateTimeField(auto_now_add=True)
-    upload = models.FileField(upload_to=UPLOAD_RELATIVE_PATH)
+    upload = models.FileField(upload_to=ADMINFILES_UPLOAD_TO)
     title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, unique=True)
     description = models.CharField(blank=True, max_length=200)
     content_type = models.CharField(editable=False, max_length=100)
     sub_type = models.CharField(editable=False, max_length=100)

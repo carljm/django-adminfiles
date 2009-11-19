@@ -1,2 +1,9 @@
-recursive-include upload/media/upload *.png *.css *.js *.gif
-recursive-include upload/templates/upload *.html
+include AUTHORS.txt
+include CHANGES.txt
+include LICENSE.txt
+include MANIFEST.in
+include README.txt
+include TODO.txt
+include HGREV
+recursive-include adminfiles/media/adminfiles *.png *.css *.js *.gif
+recursive-include adminfiles/templates/adminfiles *.html

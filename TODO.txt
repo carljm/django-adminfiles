@@ -1,0 +1,9 @@
+TODO
+====
+
+- Add test suite.
+
+- Test and document Flickr and Youtube support, snipshot integration.
+
+- Make URLs in JS portable (by reversing "all" view to find out where
+  we've been included in the URLconf).

@@ -86,7 +86,7 @@ function buildImage(image_url, alt_text, width, height, align, link, use_html) {
 function buildVideoLink(video_url, title, thumb, use_html) {
     if (use_html)
         return '<a class="flash_video" href="'+video_url+'" title="'+title+'"><img src="'+thumb+'" alt="'+title+'" /></a>';
-    return '\n\n&& flash_video ' + video_url + ' &&\n\n'; 
+    return '\n\n&& flash_video ' + video_url + ' &&\n\n';
 }
 
 function buildLink(link_url, title, use_html) {
@@ -100,7 +100,7 @@ function buildLink(link_url, title, use_html) {
 
 
 $(function(){
-    $('#uploads li').click(function(){
+    $('#adminfiles li').click(function(){
 	    $(this).children('.popup').show();
 	});
     $('.popup .close').click(function(){
@@ -108,19 +108,14 @@ $(function(){
 	    return false;
 	});
     $('.popup .select').click(function(){
-	    for (i=0; i<ta.options.length; i++) {
-		if (ta.options[i].value == this.rel) { ta.options[i].selected = true; }
+	    for (i=0; i<FIELD.options.length; i++) {
+		if (FIELD.options[i].value == this.rel) { FIELD.options[i].selected = true; }
 	    }
 	    $(this).parents('.popup').hide();
 	    return false;
 	});
     $('.popup .insert').click(function(){
-	    if (typeof parent.TinyMCE_Engine == 'function') {
-		var mce_instance = $(ta).siblings('span').attr('id').replace('_parent','');
-		var use_html = true;
-	    }
-	    else
-		use_html = false;
+            var use_html = false;
 	    var title = $(this).attr('title');
 	    if ($(this).parents('.image').length) {
 		var rel = $(this).attr('rel').split(':');
@@ -133,11 +128,8 @@ $(function(){
 	    else {
 		var code = buildLink(this.href, title, use_html);
 	    }
-	    
-	    if (typeof parent.TinyMCE_Engine == 'function')
-		parent.tinyMCE.execInstanceCommand(mce_instance ,"mceInsertContent", false, code);
-	    else
-		insertAtCursor(ta, code);
+
+            insertAtCursor(FIELD, code);
 	    $(this).parents('.popup').hide();
 	    return false;
 	});

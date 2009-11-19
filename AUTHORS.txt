@@ -1,0 +1,8 @@
+The original `django-admin-uploads`_ project is authored by
+sgt.hulka@gmail.com.
+
+`django-adminfiles` fork developed and maintained by Carl Meyer
+<carl@dirtcircle.com>.
+
+.. _django-admin-uploads: http://code.google.com/p/django-admin-uploads
+.. _django-adminfiles: http://bitbucket.org/carljm/django-adminfiles/

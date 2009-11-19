@@ -1,12 +1,38 @@
 from setuptools import setup, find_packages
- 
+import subprocess
+import os.path
+
+try:
+    # don't get confused if our sdist is unzipped in a subdir of some 
+    # other hg repo
+    if os.path.isdir('.hg'):
+        p = subprocess.Popen(['hg', 'parents', r'--template={rev}\n'],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if not p.returncode:
+            fh = open('HGREV', 'w')
+            fh.write(p.communicate()[0].splitlines()[0])
+            fh.close()
+except (OSError, IndexError):
+    pass
+    
+try:
+    hgrev = open('HGREV').read()
+except IOError:
+    hgrev = ''
+    
+long_description = (open('README.txt').read() + 
+                    open('CHANGES.txt').read() +
+                    open('TODO.txt').read())
+
 setup(
-    name='django-admin-uploads',
-    version='0.2.1dev',
-    description='file upload manager and picker for Django admin',
+    name='django-adminfiles',
+    version='0.3.0dev%s' % hgrev,
+    description='File upload manager and picker for Django admin',
     author='sgt.hulka',
     author_email='sgt.hulka@gmail.com',
-    url='http://code.google.com/p/django-admin-uploads/',
+    maintainer='Carl Meyer',
+    maintainer_email='carl@dirtcircle.com',
+    url='http://bitbucket.org/carljm/django-adminfiles/',
     packages=find_packages(),
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -18,7 +44,7 @@ setup(
         'Framework :: Django',
     ],
     zip_safe=False,
-    package_data={'upload': ['media/upload/*.*',
-                             'media/upload/mimetypes/*.png',
-                             'templates/upload/*.html']}
+    package_data={'upload': ['media/adminfiles/*.*',
+                             'media/adminfiles/mimetypes/*.png',
+                             'templates/adminfiles/*.html']}
 )

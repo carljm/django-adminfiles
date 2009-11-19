@@ -1,2 +1,3 @@
 ^dist/
-^django_admin_uploads.egg-info/
+^django_adminfiles.egg-info/
+^HGREV$
