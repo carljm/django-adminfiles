@@ -32,6 +32,7 @@ setup(
     author_email='sgt.hulka@gmail.com',
     maintainer='Carl Meyer',
     maintainer_email='carl@dirtcircle.com',
+    long_description=long_description,
     url='http://bitbucket.org/carljm/django-adminfiles/',
     packages=find_packages(),
     classifiers=[
@@ -46,5 +47,6 @@ setup(
     zip_safe=False,
     package_data={'upload': ['media/adminfiles/*.*',
                              'media/adminfiles/mimetypes/*.png',
-                             'templates/adminfiles/*.html']}
+                             'templates/adminfiles/*.html',
+                             'templates/adminfiles/uploader/*.html']}
 )

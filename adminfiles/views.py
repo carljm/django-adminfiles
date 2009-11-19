@@ -9,11 +9,11 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from adminfiles.models import FileUpload
 from adminfiles.settings import ADMINFILES_THUMB_ORDER, ADMINFILES_MEDIA_URL,\
-    JQUERY_URL
+    JQUERY_URL, ADMINFILES_REF_START, ADMINFILES_REF_END
 
 class BaseView(object):
     def template_name(self):
-        return 'adminfiles/base.html'
+        return 'adminfiles/uploader/base.html'
                 
     def context(self, request):
         return {'flickr_available': hasattr(settings, 'FLICKR_USER'),
@@ -21,6 +21,8 @@ class BaseView(object):
                 'field_id': request.GET['field'],
                 'field_type': request.GET.get('field_type', 'textarea'),
                 'ADMINFILES_MEDIA_URL': ADMINFILES_MEDIA_URL,
+                'ADMINFILES_REF_START': ADMINFILES_REF_START,
+                'ADMINFILES_REF_END': ADMINFILES_REF_END,
                 'JQUERY_URL': JQUERY_URL}
 
     def __call__(self, request):
@@ -63,7 +65,7 @@ def files(request):
 
 class YouTubeView(BaseView):
     def template_name(self):
-        return 'adminfiles/youtube.html'
+        return 'adminfiles/uploader/youtube.html'
     
     def context(self, request):
         context = super(YoutubeView, self).context(request)
@@ -103,7 +105,7 @@ def youtube(request):
 
 class FlickrView(BaseView):
     def template_name(self):
-        return 'adminfiles/flickr.html'
+        return 'adminfiles/uploader/flickr.html'
     
     def context(self, request):
         context = super(YoutubeView, self).context(request)

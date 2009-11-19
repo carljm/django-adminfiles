@@ -7,3 +7,5 @@ TODO
 
 - Make URLs in JS portable (by reversing "all" view to find out where
   we've been included in the URLconf).
+
+- Document signal handling, render_uploads templatetag.

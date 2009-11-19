@@ -6,6 +6,9 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.files.images import get_image_dimensions
 
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
+
 from adminfiles.settings import ADMINFILES_UPLOAD_TO
 
 if 'tagging' in settings.INSTALLED_APPS:
@@ -64,3 +67,13 @@ class FileUpload(models.Model):
             self.content_type = 'text'
             self.sub_type = 'plain'
         super(FileUpload, self).save()
+
+class FileUploadReference(models.Model):
+    """
+    Tracks which ``FileUpload``s are referenced by which content models.
+
+    """
+    upload = models.ForeignKey(FileUpload)
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')

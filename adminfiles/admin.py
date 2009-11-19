@@ -6,6 +6,7 @@ from django.contrib import admin
 
 from adminfiles.models import FileUpload
 from adminfiles.settings import ADMINFILES_MEDIA_URL, JQUERY_URL
+from adminfiles.listeners import register_listeners
 
 class FileUploadAdmin(admin.ModelAdmin):
     list_display = ('title', 'upload_date', 'upload', 'mime_type')
@@ -41,11 +42,15 @@ class FileUploadAdmin(admin.ModelAdmin):
                                                          **kwargs)
             
         
-class FileUploadPickerAdmin(admin.ModelAdmin):
+class FilePickerAdmin(admin.ModelAdmin):
     adminfiles_fields = ()
 
+    def __init__(self, *args, **kwargs):
+        super(FilePickerAdmin, self).__init__(*args, **kwargs)
+        register_listeners(self.model, self.adminfiles_fields)
+    
     def formfield_for_dbfield(self, db_field, **kwargs):
-        field = super(FileUploadPickerAdmin, self).formfield_for_dbfield(
+        field = super(FilePickerAdmin, self).formfield_for_dbfield(
             db_field, **kwargs)
         if db_field.name in self.adminfiles_fields:
             try:

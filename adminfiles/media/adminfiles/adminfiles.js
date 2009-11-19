@@ -53,83 +53,29 @@ function dismissAddUploadPopup(win) {
     win.close();
 }
 
-//change the following 3 functions to insert HTML, Markdown, whatever
-function buildImage(image_url, alt_text, width, height, align, link, use_html) {
-    textile = ' !';
-    markdown = ' ![';
-    html = '<img ';
-    if (align == 'left') {
-        textile += '<';
-        markdown += '{@class=left}';
-        html += 'class="left" align="left" ';
-    }
-    else if (align == 'right') {
-        textile += '>';
-	markdown += '{@class=right}';
-        html += 'class="right" align="right"';
-    }
-    markdown += '{@width=' + width + '}{@height=' + height + '}';
-    textile += image_url + '(' + alt_text + ')!';
-    markdown += alt_text + '](' + image_url + ')';
-    html += 'src="'+image_url+'" alt="'+alt_text+'" />';
-    if (link) {
-        textile += ':' + link;
-        markdown = '[' + markdown + '](' + link + ')';
-        html = '<a href="'+link+'">'+html+'</a>';
-    }
-    if (use_html)
-        return html + ' ';
-    else
-        return markdown + ' ';
-}
-//this needs some help via a templatetag
-function buildVideoLink(video_url, title, thumb, use_html) {
-    if (use_html)
-        return '<a class="flash_video" href="'+video_url+'" title="'+title+'"><img src="'+thumb+'" alt="'+title+'" /></a>';
-    return '\n\n&& flash_video ' + video_url + ' &&\n\n';
-}
-
-function buildLink(link_url, title, use_html) {
-    if (use_html)
-        return ' <a href="'+link_url+'" title="'+title+'">'+title+'</a> ';
-    textile = ' "'+title+'":'+link_url+' ';
-    markdown = ' [' + title + '](' + link_url + ') ';
-    return markdown;
-}
-
-
-
 $(function(){
-    $('#adminfiles li').click(function(){
-	    $(this).children('.popup').show();
-	});
-    $('.popup .close').click(function(){
-	    $(this).parent('.popup').hide();
-	    return false;
-	});
-    $('.popup .select').click(function(){
-	    for (i=0; i<FIELD.options.length; i++) {
-		if (FIELD.options[i].value == this.rel) { FIELD.options[i].selected = true; }
-	    }
-	    $(this).parents('.popup').hide();
-	    return false;
-	});
-    $('.popup .insert').click(function(){
-            var use_html = false;
-	    var title = $(this).attr('title');
-	    if ($(this).parents('.image').length) {
-		var rel = $(this).attr('rel').split(':');
-		var link = $(this).parents('li').siblings('li.link').children('input.link').val();
-		var code = buildImage(this.href, title, rel[0], rel[1], rel[2], link, use_html);
-	    }
-	    else if ($(this).parents('.youtube').length) {
-		var code = buildVideoLink(this.href, title, this.rel, use_html);
-	    }
-	    else {
-		var code = buildLink(this.href, title, use_html);
-	    }
-
-            insertAtCursor(FIELD, code);
+      $('#adminfiles li').click(
+          function(){
+	      $(this).children('.popup').show();
+	  });
+      $('.popup .close').click(
+          function(){
+	      $(this).parent('.popup').hide();
+	      return false;
+	  });
+      $('.popup .select').click(
+          function(){
+	      for (i=0; i<FIELD.options.length; i++) {
+		  if (FIELD.options[i].value == this.rel) {
+                      FIELD.options[i].selected = true;
+                  }
+	      }
+	      $(this).parents('.popup').hide();
+	      return false;
+	  });
+      $('.popup .insert').click(
+          function(){
+            insertAtCursor(FIELD, START + this.rel + END);
 	    $(this).parents('.popup').hide();
 	    return false;
 	});

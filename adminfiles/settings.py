@@ -16,6 +16,12 @@ ADMINFILES_UPLOAD_TO = getattr(settings, 'ADMINFILES_UPLOAD_TO', 'adminfiles')
 ADMINFILES_THUMB_ORDER = getattr(settings, 'ADMINFILES_THUMB_ORDER',
                                  ('-upload_date',))
 
+ADMINFILES_USE_SIGNALS = getattr(settings, 'ADMINFILES_USE_SIGNALS', False)
+                                 
+ADMINFILES_REF_START = getattr(settings, 'ADMINFILES_REF_START', '<<<')
+
+ADMINFILES_REF_END = getattr(settings, 'ADMINFILES_REF_END', '>>>')
+                                 
 FLICKR_USER = getattr(settings, 'FLICKR_USER', None)
 FLICKR_API_KEY = getattr(settings, 'FLICKR_API_KEY', None)
 YOUTUBE_USER = getattr(settings, 'YOUTUBE_USER', None)

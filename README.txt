@@ -41,12 +41,12 @@ To use django-adminfiles in your Django project:
 
     4. Inherit model admin options from `FileUploadPickerAdmin`_.
 
-FileUploadPickerAdmin
----------------------
+FilePickerAdmin
+---------------
 
 For each model you'd like to use the ``django-adminfiles`` picker
 with, inherit that model's admin options class from
-``adminfiles.admin.FileUploadPickerAdmin`` instead of the usual
+``adminfiles.admin.FilePickerAdmin`` instead of the usual
 ``django.contrib.admin.ModelAdmin``, and set the ``adminfiles_fields``
 attribute to a list/tuple of the names of fields it is used with.
 
@@ -56,11 +56,11 @@ from a ``django-adminfiles`` picker::
 
     from django.contrib import admin
 
-    from adminfiles.admin import FileUploadPickerAdmin
+    from adminfiles.admin import FilePickerAdmin
 
     from myapp.models import Post
 
-    class PostAdmin(FileUploadPickerAdmin):
+    class PostAdmin(FilePickerAdmin):
         adminfiles_fields = ('content',)
 
     admin.site.register(Post, PostAdmin)
@@ -93,7 +93,9 @@ ADMINFILES_THUMB_ORDER
 
 The ordering that will be applied to thumbnails displayed in the
 picker. Expects a tuple of field names, prefixed with ``-`` to
-indicate reverse ordering, same as `"ordering" model Meta attribute`_.
+indicate reverse ordering, same as `"ordering" model Meta
+attribute`_. The default value is ``('-upload_date')``; thumbnails
+ordered by date uploaded, most recent first.
 
 .. _"ordering" model Meta attribute:  http://docs.djangoproject.com/en/dev/ref/models/options/#ordering
 
