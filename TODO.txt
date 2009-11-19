@@ -9,3 +9,5 @@ TODO
   we've been included in the URLconf).
 
 - Document signal handling, render_uploads templatetag.
+
+- Make the options placed by JS insert configurable somehow?
