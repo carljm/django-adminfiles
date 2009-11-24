@@ -45,6 +45,7 @@ setup(
         'Framework :: Django',
     ],
     zip_safe=False,
+    test_suite='tests.runtests.runtests',
     package_data={'upload': ['media/adminfiles/*.*',
                              'media/adminfiles/mimetypes/*.png',
                              'templates/adminfiles/*.html',

@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from adminfiles.models import FileUpload, FileUploadReference
 from adminfiles.parse import get_uploads
-from adminfiles.settings import ADMINFILES_USE_SIGNALS
+from adminfiles import settings
 
 def get_ctype_kwargs(obj):
     return {'content_type': ContentType.objects.get_for_model(obj),
@@ -37,7 +37,7 @@ def register_listeners(model, fields):
     def _delete_references(sender, instance, **kwargs):
         ref_kwargs = get_ctype_kwargs(instance)
         FileUploadReference.objects.filter(**ref_kwargs).delete()
-    if ADMINFILES_USE_SIGNALS:
+    if settings.ADMINFILES_USE_SIGNALS:
         post_save.connect(_update_references, sender=model, weak=False)
         pre_delete.connect(_delete_references, sender=model, weak=False)
 
@@ -63,5 +63,10 @@ def _update_content(sender, instance, created=None, **kwargs):
         except AttributeError:
             pass
 
-if ADMINFILES_USE_SIGNALS:
-    post_save.connect(_update_content, sender=FileUpload)
+def _register_upload_listener():
+    if settings.ADMINFILES_USE_SIGNALS:
+        post_save.connect(_update_content, sender=FileUpload)
+_register_upload_listener()
+
+def _disconnect_upload_listener():
+    post_save.disconnect(_update_content)

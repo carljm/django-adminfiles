@@ -4,8 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
-0.3.0 (2009.11.18)
+0.3.0 (2009.11.23)
 ------------------
 
-- initial release as ``django-admin-files``
+- initial release as ``django-adminfiles``
 

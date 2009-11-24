@@ -59,7 +59,7 @@ class FileUpload(models.Model):
     def height(self):
         return self._get_dimensions()[1]
     
-    def save(self):
+    def save(self, *args, **kwargs):
         (mime_type, encoding) = mimetypes.guess_type(self.upload.path)
         try:
             [self.content_type, self.sub_type] = mime_type.split('/')
@@ -77,3 +77,6 @@ class FileUploadReference(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    class Meta:
+        unique_together = ('upload', 'content_type', 'object_id')

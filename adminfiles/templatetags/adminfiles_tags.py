@@ -2,25 +2,27 @@ from django import template
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
 
-from adminfiles.parse import parse_match, substitute_uploads
+from adminfiles.utils import render_uploads as _render
 
 register = template.Library()
 
 @register.filter
-def render_uploads(text,
+def render_uploads(content,
                    template_name="adminfiles/render.html",
                    autoescape=None):
+    """
+    Render uploaded file references in a content string
+    (i.e. translate "<<<my-uploaded-file>>>" to '<a
+    href="/path/to/my/uploaded/file">My uploaded file</a>').
+    
+    Just wraps ``adminfiles.utils.render_uploads`` with proper
+    template autoescape handling.
+
+    """
     if autoescape:
         esc = conditional_escape
     else:
         esc = lambda x: x
-    tpl = template.loader.get_template(template_name)
-    def _replace(match):
-        upload, options = parse_match(match)
-        if upload is None:
-            return u''
-        return tpl.render(template.Context({'upload': upload,
-                                            'options': options}))
-    return mark_safe(substitute_uploads(esc(text), _replace))
+    return mark_safe(esc(_render(content, template_name)))
 render_uploads.needs_autoescape = True
 

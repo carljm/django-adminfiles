@@ -8,8 +8,7 @@ from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
 
 from adminfiles.models import FileUpload
-from adminfiles.settings import ADMINFILES_THUMB_ORDER, ADMINFILES_MEDIA_URL,\
-    JQUERY_URL, ADMINFILES_REF_START, ADMINFILES_REF_END
+from adminfiles import settings
 
 class BaseView(object):
     def template_name(self):
@@ -20,10 +19,10 @@ class BaseView(object):
                 'youtube_available': hasattr(settings, 'YOUTUBE_USER'),
                 'field_id': request.GET['field'],
                 'field_type': request.GET.get('field_type', 'textarea'),
-                'ADMINFILES_MEDIA_URL': ADMINFILES_MEDIA_URL,
-                'ADMINFILES_REF_START': ADMINFILES_REF_START,
-                'ADMINFILES_REF_END': ADMINFILES_REF_END,
-                'JQUERY_URL': JQUERY_URL}
+                'ADMINFILES_MEDIA_URL': settings.ADMINFILES_MEDIA_URL,
+                'ADMINFILES_REF_START': settings.ADMINFILES_REF_START,
+                'ADMINFILES_REF_END': settings.ADMINFILES_REF_END,
+                'JQUERY_URL': settings.JQUERY_URL}
 
     def __call__(self, request):
         return render_to_response(self.template_name(),
@@ -37,7 +36,8 @@ class AllView(BaseView):
 
     def context(self, request):
         context = super(AllView, self).context(request)
-        context['files'] = self.files().order_by(*ADMINFILES_THUMB_ORDER)
+        context['files'] = self.files().order_by(
+            *settings.ADMINFILES_THUMB_ORDER)
         return context
     
 all_view = AllView()

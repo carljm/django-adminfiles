@@ -21,7 +21,11 @@ ADMINFILES_USE_SIGNALS = getattr(settings, 'ADMINFILES_USE_SIGNALS', False)
 ADMINFILES_REF_START = getattr(settings, 'ADMINFILES_REF_START', '<<<')
 
 ADMINFILES_REF_END = getattr(settings, 'ADMINFILES_REF_END', '>>>')
-                                 
+
+ADMINFILES_STRING_IF_NOT_FOUND = getattr(settings,
+                                         'ADMINFILES_STRING_IF_NOT_FOUND',
+                                         u'')
+
 FLICKR_USER = getattr(settings, 'FLICKR_USER', None)
 FLICKR_API_KEY = getattr(settings, 'FLICKR_API_KEY', None)
 YOUTUBE_USER = getattr(settings, 'YOUTUBE_USER', None)

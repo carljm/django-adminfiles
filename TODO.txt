@@ -1,13 +1,10 @@
 TODO
 ====
 
-- Add test suite.
-
-- Test and document Flickr and Youtube support, snipshot integration.
+- Test and document Flickr and Youtube support, snipshot integration,
+  select dropdown integration.
 
 - Make URLs in JS portable (by reversing "all" view to find out where
   we've been included in the URLconf).
 
-- Document signal handling, render_uploads templatetag.
-
-- Make the options placed by JS insert configurable somehow?
+- Make the JS reference-insertion options configurable.

@@ -1,13 +1,16 @@
 import re
 
-from adminfiles.settings import ADMINFILES_REF_START, ADMINFILES_REF_END
+from adminfiles import settings
 from adminfiles.models import FileUpload
 
 # Upload references look like: <<< upload-slug : key=val : key2=val2 >>>
 # Spaces are optional, key-val opts are optional, can be any number
-
-UPLOAD_RE = re.compile(r'%s\s*([\w-]+)((\s*:\s*\w+\s*=\s*\w+)*)\s*%s'
-                       % (ADMINFILES_REF_START, ADMINFILES_REF_END))
+# extra indirection is for testability
+def _get_upload_re():
+    return re.compile(r'%s\s*([\w-]+)((\s*:\s*\w+\s*=\s*[\w\s]+)*)\s*%s'
+                      % (re.escape(settings.ADMINFILES_REF_START),
+                         re.escape(settings.ADMINFILES_REF_END)))
+UPLOAD_RE = _get_upload_re()
 
 def get_uploads(text):
     """
