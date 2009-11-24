@@ -9,3 +9,7 @@ tip (unreleased)
 
 - initial release as ``django-adminfiles``
 
+- added docs and test suite
+
+- added reference parsing & rendering, template filter, signal handling
+
