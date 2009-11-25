@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 import subprocess
 import os.path
 
@@ -26,7 +26,7 @@ long_description = (open('README.txt').read() +
 
 setup(
     name='django-adminfiles',
-    version='0.4.0dev%s' % hgrev,
+    version='0.3.1',
     description='File upload manager and picker for Django admin',
     author='sgt.hulka',
     author_email='sgt.hulka@gmail.com',
@@ -34,7 +34,7 @@ setup(
     maintainer_email='carl@dirtcircle.com',
     long_description=long_description,
     url='http://bitbucket.org/carljm/django-adminfiles/',
-    packages=find_packages(),
+    packages=['adminfiles', 'adminfiles.templatetags'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
