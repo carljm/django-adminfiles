@@ -4,6 +4,11 @@ CHANGES
 tip (unreleased)
 ----------------
 
+0.3.2 (2009.12.02)
+------------------
+
+- fix setup.py package_data so media and templates are installed from sdist.
+
 0.3.1 (2009.11.25)
 ------------------
 
