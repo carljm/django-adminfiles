@@ -46,8 +46,8 @@ setup(
     ],
     zip_safe=False,
     test_suite='tests.runtests.runtests',
-    package_data={'upload': ['media/adminfiles/*.*',
-                             'media/adminfiles/mimetypes/*.png',
-                             'templates/adminfiles/*.html',
-                             'templates/adminfiles/uploader/*.html']}
+    package_data={'adminfiles': ['media/adminfiles/*.*',
+                                 'media/adminfiles/mimetypes/*.png',
+                                 'templates/adminfiles/*.html',
+                                 'templates/adminfiles/uploader/*.html']}
 )
