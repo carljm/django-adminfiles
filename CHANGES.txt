@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- slugs for non-image files are inserted.
+
 0.3.2 (2009.12.02)
 ------------------
 

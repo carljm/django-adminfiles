@@ -48,7 +48,7 @@
              <li><a class="insert" href="{{f.upload.url}}" rel="{{f.slug}}:class=left" title="{{f.title}}">Insert (align left)</a></li>
              <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.slug }}:class=right" title="{{f.title}}">Insert (align right)</a></li>
              {% else %}
-             <li><a class="insert" href="{{f.upload.url}}" title="{{f.title}}">Insert Link</a></li>
+             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.slug }}" title="{{f.title}}">Insert Link</a></li>
              {% endif %}
 	     {% endifequal %}
            </ul>
