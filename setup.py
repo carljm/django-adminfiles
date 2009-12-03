@@ -26,7 +26,7 @@ long_description = (open('README.txt').read() +
 
 setup(
     name='django-adminfiles',
-    version='0.3.1.post%s' % hgrev,
+    version='0.3.2',
     description='File upload manager and picker for Django admin',
     author='sgt.hulka',
     author_email='sgt.hulka@gmail.com',
