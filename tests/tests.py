@@ -253,11 +253,12 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
 
     def test_render_template_filter(self):
         tpl = template.Template('{% load adminfiles_tags %}'
-                                '{{ post.content|render_uploads }}')
+                                '{{ post.content|render_uploads|safe }}')
         html = tpl.render(template.Context({
                     'post': Post(title='a post',
                                  content='<<<some-file>>>')}))
         self.assertEquals(self.templates[1].name, 'adminfiles/render.html')
+        self.failUnless('<a href' in html)
 
     def test_render_template_filter_alt_template(self):
         tpl = template.Template(

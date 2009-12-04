@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- fix over-eager escaping in render_uploads template tag.
+
 0.3.3 (2009.12.02)
 ------------------
 
