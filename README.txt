@@ -21,6 +21,16 @@ or get the `in-development version`_::
 
 .. _in-development version: http://bitbucket.org/carljm/django-adminfiles/get/tip.gz#egg=django_adminfiles-tip
 
+Dependencies
+------------
+
+``django-adminfiles`` requires `Django`_ 1.1 or later,
+`sorl-thumbnail`_ and the `Python Imaging Library`_.
+
+.. _Django: http://www.djangoproject.com/
+.. _sorl-thumbnail: http://pypi.python.org/pypi/sorl-thumbnail
+.. _Python Imaging Library: http://www.pythonware.com/products/pil/
+
 Usage
 =====
 
