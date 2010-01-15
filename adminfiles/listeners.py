@@ -25,19 +25,24 @@ def _get_field(instance, field):
     if hasattr(value, 'raw'):
         value = value.raw
     return value
-    
+
+referring_models = set()
             
 def register_listeners(model, fields):
+
     def _update_references(sender, instance, **kwargs):
         ref_kwargs = get_ctype_kwargs(instance)
         for upload in chain(*[get_uploads(_get_field(instance, field))
                               for field in fields]):
             FileUploadReference.objects.get_or_create(**dict(ref_kwargs,
                                                              upload=upload))
+
     def _delete_references(sender, instance, **kwargs):
         ref_kwargs = get_ctype_kwargs(instance)
         FileUploadReference.objects.filter(**ref_kwargs).delete()
+
     if settings.ADMINFILES_USE_SIGNALS:
+        referring_models.add(model)
         post_save.connect(_update_references, sender=model, weak=False)
         pre_delete.connect(_delete_references, sender=model, weak=False)
 

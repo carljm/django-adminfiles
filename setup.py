@@ -34,7 +34,8 @@ setup(
     maintainer_email='carl@dirtcircle.com',
     long_description=long_description,
     url='http://bitbucket.org/carljm/django-adminfiles/',
-    packages=['adminfiles', 'adminfiles.templatetags'],
+    packages=['adminfiles', 'adminfiles.templatetags', \
+              'adminfiles.management', 'adminfiles.management.commands'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
