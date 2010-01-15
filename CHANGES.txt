@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- upgrade to jQuery 1.4
+
 - fix bug where YouTube and Flickr links showed up even when disabled.
 
 - add sync_upload_refs command
