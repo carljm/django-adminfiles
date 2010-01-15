@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- fix bug where YouTube and Flickr links showed up even when disabled.
+
 - add sync_upload_refs command
 
 0.3.4 (2009.12.03)

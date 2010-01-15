@@ -19,10 +19,10 @@
     <a href="{% url adminfiles_all %}?field={{field_id}}">All Uploads</a><br />
     <a href="{% url adminfiles_files %}?field={{field_id}}">Files</a><br />
     <a href="{% url adminfiles_images %}?field={{field_id}}">Images</a><br />
-{% if youtube_available %}
+{% if YOUTUBE_USER %}
     <a href="{% url adminfiles_youtube %}?field={{field_id}}">YouTube</a><br />
 {% endif %}
-{% if flickr_available %}
+{% if FLICKR_USER %}
     <a href="{% url adminfiles_flickr %}?field={{field_id}}">Flickr</a><br />
 {% endif %}
     <br />

@@ -15,8 +15,8 @@ class BaseView(object):
         return 'adminfiles/uploader/base.html'
                 
     def context(self, request):
-        return {'flickr_available': hasattr(settings, 'FLICKR_USER'),
-                'youtube_available': hasattr(settings, 'YOUTUBE_USER'),
+        return {'FLICKR_USER': settings.FLICKR_USER,
+                'YOUTUBE_USER': settings.YOUTUBE_USER,
                 'field_id': request.GET['field'],
                 'field_type': request.GET.get('field_type', 'textarea'),
                 'ADMINFILES_MEDIA_URL': settings.ADMINFILES_MEDIA_URL,
