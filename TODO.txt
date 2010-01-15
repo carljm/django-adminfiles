@@ -8,3 +8,8 @@ TODO
   we've been included in the URLconf).
 
 - Make the JS reference-insertion options configurable.
+
+- Add integration with plain FilePathField or FileField (for unobtrusive use
+  with third-party apps).
+
+- Link to online demo or video.
