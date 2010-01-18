@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.filter
 def render_uploads(content,
-                   template_name="adminfiles/render.html"):
+                   template_path="adminfiles/render/"):
     """
     Render uploaded file references in a content string
     (i.e. translate "<<<my-uploaded-file>>>" to '<a
@@ -15,6 +15,6 @@ def render_uploads(content,
     Just wraps ``adminfiles.utils.render_uploads``.
 
     """
-    return _render(content, template_name)
+    return _render(content, template_path)
 render_uploads.is_safe = True
 

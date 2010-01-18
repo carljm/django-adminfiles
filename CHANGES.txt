@@ -4,6 +4,14 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- BACKWARDS-INCOMPATIBLE: default rendering template is now
+  ``adminfiles/render/default.html`` instead of
+  ``adminfiles/render.html``.  Image-specific rendering should
+  override ``adminfiles/render/image/default.html`` instead of testing
+  ``upload.is_image`` in default template.
+
+- add per-mime-type template rendering
+
 - upgrade to jQuery 1.4
 
 - fix bug where YouTube and Flickr links showed up even when disabled.

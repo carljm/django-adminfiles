@@ -110,18 +110,29 @@ Rendering references
 
 These references need to be rendered at some point into whatever
 markup you ultimately want. The markup produced by the rendering is
-controlled by a Django template: ``adminfiles/render.html``. 
+controlled by the Django templates under ``adminfiles/render/``.
 
-The default template produces an HTML ``img`` tag for images and a
-simple ``a`` link to other file types. It also respects three
+The template used is selected according to the mime type of the file
+upload referenced. For instance, for rendering a file with mime type
+``image/jpeg``, the template used would be the first template of the
+following that exists: ``adminfiles/render/image/jpeg.html``,
+``adminfiles/render/image/default.html``,
+``adminfiles/render/default.html``.
+
+Two rendering templates are included with ``django-adminfiles``:
+``adminfiles/render/image/default.html`` (used for any type of image)
+and ``adminfiles/render/default.html`` (used for any other type of
+file). These default templates produce an HTML ``img`` tag for images
+and a simple ``a`` link to other file types. They also respect three
 key-value options: ``class``, which will be used as the the ``class``
 attribute of the ``img`` or ``a`` tag; ``alt``, which will be the
 image alt text (images only; if not provided ``upload.title`` is used
 for alt text); and ``title``, which will override ``upload.title`` as
 the link text of the ``a`` tag (non-images only).
 
-You can easily override this template with your own. The template is
-rendered with the following context:
+You can easily override these templates with your own, and provide
+additional templates for other file types. The template is rendered
+with the following context:
 
 ``upload``
     The ``FileUpload`` model instance whose slug field matches the
@@ -156,14 +167,20 @@ library, and apply the ``render_uploads`` filter to your content field::
     {{ post.content|render_uploads }}
 
 The ``render_uploads`` filter just replaces any file upload references
-in the content with the rendered ``adminfiles/render.html`` template.
+in the content with the rendered template (described above).
 
-The filter also accepts an optional argument: the name of an alternate
-template to use for rendering each uploaded file reference. This
-allows several different renderings to be used in different
-circumstances::
+The filter also accepts an optional argument: an alternate base path
+to the templates to use for rendering each uploaded file
+reference. This path will replace ``adminfiles/render`` as the base
+path in the mime-type-based search for specific templates. This allows
+different renderings to be used in different circumstances::
 
-    {{ post.content|render_uploads:"custom_file_render.html" }}
+    {{ post.content|render_uploads:"adminfiles/alt_render" }}
+
+For a file of mime type ``text/plain`` this would use one of the
+following templates: ``adminfiles/alt_render/text/plain.html``,
+``adminfiles/alt_render/text/default.html``, or
+``adminfiles/alt_render/default.html``.
 
 pre-rendering at save time
 --------------------------
@@ -182,7 +199,8 @@ saving the content model.
 The ``adminfiles.utils.render_uploads`` function takes a content
 string as its argument and returns the same string with all uploaded
 file references replaced, same as the template tag. It also accepts a
-``template_name`` argument.
+``template_path`` argument, which is the same as the argument accepted
+by the `render_uploads template filter`_.
 
 Integrating this function in the markup-rendering step is outside the
 scope of ``django-adminfiles``. For instance, if using

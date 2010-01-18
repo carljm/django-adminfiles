@@ -1,9 +1,3 @@
 {% spaceless %}
-{% if upload.is_image %}
 <img src="{{ upload.upload.url }}" width="{{ upload.width }}" height="{{ upload.height }}" class="{{ options.class }}" alt="{% if options.alt %}{{ options.alt }}{% else %}{{ upload.title }}{% endif %}" />
-{% else %}
-<a href="{{ upload.upload.url }}" class="{{ options.class }}">
-{% if options.title %}{{ options.title }}{% else %}{{ upload.title }}{% endif %}
-</a>
-{% endif %}
 {% endspaceless %}

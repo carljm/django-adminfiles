@@ -176,7 +176,18 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
     
     def test_render_template_used(self):
         render_uploads('<<<some-file>>>')
-        self.assertEquals(self.templates[0].name, 'adminfiles/render.html')
+        self.assertEquals(self.templates[0].name,
+                          'adminfiles/render/default.html')
+
+    def test_render_mimetype_template_used(self):
+        render_uploads('<<<an-image>>>')
+        self.assertEquals(self.templates[0].name,
+                          'adminfiles/render/image/default.html')
+
+    def test_render_subtype_template_used(self):
+        render_uploads('<<<an-image>>>', 'alt')
+        self.assertEquals(self.templates[0].name,
+                          'alt/image/png.html')
 
     def test_render_whitespace(self):
         render_uploads('<<< some-file \n>>>')
@@ -257,15 +268,16 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
         html = tpl.render(template.Context({
                     'post': Post(title='a post',
                                  content='<<<some-file>>>')}))
-        self.assertEquals(self.templates[1].name, 'adminfiles/render.html')
+        self.assertEquals(self.templates[1].name,
+                          'adminfiles/render/default.html')
         self.failUnless('<a href' in html)
 
     def test_render_template_filter_alt_template(self):
         tpl = template.Template(
             '{% load adminfiles_tags %}'
-            '{{ post.content|render_uploads:"other.html" }}')
+            '{{ post.content|render_uploads:"alt" }}')
         html = tpl.render(template.Context({
                     'post': Post(title='a post',
                                  content='<<<some-file>>>')}))
-        self.assertEquals(self.templates[1].name, 'other.html')
+        self.assertEquals(self.templates[1].name, 'alt/default.html')
         
