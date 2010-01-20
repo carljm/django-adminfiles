@@ -42,14 +42,13 @@
 	     {% ifequal field_type "select" %}
 	     <li><a class="select" href="{{f.upload.url}}" rel="{{f.id}}" title="{{f.title}}">Select</a></li>
 	     {% else %}
-             {% if f.is_image %}
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{f.slug}}" title="{{f.title}}">Insert</a></li>
-	     
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{f.slug}}:class=left" title="{{f.title}}">Insert (align left)</a></li>
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.slug }}:class=right" title="{{f.title}}">Insert (align right)</a></li>
-             {% else %}
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.slug }}" title="{{f.title}}">Insert Link</a></li>
-             {% endif %}
+             {% for link in f.insert_links %}
+             <li>
+               <a class="insert" href="{{ f.upload.url }}" rel="{{ link.ref }}">
+                 {{ link.desc }}
+               </a>
+             </li>
+             {% endfor %}
 	     {% endifequal %}
            </ul>
            <a href="{% url admin:adminfiles_fileupload_delete f.id %}" class="deletelink" id="ddd" onclick="return showEditPopup(this);">Delete</a>

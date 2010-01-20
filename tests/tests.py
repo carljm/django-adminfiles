@@ -74,6 +74,15 @@ class FilePickerTests(FileUploadTestCase):
         self.assertNotContains(response, 'href="/media/adminfiles/tiny.png"')
         self.assertContains(response, 'href="/media/adminfiles/somefile.txt')
 
+    def test_custom_links(self):
+        _old_links = settings.ADMINFILES_INSERT_LINKS.copy()
+        settings.ADMINFILES_INSERT_LINKS['text/plain'] = [('Crazy insert', {'yo': 'thing'})]
+       
+        response = self.client.get('/adminfiles/?field=test')
+        self.assertContains(response, 'rel="some-file:yo=thing"')
+        
+        settings.ADMINFILES_INSERT_LINKS = _old_links
+
     def test_thumb_order(self):
         _old_order = settings.ADMINFILES_THUMB_ORDER
         settings.ADMINFILES_THUMB_ORDER = ('title',)

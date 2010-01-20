@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- make the JS reference-insertion options configurable.
+
 - BACKWARDS-INCOMPATIBLE: default rendering template is now
   ``adminfiles/render/default.html`` instead of
   ``adminfiles/render.html``.  Image-specific rendering should
