@@ -82,6 +82,13 @@ class FileUpload(models.Model):
             yield {'desc': link[0],
                    'ref': ref}
 
+    def mime_image(self):
+        if not settings.ADMINFILES_STDICON_SET:
+            return None
+        return ('http://www.stdicon.com/%s/%s?size=64'
+                % (settings.ADMINFILES_STDICON_SET, self.mime_type()))
+
+
 
 class FileUploadReference(models.Model):
     """

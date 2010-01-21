@@ -276,6 +276,16 @@ ADMINFILES_STRING_IF_NOT_FOUND
 The string used to replace invalid uploaded file references (given
 slug not found). Defaults to ``u''``.
 
+ADMINFILES_STDICON_SET
+----------------------
+
+Django-adminfiles ships with a few icons for common file types, used
+for displaying non-image files in the file-picker. To enable a broader
+range of mime-type icons, set this setting to the name of an icon set
+included at `stdicon.com`_, and icons from that set will be linked.
+
+.. _stdicon.com: http://www.stdicon.com
+
 ADMINFILES_INSERT_LINKS
 -----------------------
 
