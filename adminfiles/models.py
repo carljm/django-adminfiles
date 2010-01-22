@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.files.images import get_image_dimensions
+from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -17,11 +18,11 @@ else:
     TagField = None
 
 class FileUpload(models.Model):
-    upload_date = models.DateTimeField(auto_now_add=True)
-    upload = models.FileField(upload_to=ADMINFILES_UPLOAD_TO)
-    title = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100, unique=True)
-    description = models.CharField(blank=True, max_length=200)
+    upload_date = models.DateTimeField(_('upload date'), auto_now_add=True)
+    upload = models.FileField(_('upload'), upload_to=ADMINFILES_UPLOAD_TO)
+    title = models.CharField(_('title'), max_length=100)
+    slug = models.SlugField(_('slug'), max_length=100, unique=True)
+    description = models.CharField(_('description'), blank=True, max_length=200)
     content_type = models.CharField(editable=False, max_length=100)
     sub_type = models.CharField(editable=False, max_length=100)
 
@@ -30,6 +31,8 @@ class FileUpload(models.Model):
     
     class Meta:
         ordering = ['upload_date', 'title']
+        verbose_name = _('file upload')
+        verbose_name_plural = _('file uploads')
 
     def __unicode__(self):
         return self.title
