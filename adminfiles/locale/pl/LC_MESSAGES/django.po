@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-adminfiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-22 17:58+0100\n"
-"PO-Revision-Date: 2010-01-22 18:16+0100\n"
+"POT-Creation-Date: 2010-01-22 23:01+0100\n"
+"PO-Revision-Date: 2010-01-22 23:03+0100\n"
 "Last-Translator: Ludwik Trammer <ludwik@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -44,6 +44,10 @@ msgstr "przesyłanie pliku"
 #: models.py:35
 msgid "file uploads"
 msgstr "przesyłanie plików"
+
+#: models.py:42
+msgid "mime type"
+msgstr "typ pliku"
 
 #: templates/adminfiles/uploader/base.html:20
 msgid "All Uploads"
