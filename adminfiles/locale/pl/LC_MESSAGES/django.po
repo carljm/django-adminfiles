@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-adminfiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-22 23:01+0100\n"
-"PO-Revision-Date: 2010-01-22 23:03+0100\n"
+"POT-Creation-Date: 2010-01-22 23:06+0100\n"
+"PO-Revision-Date: 2010-01-22 23:07+0100\n"
 "Last-Translator: Ludwik Trammer <ludwik@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,6 +36,10 @@ msgstr "identyfikator"
 #: models.py:25
 msgid "description"
 msgstr "opis"
+
+#: models.py:30
+msgid "tags"
+msgstr "tagi"
 
 #: models.py:34
 msgid "file upload"

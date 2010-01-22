@@ -27,7 +27,7 @@ class FileUpload(models.Model):
     sub_type = models.CharField(editable=False, max_length=100)
 
     if TagField:
-        tags = TagField()
+        tags = TagField(_('tags'))
     
     class Meta:
         ordering = ['upload_date', 'title']
