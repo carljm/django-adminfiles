@@ -51,5 +51,5 @@ setup(
                                  'media/adminfiles/mimetypes/*.png',
                                  'templates/adminfiles/*.html',
                                  'templates/adminfiles/uploader/*.html',
-                                 'locale/*/LC_MESSAGES/*]}
+                                 'locale/*/LC_MESSAGES/*']}
 )
