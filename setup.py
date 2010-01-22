@@ -50,5 +50,6 @@ setup(
     package_data={'adminfiles': ['media/adminfiles/*.*',
                                  'media/adminfiles/mimetypes/*.png',
                                  'templates/adminfiles/*.html',
-                                 'templates/adminfiles/uploader/*.html']}
+                                 'templates/adminfiles/uploader/*.html',
+                                 'locale/*/LC_MESSAGES/*]}
 )
