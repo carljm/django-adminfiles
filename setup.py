@@ -35,7 +35,7 @@ setup(
     long_description=long_description,
     url='http://bitbucket.org/carljm/django-adminfiles/',
     packages=['adminfiles', 'adminfiles.templatetags', \
-              'adminfiles.locale' \ 
+              'adminfiles.locale', \ 
               'adminfiles.management', 'adminfiles.management.commands'],
     classifiers=[
         'Development Status :: 4 - Beta',
