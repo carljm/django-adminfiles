@@ -39,6 +39,7 @@ class FileUpload(models.Model):
 
     def mime_type(self):
         return '%s/%s' % (self.content_type, self.sub_type)
+    mime_type.short_description = _('mime type')
 
     def type_slug(self):
         return slugify(self.sub_type)
