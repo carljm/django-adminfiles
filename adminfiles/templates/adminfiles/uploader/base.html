@@ -1,5 +1,6 @@
 {% extends "admin/base.html" %}
 {% load thumbnail %}
+{% load i18n %}
 {% block extrastyle %}
     <link rel="stylesheet" href="{{ ADMINFILES_MEDIA_URL }}adminfiles/adminfiles.css" type="text/css" media="screen" charset="utf-8" />
     <script type="text/javascript" src="{{ JQUERY_URL }}"></script>
@@ -16,9 +17,9 @@
 {% block userlinks %}{% endblock %}
 {% block content %}
 <div id="adminfiles-filter">
-    <a href="{% url adminfiles_all %}?field={{field_id}}">All Uploads</a><br />
-    <a href="{% url adminfiles_files %}?field={{field_id}}">Files</a><br />
-    <a href="{% url adminfiles_images %}?field={{field_id}}">Images</a><br />
+    <a href="{% url adminfiles_all %}?field={{field_id}}">{% trans "All Uploads" %}</a><br />
+    <a href="{% url adminfiles_files %}?field={{field_id}}">{% trans "Files" %}</a><br />
+    <a href="{% url adminfiles_images %}?field={{field_id}}">{% trans "Images" %}</a><br />
 {% if YOUTUBE_USER %}
     <a href="{% url adminfiles_youtube %}?field={{field_id}}">YouTube</a><br />
 {% endif %}
@@ -28,8 +29,8 @@
     <br />
     <hr />
     <br />
-    <a href="{% url admin:adminfiles_fileupload_add %}" class="addlink" id="add_id_uploads" onclick="return showAddUploadPopup(this);">Upload</a><br />
-    <a id="refresh" href="#"><img src="{{ADMINFILES_MEDIA_URL}}adminfiles/icon_refreshlink.gif" /> Refresh</a>
+    <a href="{% url admin:adminfiles_fileupload_add %}" class="addlink" id="add_id_uploads" onclick="return showAddUploadPopup(this);">{% trans "Upload" %}</a><br />
+    <a id="refresh" href="#"><img src="{{ADMINFILES_MEDIA_URL}}adminfiles/icon_refreshlink.gif" />{% trans "Refresh" %}</a>
 </div>
 
 <ul id="adminfiles">
@@ -40,20 +41,20 @@
            <a href="#" class="close" title="Close">X</a>
            <ul>
 	     {% ifequal field_type "select" %}
-	     <li><a class="select" href="{{f.upload.url}}" rel="{{f.id}}" title="{{f.title}}">Select</a></li>
+	     <li><a class="select" href="{{f.upload.url}}" rel="{{f.id}}" title="{{f.title}}">{% trans "Select" %}</a></li>
 	     {% else %}
              {% if f.is_image %}
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{f.slug}}" title="{{f.title}}">Insert</a></li>
+             <li><a class="insert" href="{{f.upload.url}}" rel="{{f.slug}}" title="{{f.title}}">{% trans "Insert" %}</a></li>
 	     
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{f.slug}}:class=left" title="{{f.title}}">Insert (align left)</a></li>
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.slug }}:class=right" title="{{f.title}}">Insert (align right)</a></li>
+             <li><a class="insert" href="{{f.upload.url}}" rel="{{f.slug}}:class=left" title="{{f.title}}">{% trans "Insert (align left)" %}</a></li>
+             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.slug }}:class=right" title="{{f.title}}">{% trans "Insert (align right)" %}</a></li>
              {% else %}
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.slug }}" title="{{f.title}}">Insert Link</a></li>
+             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.slug }}" title="{{f.title}}">{% trans "Insert Link" %}</a></li>
              {% endif %}
 	     {% endifequal %}
            </ul>
-           <a href="{% url admin:adminfiles_fileupload_delete f.id %}" class="deletelink" id="ddd" onclick="return showEditPopup(this);">Delete</a>
-           <a href="{% url admin:adminfiles_fileupload_change f.id %}" class="editlink" id="eee" onclick="return showEditPopup(this);">Edit</a>
+           <a href="{% url admin:adminfiles_fileupload_delete f.id %}" class="deletelink" id="ddd" onclick="return showEditPopup(this);">{% trans "Delete" %}</a>
+           <a href="{% url admin:adminfiles_fileupload_change f.id %}" class="editlink" id="eee" onclick="return showEditPopup(this);">{% trans "Edit" %}</a>
        </div>
        <div class="upload-title">{{f.title}}<br />
          <small>{{f.upload_date|date:"F j, Y"}}</small><br />
