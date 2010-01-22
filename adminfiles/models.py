@@ -19,7 +19,7 @@ else:
 
 class FileUpload(models.Model):
     upload_date = models.DateTimeField(_('upload date'), auto_now_add=True)
-    upload = models.FileField(_('upload'), upload_to=ADMINFILES_UPLOAD_TO)
+    upload = models.FileField(_('file'), upload_to=ADMINFILES_UPLOAD_TO)
     title = models.CharField(_('title'), max_length=100)
     slug = models.SlugField(_('slug'), max_length=100, unique=True)
     description = models.CharField(_('description'), blank=True, max_length=200)
