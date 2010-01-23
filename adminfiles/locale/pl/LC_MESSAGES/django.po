@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-adminfiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-22 23:06+0100\n"
-"PO-Revision-Date: 2010-01-22 23:07+0100\n"
+"POT-Creation-Date: 2010-01-23 01:35+0100\n"
+"PO-Revision-Date: 2010-01-23 01:36+0100\n"
 "Last-Translator: Ludwik Trammer <ludwik@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -53,6 +53,25 @@ msgstr "przesyłanie plików"
 msgid "mime type"
 msgstr "typ pliku"
 
+#: settings.py:33
+msgid "Insert Link"
+msgstr "Wstaw odnośnik"
+
+#: settings.py:34
+#: templates/adminfiles/uploader/flickr.html:9
+msgid "Insert"
+msgstr "Wstaw"
+
+#: settings.py:35
+#, fuzzy
+msgid "Insert (left)"
+msgstr "Wstaw (po lewej)"
+
+#: settings.py:36
+#, fuzzy
+msgid "Insert (right)"
+msgstr "Wstaw (po prawej)"
+
 #: templates/adminfiles/uploader/base.html:20
 msgid "All Uploads"
 msgstr "Wszystkie"
@@ -77,32 +96,21 @@ msgstr "Odśwież"
 msgid "Select"
 msgstr "Wybierz"
 
-#: templates/adminfiles/uploader/base.html:47
-#: templates/adminfiles/uploader/flickr.html:9
-msgid "Insert"
-msgstr "Wstaw"
+#: templates/adminfiles/uploader/base.html:55
+msgid "Delete"
+msgstr "Usuń"
 
-#: templates/adminfiles/uploader/base.html:49
+#: templates/adminfiles/uploader/base.html:56
+msgid "Edit"
+msgstr "Edytuj"
+
 #: templates/adminfiles/uploader/flickr.html:10
 msgid "Insert (align left)"
 msgstr "Wstaw (po lewej)"
 
-#: templates/adminfiles/uploader/base.html:50
 #: templates/adminfiles/uploader/flickr.html:11
 msgid "Insert (align right)"
 msgstr "Wstaw (po prawej)"
-
-#: templates/adminfiles/uploader/base.html:52
-msgid "Insert Link"
-msgstr "Wstaw odnośnik"
-
-#: templates/adminfiles/uploader/base.html:56
-msgid "Delete"
-msgstr "Usuń"
-
-#: templates/adminfiles/uploader/base.html:57
-msgid "Edit"
-msgstr "Edytuj"
 
 #: templates/adminfiles/uploader/youtube.html:9
 msgid "Insert Video"
