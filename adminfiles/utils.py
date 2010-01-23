@@ -1,5 +1,12 @@
 from os.path import join
+
 from django import template
+from django.conf import settings
+
+if 'oembed' in settings.INSTALLED_APPS:
+    from oembed.core import replace as oembed_replace
+else:
+    oembed_replace = lambda s: s
 
 from adminfiles.parse import parse_match, substitute_uploads
 from adminfiles import settings
@@ -27,6 +34,9 @@ def render_uploads(content, template_path="adminfiles/render/"):
 
     If the given slug is not found, the reference is replaced with the
     empty string.
+
+    If ``django-oembed`` is installed, also replaces OEmbed URLs with
+    the appropriate embed markup.
     
     """
     def _replace(match):
@@ -40,4 +50,4 @@ def render_uploads(content, template_path="adminfiles/render/"):
             ["%s.html" % join(template_path, p) for p in templates])
         return tpl.render(template.Context({'upload': upload,
                                             'options': options}))
-    return substitute_uploads(content, _replace)
+    return oembed_replace(substitute_uploads(content, _replace))

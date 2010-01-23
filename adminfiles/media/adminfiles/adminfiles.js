@@ -75,9 +75,13 @@ $(function(){
 	  });
       $('.popup .insert').click(
           function(){
-            insertAtCursor(FIELD, START + this.rel + END);
-	    $(this).parents('.popup').hide();
-	    return false;
+              var insertText = this.rel;
+              if(!insertText.match('://')) {
+                  insertText = START + insertText + END;
+                  }
+              insertAtCursor(FIELD, insertText);
+	      $(this).parents('.popup').hide();
+	      return false;
 	});
     $('#refresh').click(function(){
 	    location.reload(true);
