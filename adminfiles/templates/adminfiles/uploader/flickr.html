@@ -1,21 +1,23 @@
 {% extends "adminfiles/uploader/base.html" %}
 {% load i18n %}
 {% block files %}
-    {% for p in photos %}
-        <li class="item image flickr" style="background-image:url({{ p.url }})">
-            <div class="popup">
-                   <a href="#" class="close" title="Close">X</a>
-                   <ul>
-                        <li><a class="insert" href="{{ p.url }}" title="{{ p.title }}">{% trans "Insert" %}</a></li>
-                        <li><a class="insert" href="{{ p.url }}" rel="left" title="{{ p.title }}">{% trans "Insert (align left)" %}</a></li>
-                        <li><a class="insert" href="{{ p.url }}" rel="right" title="{{ p.title }}">{% trans "Insert (align right)" %}</a></li>
-                    <li class="link"><input type="hidden" name="link" value="{{ p.link }}" class="link" /></li>
-                    </ul>
-            </div>
-            <div class="upload-title">{{ p.title }}<br />
-                   <small>{{p.upload_date|date:"F j, Y"}}</small><br />
-                   <!-- {{ v.description }} -->
-            </div>
-        </li>
-    {% endfor %}
+<li class="nav">
+  {% if prev_page %}
+  <a class="prev" href="{{ prev_page }}">&laquo; {% trans "Previous" %}</a>
+  {% endif %}
+  <a class="next" href="{{ next_page }}">{% trans "More" %} &raquo;</a>
+</li>
+{% for p in photos %}
+<li class="item image flickr" style="background-image:url({{ p.url }})">
+  <div class="popup">
+    <a href="#" class="close" title="Close">X</a>
+    <ul>
+      <li><a class="insert" href="{{ p.url }}" rel="{{ p.link }}" title="{{ p.title }}">{% trans "Insert Photo" %}</a></li>
+    </ul>
+  </div>
+  <div class="upload-title">
+    {{ p.title }}
+  </div>
+</li>
+{% endfor %}
 {% endblock %}

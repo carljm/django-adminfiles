@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
 from django.conf import settings
 from django.template import RequestContext
+from django.core.exceptions import ImproperlyConfigured
 
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -108,27 +109,38 @@ class FlickrView(BaseView):
         return 'adminfiles/uploader/flickr.html'
     
     def context(self, request):
-        context = super(YoutubeView, self).context(request)
-        context['photos'] = self.photos()
+        context = super(FlickrView, self).context(request)
+        page = int(request.GET.get('page', 1))
+        base_path = '%s?field=%s&page=' % (request.path, request.GET['field'])
+        context['next_page'] = base_path + str(page + 1)
+        if page > 1:
+            context['prev_page'] = base_path + str(page - 1)
+        else:
+            context['prev_page'] = None
+        context['photos'] = self.photos(page)
         return context
 
-    def photos(self):
-        import flickr
+    def photos(self, page=1):
         try:
-            user = settings.FLICKR_USER
-            flickr.API_KEY = settings.FLICKR_API_KEY
-        except AttributeError:
-            raise Http404
+            import flickrapi
+        except ImportError:
+            raise ImproperlyConfigured('django-adminfiles requires the "flickrapi" module for accessing Flickr photos')
+        user = settings.FLICKR_USER
+        flickr = flickrapi.FlickrAPI(settings.FLICKR_API_KEY)
+        # Get the user's NSID
+        nsid = flickr.people_findByUsername(
+            username=user).find('user').attrib['nsid']
         # Get first 12 photos for the user
-        flickr_photos = flickr.people_getPublicPhotos(user, 12, 1)
+        flickr_photos = flickr.people_getPublicPhotos(
+            user_id=nsid, per_page=12, page=page).find('photos').findall('photo')
         photos = []
         #this loop is too slow. needs caching or a better library?
         for f in flickr_photos:
             photo = {}
-            photo['url'] = f.getURL('Small', 'source')
-            photo['link'] = f.getURL()
-            photo['title'] = f._Photo__title
-            photo['upload_date'] = datetime.datetime.fromtimestamp(float(f._Photo__dateposted))
+            photo['url'] = 'http://farm%(farm)s.static.flickr.com/%(server)s/%(id)s_%(secret)s_m.jpg' % f.attrib
+            photo['link'] = 'http://www.flickr.com/photos/%s/%s' % (
+                nsid, f.attrib['id'])
+            photo['title'] = f.attrib['title']
             photos.append(photo)
         return photos
 

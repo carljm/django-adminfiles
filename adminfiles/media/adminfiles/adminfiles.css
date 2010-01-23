@@ -11,6 +11,20 @@
     left:110px; 
 }
 
+#adminfiles .nav {
+    list-style-type:none;
+    width:100%;
+    height: 2em;
+}
+
+#adminfiles .nav .next {
+    float:right;
+}
+
+#adminfiles .nav .prev {
+    float:left;
+}
+
 .item { 
     float:left; 
     overflow:hidden; 
