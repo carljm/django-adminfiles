@@ -1,4 +1,5 @@
 import posixpath
+
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
@@ -32,8 +33,8 @@ ADMINFILES_INSERT_LINKS = getattr(
     'ADMINFILES_INSERT_LINKS',
     {'': [(_('Insert Link'), {})],
      'image': [(_('Insert'), {}),
-               (_('Insert (left)'), {'class': 'left'}),
-               (_('Insert (right)'), {'class': 'right'})]
+               (_('Insert (align left)'), {'class': 'left'}),
+               (_('Insert (align right)'), {'class': 'right'})]
      },
     )
     

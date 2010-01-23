@@ -4,7 +4,7 @@
 {% for v in videos %}
 <li class="item youtube" style="background-image:url({{ v.thumb }})">
   <div class="popup">
-    <a href="#" class="close" title="Close">X</a>
+    <a href="#" class="close" title="{% trans "Close" %}">X</a>
     <ul>
       <li><a class="insert" rel="{{ v.url }}" href="{{ v.url }}" title="{{ v.title }}">{% trans "Insert Video" %}</a></li>
     </ul>

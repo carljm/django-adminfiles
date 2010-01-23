@@ -7,3 +7,4 @@ include TODO.txt
 include HGREV
 recursive-include adminfiles/media/adminfiles *.png *.css *.js *.gif
 recursive-include adminfiles/templates/adminfiles *.html
+recursive-include adminfiles/locale *.mo *.po
