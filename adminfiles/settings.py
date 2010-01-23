@@ -1,5 +1,7 @@
 import posixpath
+
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
 JQUERY_URL = getattr(
     settings, 'JQUERY_URL',
@@ -29,10 +31,10 @@ ADMINFILES_STRING_IF_NOT_FOUND = getattr(settings,
 ADMINFILES_INSERT_LINKS = getattr(
     settings,
     'ADMINFILES_INSERT_LINKS',
-    {'': [('Insert Link', {})],
-     'image': [('Insert', {}),
-               ('Insert (left)', {'class': 'left'}),
-               ('Insert (right)', {'class': 'right'})]
+    {'': [(_('Insert Link'), {})],
+     'image': [(_('Insert'), {}),
+               (_('Insert (align left)'), {'class': 'left'}),
+               (_('Insert (align right)'), {'class': 'right'})]
      },
     )
     

@@ -1,11 +1,12 @@
 {% extends "adminfiles/uploader/base.html" %}
+{% load i18n %}
 {% block files %}
 {% for v in videos %}
 <li class="item youtube" style="background-image:url({{ v.thumb }})">
   <div class="popup">
-    <a href="#" class="close" title="Close">X</a>
+    <a href="#" class="close" title="{% trans "Close" %}">X</a>
     <ul>
-      <li><a class="insert" rel="{{ v.url }}" href="{{ v.url }}" title="{{ v.title }}">Insert Video</a></li>
+      <li><a class="insert" rel="{{ v.url }}" href="{{ v.url }}" title="{{ v.title }}">{% trans "Insert Video" %}</a></li>
     </ul>
   </div>
   <div class="upload-title">{{ v.title }}<br />
