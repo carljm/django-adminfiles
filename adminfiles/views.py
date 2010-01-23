@@ -75,28 +75,24 @@ class YouTubeView(BaseView):
 
     def videos(self):
         try:
-            import xml.etree.ElementTree as ET
+            from gdata.youtube.service import YouTubeService
         except ImportError:
-            import elementtree.ElementTree as ET
+            raise ImproperlyConfigured('The YouTube view requires the "gdata" module')
         try:
             user = settings.YOUTUBE_USER
-            needs_user_setting = False
         except AttributeError:
             raise Http404
         gdata_feed = "http://gdata.youtube.com/feeds/videos?author=%s&orderby=updated" % (user,)
-        root = ET.parse(urllib.urlopen(gdata_feed)).getroot()
+        feed = YouTubeService().GetYouTubeVideoFeed(gdata_feed)
         videos = []
-        for e in root.findall('{http://www.w3.org/2005/Atom}entry'):
-            video = {}
-            video['title'] = e.findtext('{http://www.w3.org/2005/Atom}title')
-            date = e.findtext('{http://www.w3.org/2005/Atom}published').split('T')[0]
-            video['upload_date'] = date
-            media = e.find('{http://search.yahoo.com/mrss/}group')
-            video['description'] = media.findtext('{http://search.yahoo.com/mrss/}description')
-            video['thumb'] = media.find('{http://search.yahoo.com/mrss/}thumbnail').attrib['url']
-            video['image'] = media.findall('{http://search.yahoo.com/mrss/}thumbnail')[-1].attrib['url']
-            video['url'] = media.find('{http://search.yahoo.com/mrss/}content').attrib['url']
-            videos.append(video)
+        for entry in feed.entry:
+            videos.append({
+                    'title': entry.media.title.text,
+                    'upload_date': entry.published.text.split('T')[0],
+                    'description': entry.media.description.text,
+                    'thumb': entry.media.thumbnail[0].url,
+                    'url': entry.media.player.url.split('&')[0],
+                    })
         return videos
 
 youtube_view = YouTubeView()
