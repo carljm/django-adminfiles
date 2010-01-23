@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: django-adminfiles\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-23 01:35+0100\n"
-"PO-Revision-Date: 2010-01-23 01:36+0100\n"
+"PO-Revision-Date: 2010-01-23 01:42+0100\n"
 "Last-Translator: Ludwik Trammer <ludwik@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,12 +63,10 @@ msgid "Insert"
 msgstr "Wstaw"
 
 #: settings.py:35
-#, fuzzy
 msgid "Insert (left)"
 msgstr "Wstaw (po lewej)"
 
 #: settings.py:36
-#, fuzzy
 msgid "Insert (right)"
 msgstr "Wstaw (po prawej)"
 
