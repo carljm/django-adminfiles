@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 import subprocess
 import os.path
 
@@ -34,12 +34,8 @@ setup(
     maintainer_email='carl@dirtcircle.com',
     long_description=long_description,
     url='http://bitbucket.org/carljm/django-adminfiles/',
-    packages=find_packages(),
-    package_data = {'adminfiles': [
-        'templates/adminfiles/*/*',
-        'templatetags/*',
-        'locale/*/LC_MESSAGES/*',
-        'media/*/*/*/*/*/*/*/*']},
+    packages=['adminfiles', 'adminfiles.templatetags', \
+              'adminfiles.management', 'adminfiles.management.commands'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
