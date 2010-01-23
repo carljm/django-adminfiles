@@ -18,6 +18,7 @@ class BaseView(object):
     def context(self, request):
         return {'FLICKR_USER': settings.FLICKR_USER,
                 'YOUTUBE_USER': settings.YOUTUBE_USER,
+                'VIMEO_USER': settings.VIMEO_USER,
                 'field_id': request.GET['field'],
                 'field_type': request.GET.get('field_type', 'textarea'),
                 'ADMINFILES_MEDIA_URL': settings.ADMINFILES_MEDIA_URL,
@@ -126,11 +127,10 @@ class FlickrView(BaseView):
         # Get the user's NSID
         nsid = flickr.people_findByUsername(
             username=user).find('user').attrib['nsid']
-        # Get first 12 photos for the user
+        # Get 12 photos for the user
         flickr_photos = flickr.people_getPublicPhotos(
             user_id=nsid, per_page=12, page=page).find('photos').findall('photo')
         photos = []
-        #this loop is too slow. needs caching or a better library?
         for f in flickr_photos:
             photo = {}
             photo['url'] = 'http://farm%(farm)s.static.flickr.com/%(server)s/%(id)s_%(secret)s_m.jpg' % f.attrib
@@ -144,6 +144,44 @@ flickr_view = FlickrView()
 @staff_member_required
 def flickr(request):
     return flickr_view(request)
+
+
+class VimeoView(BaseView):
+    def template_name(self):
+        return 'adminfiles/uploader/youtube.html'
+
+    def context(self, request):
+        context = super(VimeoView, self).context(request)
+        context['videos'] = self.videos()
+        return context
+
+    def videos(self):
+        import urllib2
+        try:
+            import xml.etree.ElementTree as ET
+        except ImportError:
+            import elementtree.ElementTree as ET
+        url = 'http://vimeo.com/api/v2/%s/videos.xml' % settings.VIMEO_USER
+        request = urllib2.Request(url)
+        request.add_header('User-Agent', 'django-adminfiles/0.x')
+        opener = urllib2.build_opener()
+        root = ET.parse(opener.open(request)).getroot()
+        videos = []
+        for v in root.findall('video'):
+            videos.append({
+                    'title': v.find('title').text,
+                    'upload_date': v.find('upload_date').text.split()[0],
+                    'description': v.find('description').text,
+                    'thumb': v.find('thumbnail_small').text,
+                    'url': v.find('url').text,
+                    })
+        return videos
+
+vimeo_view = VimeoView()
+@staff_member_required
+def vimeo(request):
+    return vimeo_view(request)
+
     
 @staff_member_required
 def download(request):

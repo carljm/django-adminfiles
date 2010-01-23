@@ -3,6 +3,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('adminfiles.views',
     url(r'download/$', 'download', name="adminfiles_download"),
     url(r'youtube/$', 'youtube', name="adminfiles_youtube"),
+    url(r'vimeo/$', 'vimeo', name="adminfiles_vimeo"),
     url(r'flickr/$', 'flickr', name="adminfiles_flickr"),
     url(r'images/$', 'images', name="adminfiles_images"),
     url(r'files/$', 'files', name="adminfiles_files"),

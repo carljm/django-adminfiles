@@ -23,6 +23,9 @@
 {% if YOUTUBE_USER %}
     <a href="{% url adminfiles_youtube %}?field={{field_id}}">YouTube</a><br />
 {% endif %}
+{% if VIMEO_USER %}
+    <a href="{% url adminfiles_vimeo %}?field={{field_id}}">Vimeo</a><br />
+{% endif %}
 {% if FLICKR_USER %}
     <a href="{% url adminfiles_flickr %}?field={{field_id}}">Flickr</a><br />
 {% endif %}
