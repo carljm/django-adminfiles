@@ -5,8 +5,13 @@ django-adminfiles
 A file upload manager and picker for the Django admin. 
 
 Easily upload files and view all uploaded files (with thumbnails for
-images) in a picker underneath any content textarea. Click on an image
+images) in a picker underneath any content textarea. Click on a file
 to add a reference to it into the content area.
+
+Inline file references can be customized per-mime-type to automate the
+correct presentation of each file: <img> tags (with additional markup
+as needed) for images, simple links for downloadable files, even
+embedded players for audio or video files.
 
 Installation
 ============
@@ -83,7 +88,8 @@ upload a new file or refresh the list of available files.
 
 If you click on a file thumbnail/icon, a menu pops up with options to
 edit or delete the uploaded file, or insert it into the associated
-content field.
+content field. To modify the default insertion options, set the
+`ADMINFILES_INSERT_LINKS`_ setting.
 
 File references
 ===============
@@ -269,6 +275,47 @@ ADMINFILES_STRING_IF_NOT_FOUND
 
 The string used to replace invalid uploaded file references (given
 slug not found). Defaults to ``u''``.
+
+ADMINFILES_STDICON_SET
+----------------------
+
+Django-adminfiles ships with a few icons for common file types, used
+for displaying non-image files in the file-picker. To enable a broader
+range of mime-type icons, set this setting to the name of an icon set
+included at `stdicon.com`_, and icons from that set will be linked.
+
+.. _stdicon.com: http://www.stdicon.com
+
+ADMINFILES_INSERT_LINKS
+-----------------------
+
+By default, the admin file picker popup menu for images allows
+inserting a reference with no options, a reference with "class=left",
+or a reference with "class=right". For non-images, the default popup
+menu only allows inserting a reference without options. To change the
+insertion options for various file types, set
+``ADMINFILES_INSERT_LINKS`` to a dictionary mapping mime-types (or
+partial mime-types) to a list of insertion menu options. For instance,
+the default setting looks like this::
+
+    ADMINFILES_INSERT_LINKS = {
+        '': [('Insert Link', {})],
+        'image': [('Insert', {}),
+                  ('Insert (left)', {'class': 'left'}),
+                  ('Insert (right)', {'class': 'right'})]
+    }
+
+Each key in the dictionary can be the first segment of a mime type
+(e.g. "image"), or a full mime type (e.g. "audio/mpeg"), or an empty
+string (the default used if no mime type matches). For any given file
+the most specific matching entry is used. The dictionary should always
+contain a default entry (empty string key), or some files may have no
+insertion options.
+
+Each value in the dictionary is a list of menu items. Each menu item
+is a two-tuple, where the first entry is the user-visible name for the
+insertion option, and the second entry is a dictionary of options to
+be added to the inserted file reference.
 
 ADMINFILES_MEDIA_URL
 --------------------

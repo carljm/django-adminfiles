@@ -3,19 +3,66 @@
 #user-tools { display:none; }
 #footer { display:none; }
 
-#adminfiles { list-style-type:none; padding:0; position:absolute; top:0px; left:110px; }
-.item { float:left; overflow:hidden; border:1px solid #ccc; background:#fafafa url(mimetypes/empty.png) no-repeat 41px 70px; text-align:center; cursor:pointer; width:144px; height:150px; margin:0 11px 12px 0; }
-    .upload-title { background:#fff; opacity:0.85;}
-    .popup { position:absolute; z-index:100; opacity:0.95; background:#eee; width:126px; height:120px; padding:5px; display:none; text-align:left; margin:15px 0 0 3px; border:1px solid #aaa; border-top-color:#ddd; border-left-color:#ddd; }
-        .popup ul { padding:0; }
-        .popup li { list-style-type:none; }
-        .popup .close { float:right; color:#CC3434; }
-        .popup input { width:116px; }
+#adminfiles { 
+    list-style-type:none; 
+    padding:0; 
+    position:absolute; 
+    top:0px; 
+    left:110px; 
+}
+
+.item { 
+    float:left; 
+    overflow:hidden; 
+    border:1px solid #ccc; 
+    background:#fafafa url(mimetypes/empty.png) no-repeat 41px 70px; 
+    text-align:center; 
+    cursor:pointer; 
+    width:144px; 
+    height:150px; 
+    margin:0 11px 12px 0;
+}
+
+.upload-title { 
+    background:#fff; 
+    opacity:0.8;
+}
+
+.popup { 
+    position:absolute; 
+    z-index:100; 
+    opacity:0.9; 
+    background:#eee; 
+    width:126px; 
+    height:120px; 
+    padding:5px; 
+    display:none; 
+    text-align:left; 
+    margin:15px 0 0 3px; 
+    border:1px solid #aaa; 
+    border-top-color:#ddd; 
+    border-left-color:#ddd; 
+}
+
+.popup ul { padding:0; }
+.popup li { list-style-type:none; }
+.popup .close { float:right; color:#CC3434; }
+.popup input { width:116px; }
+.popup .deletelink { position: absolute; left: 5px; bottom: 10px; }
+.popup .editlink { position: absolute; right: 5px; bottom: 10px; }
         
-#adminfiles-filter { position:fixed; left:0; width:100px; }
+#adminfiles-filter { 
+    position:fixed; 
+    left:0; 
+    width:100px; 
+}
         
 /* mimetypes, icons from Nuvola */
-.image, .youtube { background-image:none; background-position:center center; }
+.image, .youtube { 
+    background-image:none; 
+    background-position:center center; 
+}
+
 .pdf { background-image:url(mimetypes/pdf.png); }
 .msword { background-image:url(mimetypes/doc.png); }
 .vndms-excel { background-image:url(mimetypes/xls.png); }

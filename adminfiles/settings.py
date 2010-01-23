@@ -26,6 +26,18 @@ ADMINFILES_STRING_IF_NOT_FOUND = getattr(settings,
                                          'ADMINFILES_STRING_IF_NOT_FOUND',
                                          u'')
 
+ADMINFILES_INSERT_LINKS = getattr(
+    settings,
+    'ADMINFILES_INSERT_LINKS',
+    {'': [('Insert Link', {})],
+     'image': [('Insert', {}),
+               ('Insert (left)', {'class': 'left'}),
+               ('Insert (right)', {'class': 'right'})]
+     },
+    )
+    
+ADMINFILES_STDICON_SET = getattr(settings, 'ADMINFILES_STDICON_SET', None)
+    
 FLICKR_USER = getattr(settings, 'FLICKR_USER', None)
 FLICKR_API_KEY = getattr(settings, 'FLICKR_API_KEY', None)
 YOUTUBE_USER = getattr(settings, 'YOUTUBE_USER', None)

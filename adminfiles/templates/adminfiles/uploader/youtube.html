@@ -1,19 +1,18 @@
 {% extends "adminfiles/uploader/base.html" %}
 {% load i18n %}
 {% block files %}
-    {% for v in videos %}
-        <li class="item youtube" style="background-image:url({{ v.thumb }})">
-            <div class="popup">
-                <a href="#" class="close" title="Close">X</a>
-                <ul>
-                    <li><a class="insert" rel="{{ v.image }}" href="{{ v.url }}" title="{{ v.title }}">{% trans "Insert Video" %}</a></li>
-                 </ul>
-                 <a href="{% url admin:adminfiles_fileupload_delete v.id %}" class="deletelink" onclick="return showAddUploadPopup(this);">Delete</a>
-            </div>
-            <div class="upload-title">{{ v.title }}<br />
-                   <small>{{ v.upload_date }}</small><br />
-                   <!-- {{ v.description }} -->
-            </div>
-        </li>
-    {% endfor %}
+{% for v in videos %}
+<li class="item youtube" style="background-image:url({{ v.thumb }})">
+  <div class="popup">
+    <a href="#" class="close" title="Close">X</a>
+    <ul>
+      <li><a class="insert" rel="{{ v.url }}" href="{{ v.url }}" title="{{ v.title }}">{% trans "Insert Video" %}</a></li>
+    </ul>
+  </div>
+  <div class="upload-title">{{ v.title }}<br />
+    <small>{{ v.upload_date }}</small><br />
+    <!-- {{ v.description }} -->
+  </div>
+</li>
+{% endfor %}
 {% endblock %}

@@ -36,21 +36,20 @@
 <ul id="adminfiles">
 {% block files %}
 {% for f in files %}
-   <li class="item {{f.content_type}} {{f.sub_type}}" {% if f.is_image %}style="background-image:url({% thumbnail f.upload 144x150 %})"{% endif %}>
+   <li class="item {{f.content_type}} {{f.sub_type}}" {% if f.is_image %}style="background-image:url({% thumbnail f.upload 144x150 %});"{% else %}{% if f.mime_image %}style="background-image:url({{ f.mime_image }});"{% endif %}{% endif %}>
        <div class="popup">
            <a href="#" class="close" title="Close">X</a>
            <ul>
 	     {% ifequal field_type "select" %}
 	     <li><a class="select" href="{{f.upload.url}}" rel="{{f.id}}" title="{{f.title}}">{% trans "Select" %}</a></li>
 	     {% else %}
-             {% if f.is_image %}
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{f.slug}}" title="{{f.title}}">{% trans "Insert" %}</a></li>
-	     
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{f.slug}}:class=left" title="{{f.title}}">{% trans "Insert (align left)" %}</a></li>
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.slug }}:class=right" title="{{f.title}}">{% trans "Insert (align right)" %}</a></li>
-             {% else %}
-             <li><a class="insert" href="{{f.upload.url}}" rel="{{ f.slug }}" title="{{f.title}}">{% trans "Insert Link" %}</a></li>
-             {% endif %}
+             {% for link in f.insert_links %}
+             <li>
+               <a class="insert" href="{{ f.upload.url }}" rel="{{ link.ref }}">
+                 {{ link.desc }}
+               </a>
+             </li>
+             {% endfor %}
 	     {% endifequal %}
            </ul>
            <a href="{% url admin:adminfiles_fileupload_delete f.id %}" class="deletelink" id="ddd" onclick="return showEditPopup(this);">{% trans "Delete" %}</a>

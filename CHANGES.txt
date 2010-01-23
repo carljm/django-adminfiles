@@ -4,6 +4,10 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- add support for linking full set of mime-type icons from stdicon.com.
+
+- make the JS reference-insertion options configurable.
+
 - BACKWARDS-INCOMPATIBLE: default rendering template is now
   ``adminfiles/render/default.html`` instead of
   ``adminfiles/render.html``.  Image-specific rendering should

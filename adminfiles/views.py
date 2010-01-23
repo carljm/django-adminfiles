@@ -68,7 +68,7 @@ class YouTubeView(BaseView):
         return 'adminfiles/uploader/youtube.html'
     
     def context(self, request):
-        context = super(YoutubeView, self).context(request)
+        context = super(YouTubeView, self).context(request)
         context['videos'] = self.videos()
         return context
 

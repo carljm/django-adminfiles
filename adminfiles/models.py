@@ -1,7 +1,7 @@
 import os
 import mimetypes
 
-from django.conf import settings
+from django.conf import settings as django_settings
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.files.images import get_image_dimensions
@@ -10,16 +10,16 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from adminfiles.settings import ADMINFILES_UPLOAD_TO
+from adminfiles import settings
 
-if 'tagging' in settings.INSTALLED_APPS:
+if 'tagging' in django_settings.INSTALLED_APPS:
     from tagging.fields import TagField
 else:
     TagField = None
 
 class FileUpload(models.Model):
     upload_date = models.DateTimeField(_('upload date'), auto_now_add=True)
-    upload = models.FileField(_('file'), upload_to=ADMINFILES_UPLOAD_TO)
+    upload = models.FileField(_('file'), upload_to=settings.ADMINFILES_UPLOAD_TO)
     title = models.CharField(_('title'), max_length=100)
     slug = models.SlugField(_('slug'), max_length=100, unique=True)
     description = models.CharField(_('description'), blank=True, max_length=200)
@@ -71,6 +71,28 @@ class FileUpload(models.Model):
             self.content_type = 'text'
             self.sub_type = 'plain'
         super(FileUpload, self).save()
+
+    def insert_links(self):
+        links = []
+        for key in [self.mime_type(), self.content_type, '']:
+            if key in settings.ADMINFILES_INSERT_LINKS:
+                links = settings.ADMINFILES_INSERT_LINKS[key]
+                break
+        for link in links:
+            ref = self.slug
+            opts = ':'.join(['%s=%s' % (k,v) for k,v in link[1].items()])
+            if opts:
+                ref += ':' + opts
+            yield {'desc': link[0],
+                   'ref': ref}
+
+    def mime_image(self):
+        if not settings.ADMINFILES_STDICON_SET:
+            return None
+        return ('http://www.stdicon.com/%s/%s?size=64'
+                % (settings.ADMINFILES_STDICON_SET, self.mime_type()))
+
+
 
 class FileUploadReference(models.Model):
     """
