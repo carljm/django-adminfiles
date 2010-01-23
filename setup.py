@@ -49,6 +49,7 @@ setup(
     test_suite='tests.runtests.runtests',
     package_data={'adminfiles': ['media/adminfiles/*.*',
                                  'media/adminfiles/mimetypes/*.png',
-                                 'templates/adminfiles/*.html',
+                                 'templates/adminfiles/render/*.html',
+                                 'templates/adminfiles/render/image/*.html',
                                  'templates/adminfiles/uploader/*.html']}
 )
