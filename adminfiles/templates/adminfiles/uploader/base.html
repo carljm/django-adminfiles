@@ -53,14 +53,13 @@
 	     {% endifequal %}
            </ul>
            <a href="{% url admin:adminfiles_fileupload_delete f.id %}" class="deletelink" id="ddd" onclick="return showEditPopup(this);">{% trans "Delete" %}</a>
-           <a href="{% url admin:adminfiles_fileupload_change f.id %}" class="editlink" id="eee" onclick="return showEditPopup(this);">{% trans "Edit" %}</a>
+           <a href="{% url admin:adminfiles_fileupload_change f.id %}" class="changelink" id="eee" onclick="return showEditPopup(this);">{% trans "Change" %}</a>
        </div>
        <div class="upload-title">{{f.title}}<br />
          <small>{{f.upload_date|date:"F j, Y"}}</small><br />
          <span class="description">{{f.description}}</span><br /></div>
-       
    </li>
    {% endfor %}
-   {% endblock %}
+{% endblock %}
 </ul>
 {% endblock %}

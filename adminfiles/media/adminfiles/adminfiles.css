@@ -49,7 +49,7 @@
 .popup .close { float:right; color:#CC3434; }
 .popup input { width:116px; }
 .popup .deletelink { position: absolute; left: 5px; bottom: 10px; }
-.popup .editlink { position: absolute; right: 5px; bottom: 10px; }
+.popup .changelink { position: absolute; right: 5px; bottom: 10px; }
         
 #adminfiles-filter { 
     position:fixed; 
