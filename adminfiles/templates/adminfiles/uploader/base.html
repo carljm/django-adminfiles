@@ -17,23 +17,18 @@
 {% block userlinks %}{% endblock %}
 {% block content %}
 <div id="adminfiles-filter">
-    <a href="{% url adminfiles_all %}?field={{field_id}}">{% trans "All Uploads" %}</a><br />
-    <a href="{% url adminfiles_files %}?field={{field_id}}">{% trans "Files" %}</a><br />
-    <a href="{% url adminfiles_images %}?field={{field_id}}">{% trans "Images" %}</a><br />
-{% if YOUTUBE_USER %}
-    <a href="{% url adminfiles_youtube %}?field={{field_id}}">YouTube</a><br />
-{% endif %}
-{% if VIMEO_USER %}
-    <a href="{% url adminfiles_vimeo %}?field={{field_id}}">Vimeo</a><br />
-{% endif %}
-{% if FLICKR_USER %}
-    <a href="{% url adminfiles_flickr %}?field={{field_id}}">Flickr</a><br />
-{% endif %}
-    <br />
-    <hr />
-    <br />
-    <a href="{% url admin:adminfiles_fileupload_add %}" class="addlink" id="add_id_uploads" onclick="return showAddUploadPopup(this);">{% trans "Upload" %}</a><br />
+  <ul>
+  {% for browser in browsers %}
+  <li>
+    <a href="{{ browser.url }}?field={{field_id}}">{{ browser.link_text }}</a>
+  </li>
+  {% endfor %}
+  <li class="upload">
+    <a href="{% url admin:adminfiles_fileupload_add %}" class="addlink" id="add_id_uploads" onclick="return showAddUploadPopup(this);">{% trans "Upload" %}</a>
+  </li>
+  <li>
     <a id="refresh" href="#"><img src="{{ADMINFILES_MEDIA_URL}}adminfiles/icon_refreshlink.gif" /> {% trans "Refresh" %}</a>
+  </li>
 </div>
 
 <ul id="adminfiles">

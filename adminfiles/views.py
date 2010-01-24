@@ -2,23 +2,58 @@ import urllib, urlparse, datetime
 
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
-from django.conf import settings
+from django.conf import settings as django_settings
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 from django.core.exceptions import ImproperlyConfigured
-
-from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.translation import ugettext_lazy as _
 
 from adminfiles.models import FileUpload
 from adminfiles import settings
 
+class DisableView(Exception):
+    pass
+
 class BaseView(object):
-    def template_name(self):
-        return 'adminfiles/uploader/base.html'
-                
+    template_name = 'adminfiles/uploader/base.html'
+
+    def slug(self):
+        """
+        Return slug suitable for accessing this view in a URLconf.
+        
+        """
+        slug = self.__class__.__name__.lower()
+        if slug.endswith('view'):
+            slug = slug[:-4]
+        return slug
+
+    def link_text(self):
+        """
+        Return link text for this view.
+        
+        """
+        link = self.__class__.__name__
+        if link.endswith('View'):
+            link = link[:-4]
+        return link
+
+    def url(self):
+        """
+        Return URL for this view.
+
+        """
+        return reverse('adminfiles_%s' % self.slug())
+
+    def check(self):
+        """
+        Raise ``DisableView`` if the configuration necessary for this
+        view is not active.
+        
+        """
+        pass
+    
     def context(self, request):
-        return {'FLICKR_USER': settings.FLICKR_USER,
-                'YOUTUBE_USER': settings.YOUTUBE_USER,
-                'VIMEO_USER': settings.VIMEO_USER,
+        return {'browsers': get_enabled_browsers(),
                 'field_id': request.GET['field'],
                 'field_type': request.GET.get('field_type', 'textarea'),
                 'ADMINFILES_MEDIA_URL': settings.ADMINFILES_MEDIA_URL,
@@ -27,12 +62,14 @@ class BaseView(object):
                 'JQUERY_URL': settings.JQUERY_URL}
 
     def __call__(self, request):
-        return render_to_response(self.template_name(),
+        return render_to_response(self.template_name,
                                   self.context(request),
                                   context_instance=RequestContext(request))
 
 
 class AllView(BaseView):
+    link_text = _('All Uploads')
+
     def files(self):
         return FileUpload.objects.all()
 
@@ -41,33 +78,51 @@ class AllView(BaseView):
         context['files'] = self.files().order_by(
             *settings.ADMINFILES_THUMB_ORDER)
         return context
-    
-all_view = AllView()
-@staff_member_required
-def all(request):
-    return all_view(request)
+
 
 class ImagesView(AllView):
+    link_text = _('Images')
+    
     def files(self):
         return super(ImagesView, self).files().filter(content_type='image')
 
-images_view = ImagesView()
-@staff_member_required
-def images(request):
-    return images_view(request)
+
+class AudioView(AllView):
+    link_text = _('Audio')
+    
+    def files(self):
+        return super(AudioView, self).files().filter(content_type='audio')
+
 
 class FilesView(AllView):
+    link_text = _('Files')
+        
     def files(self):
-        not_files = ['video', 'image']
+        not_files = ['video', 'image', 'audio']
         return super(FilesView, self).files().exclude(content_type__in=not_files)
-files_view = FilesView()
-@staff_member_required
-def files(request):
-    return files_view(request)
 
-class YouTubeView(BaseView):
-    def template_name(self):
-        return 'adminfiles/uploader/youtube.html'
+class OEmbedView(BaseView):
+    def check(self):
+        if 'oembed' not in django_settings.INSTALLED_APPS:
+            raise DisableView('OEmbed views require django-oembed. '
+                              '(http://pypi.python.org/pypi/django-oembed)')
+
+class YouTubeView(OEmbedView):
+    template_name = 'adminfiles/uploader/video.html'
+
+    def check(self):
+        super(YouTubeView, self).check()
+        try:
+            from gdata.youtube.service import YouTubeService
+        except ImportError:
+            raise DisableView('YouTubeView requires "gdata" library '
+                              '(http://pypi.python.org/pypi/gdata)')
+        try:
+            django_settings.ADMINFILES_YOUTUBE_USER
+        except AttributeError:
+            raise DisableView('YouTubeView requires '
+                              'ADMINFILES_YOUTUBE_USER setting')
+            
     
     def context(self, request):
         context = super(YouTubeView, self).context(request)
@@ -75,16 +130,10 @@ class YouTubeView(BaseView):
         return context
 
     def videos(self):
-        try:
-            from gdata.youtube.service import YouTubeService
-        except ImportError:
-            raise ImproperlyConfigured('The YouTube view requires the "gdata" module')
-        try:
-            user = settings.YOUTUBE_USER
-        except AttributeError:
-            raise Http404
-        gdata_feed = "http://gdata.youtube.com/feeds/videos?author=%s&orderby=updated" % (user,)
-        feed = YouTubeService().GetYouTubeVideoFeed(gdata_feed)
+        from gdata.youtube.service import YouTubeService
+        feed = YouTubeService().GetYouTubeVideoFeed(
+            "http://gdata.youtube.com/feeds/videos?author=%s&orderby=updated"
+            % django_settings.ADMINFILES_YOUTUBE_USER)
         videos = []
         for entry in feed.entry:
             videos.append({
@@ -96,15 +145,25 @@ class YouTubeView(BaseView):
                     })
         return videos
 
-youtube_view = YouTubeView()
-@staff_member_required
-def youtube(request):
-    return youtube_view(request)
 
-class FlickrView(BaseView):
-    def template_name(self):
-        return 'adminfiles/uploader/flickr.html'
+class FlickrView(OEmbedView):
+    template_name = 'adminfiles/uploader/flickr.html'
     
+    def check(self):
+        super(FlickrView, self).check()
+        try:
+            import flickrapi
+        except ImportError:
+            raise DisableView('FlickrView requires the "flickrapi" library '
+                              '(http://pypi.python.org/pypi/flickrapi)')
+        try:
+            django_settings.ADMINFILES_FLICKR_USER
+            django_settings.ADMINFILES_FLICKR_API_KEY
+        except AttributeError:
+            raise DisableView('FlickrView requires '
+                              'ADMINFILES_FLICKR_USER and '
+                              'ADMINFILES_FLICKR_API_KEY settings')
+                              
     def context(self, request):
         context = super(FlickrView, self).context(request)
         page = int(request.GET.get('page', 1))
@@ -118,12 +177,9 @@ class FlickrView(BaseView):
         return context
 
     def photos(self, page=1):
-        try:
-            import flickrapi
-        except ImportError:
-            raise ImproperlyConfigured('django-adminfiles requires the "flickrapi" module for accessing Flickr photos')
-        user = settings.FLICKR_USER
-        flickr = flickrapi.FlickrAPI(settings.FLICKR_API_KEY)
+        import flickrapi
+        user = django_settings.ADMINFILES_FLICKR_USER
+        flickr = flickrapi.FlickrAPI(django_settings.ADMINFILES_FLICKR_API_KEY)
         # Get the user's NSID
         nsid = flickr.people_findByUsername(
             username=user).find('user').attrib['nsid']
@@ -140,16 +196,18 @@ class FlickrView(BaseView):
             photos.append(photo)
         return photos
 
-flickr_view = FlickrView()
-@staff_member_required
-def flickr(request):
-    return flickr_view(request)
 
+class VimeoView(OEmbedView):
+    template_name = 'adminfiles/uploader/video.html'
 
-class VimeoView(BaseView):
-    def template_name(self):
-        return 'adminfiles/uploader/youtube.html'
-
+    def check(self):
+        super(VimeoView, self).check()
+        try:
+            django_settings.ADMINFILES_VIMEO_USER
+        except AttributeError:
+            raise DisableView('VimeoView requires '
+                              'ADMINFILES_VIMEO_USER setting')
+    
     def context(self, request):
         context = super(VimeoView, self).context(request)
         context['videos'] = self.videos()
@@ -161,11 +219,10 @@ class VimeoView(BaseView):
             import xml.etree.ElementTree as ET
         except ImportError:
             import elementtree.ElementTree as ET
-        url = 'http://vimeo.com/api/v2/%s/videos.xml' % settings.VIMEO_USER
-        request = urllib2.Request(url)
+        request = urllib2.Request('http://vimeo.com/api/v2/%s/videos.xml'
+                                  % django_settings.ADMINFILES_VIMEO_USER)
         request.add_header('User-Agent', 'django-adminfiles/0.x')
-        opener = urllib2.build_opener()
-        root = ET.parse(opener.open(request)).getroot()
+        root = ET.parse(urllib2.build_opener().open(request)).getroot()
         videos = []
         for v in root.findall('video'):
             videos.append({
@@ -177,13 +234,7 @@ class VimeoView(BaseView):
                     })
         return videos
 
-vimeo_view = VimeoView()
-@staff_member_required
-def vimeo(request):
-    return vimeo_view(request)
 
-    
-@staff_member_required
 def download(request):
     '''Saves image from URL and returns ID for use with AJAX script'''
     f = FileUpload()
@@ -195,3 +246,37 @@ def download(request):
     f.save_upload_file(file_name, file_content)
     f.save()
     return HttpResponse('%s' % (f.id))
+
+
+_enabled_browsers_cache = None
+
+def get_enabled_browsers():
+    """
+    Check the ADMINFILES_BROWSER_VIEWS setting and return a list of
+    instantiated browser views that have the necessary
+    dependencies/configuration to run.
+
+    """
+    global _enabled_browsers_cache
+    if _enabled_browsers_cache is not None:
+        return _enabled_browsers_cache
+    enabled = []
+    for browser_path in settings.ADMINFILES_BROWSER_VIEWS:
+        try:
+            view_class = import_browser(browser_path)
+        except ImportError:
+            continue
+        if not issubclass(view_class, BaseView):
+            continue
+        browser = view_class()
+        try:
+            browser.check()
+        except DisableView:
+            continue
+        enabled.append(browser)
+    _enabled_browsers_cache = enabled
+    return enabled
+
+def import_browser(path):
+    module, classname = path.rsplit('.', 1)
+    return getattr(__import__(module, {}, {}, [classname]), classname)

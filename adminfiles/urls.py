@@ -1,11 +1,16 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('adminfiles.views',
-    url(r'download/$', 'download', name="adminfiles_download"),
-    url(r'youtube/$', 'youtube', name="adminfiles_youtube"),
-    url(r'vimeo/$', 'vimeo', name="adminfiles_vimeo"),
-    url(r'flickr/$', 'flickr', name="adminfiles_flickr"),
-    url(r'images/$', 'images', name="adminfiles_images"),
-    url(r'files/$', 'files', name="adminfiles_files"),
-    url(r'^$', 'all', name="adminfiles_all"),
+from django.contrib.admin.views.decorators import staff_member_required
+
+from adminfiles.views import download, get_enabled_browsers
+
+urlpatterns = patterns('',
+    url(r'download/$', staff_member_required(download),
+        name="adminfiles_download")
 )
+
+for browser in get_enabled_browsers():
+    slug = browser.slug()
+    urlpatterns += patterns('',
+        url('%s/$' % slug, browser,
+            name='adminfiles_%s' % slug))

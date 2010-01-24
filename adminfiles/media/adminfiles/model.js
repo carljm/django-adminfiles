@@ -1,7 +1,7 @@
 $(function(){
       $('.adminfilespicker').each(
           function(){
-	      var href = '/adminfiles/?field='+this.id;
+	      var href = '/adminfiles/all/?field='+this.id;
 	      if (this.options) {
 		  $(this).siblings('a.add-another').remove();
 		  href += '&field_type=select';

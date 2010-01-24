@@ -68,11 +68,20 @@
 #adminfiles-filter { 
     position:fixed; 
     left:0; 
-    width:100px; 
+    width:100%; 
+    margin-left:-3em;
+}
+
+#adminfiles-filter li {
+    list-style-type:none;
+}
+
+#adminfiles-filter li.upload {
+    margin-top: 4em;
 }
         
 /* mimetypes, icons from Nuvola */
-.image, .youtube { 
+.image, .video { 
     background-image:none; 
     background-position:center center; 
 }

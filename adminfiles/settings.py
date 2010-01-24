@@ -40,7 +40,11 @@ ADMINFILES_INSERT_LINKS = getattr(
     
 ADMINFILES_STDICON_SET = getattr(settings, 'ADMINFILES_STDICON_SET', None)
     
-FLICKR_USER = getattr(settings, 'FLICKR_USER', None)
-FLICKR_API_KEY = getattr(settings, 'FLICKR_API_KEY', None)
-YOUTUBE_USER = getattr(settings, 'YOUTUBE_USER', None)
-VIMEO_USER = getattr(settings, 'VIMEO_USER', None)
+ADMINFILES_BROWSER_VIEWS = getattr(settings, 'ADMINFILES_BROWSER_VIEWS',
+                                   ['adminfiles.views.AllView',
+                                    'adminfiles.views.ImagesView',
+                                    'adminfiles.views.AudioView',
+                                    'adminfiles.views.FilesView',
+                                    'adminfiles.views.FlickrView',
+                                    'adminfiles.views.YouTubeView',
+                                    'adminfiles.views.VimeoView'])

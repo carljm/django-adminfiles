@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block files %}
 {% for v in videos %}
-<li class="item youtube" style="background-image:url({{ v.thumb }})">
+<li class="item video" style="background-image:url({{ v.thumb }})">
   <div class="popup">
     <a href="#" class="close" title="{% trans "Close" %}">X</a>
     <ul>
@@ -11,7 +11,6 @@
   </div>
   <div class="upload-title">{{ v.title }}<br />
     <small>{{ v.upload_date }}</small><br />
-    <!-- {{ v.description }} -->
   </div>
 </li>
 {% endfor %}

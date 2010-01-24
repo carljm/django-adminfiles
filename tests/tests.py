@@ -60,7 +60,7 @@ class FilePickerTests(FileUploadTestCase):
         Very basic smoke test for file picker.
 
         """
-        response = self.client.get('/adminfiles/?field=test')
+        response = self.client.get('/adminfiles/all/?field=test')
         self.assertContains(response, 'href="/media/adminfiles/tiny.png"')
         self.assertContains(response, 'href="/media/adminfiles/somefile.txt')
             
@@ -73,12 +73,12 @@ class FilePickerTests(FileUploadTestCase):
         response = self.client.get('/adminfiles/files/?field=test')
         self.assertNotContains(response, 'href="/media/adminfiles/tiny.png"')
         self.assertContains(response, 'href="/media/adminfiles/somefile.txt')
-
+        
     def test_custom_links(self):
         _old_links = settings.ADMINFILES_INSERT_LINKS.copy()
         settings.ADMINFILES_INSERT_LINKS['text/plain'] = [('Crazy insert', {'yo': 'thing'})]
        
-        response = self.client.get('/adminfiles/?field=test')
+        response = self.client.get('/adminfiles/all/?field=test')
         self.assertContains(response, 'rel="some-file:yo=thing"')
         
         settings.ADMINFILES_INSERT_LINKS = _old_links
@@ -87,7 +87,7 @@ class FilePickerTests(FileUploadTestCase):
         _old_order = settings.ADMINFILES_THUMB_ORDER
         settings.ADMINFILES_THUMB_ORDER = ('title',)
         
-        response = self.client.get('/adminfiles/?field=test')
+        response = self.client.get('/adminfiles/all/?field=test')
         image_index = response.content.find('tiny.png')
         file_index = response.content.find('somefile.txt')
         self.failUnless(image_index > 0)

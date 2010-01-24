@@ -51,3 +51,5 @@ def render_uploads(content, template_path="adminfiles/render/"):
         return tpl.render(template.Context({'upload': upload,
                                             'options': options}))
     return oembed_replace(substitute_uploads(content, _replace))
+
+

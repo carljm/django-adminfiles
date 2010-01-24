@@ -2,16 +2,17 @@
 django-adminfiles
 =================
 
-A file upload manager and picker for the Django admin. 
+A file upload manager and picker for the Django admin, with support
+for browsing and embedding from Flickr, Youtube, Vimeo, etc.
 
-Easily upload files and view all uploaded files (with thumbnails for
-images) in a picker underneath any content textarea. Click on a file
-to add a reference to it into the content area.
+Upload files and view uploaded files (with thumbnails) in a
+file-picker underneath any content textarea. Click on a file to add a
+reference to it into the content area.
 
 Inline file references can be customized per-mime-type to automate the
 correct presentation of each file: <img> tags (with additional markup
-as needed) for images, simple links for downloadable files, even
-embedded players for audio or video files.
+as needed) for images, links for downloadable files, even embedded
+players for audio or video files.
 
 Installation
 ============
@@ -32,9 +33,15 @@ Dependencies
 ``django-adminfiles`` requires `Django`_ 1.1 or later,
 `sorl-thumbnail`_ and the `Python Imaging Library`_.
 
+`django-oembed`_ is required for OEmbed functionality. `flickrapi`_ is
+required for browsing Flickr photos, `gdata`_ for Youtube videos.
+
 .. _Django: http://www.djangoproject.com/
 .. _sorl-thumbnail: http://pypi.python.org/pypi/sorl-thumbnail
 .. _Python Imaging Library: http://www.pythonware.com/products/pil/
+.. _django-oembed: http://pypi.python.org/pypi/django-oembed
+.. _gdata: http://pypi.python.org/pypi/gdata
+.. _flickrapi: http://pypi.python.org/pypi/flickrapi
 
 Usage
 =====
@@ -228,6 +235,38 @@ file).
 
 .. _django-markitup: http://bitbucket.org/carljm/django-markitup
 
+Embedding media from other sites
+================================
+
+``django-adminfiles`` allows embedding media from any site that
+supports the OEmbed protocol. OEmbed support is provided via
+`django-oembed`_, which must be installed for embedding to work.
+
+If `django-oembed`_ is installed, the `render_uploads template
+filter`_ will also automatically replace any OEmbed-capable URLs with
+the appropriate embed markup (so URLs from any site supported by
+`django-oembed`_ can simply be pasted in to the content manually).
+
+In addition, ``django-adminfiles`` provides views in its filepicker to
+browse Flickr photos, Youtube videos, and Vimeo videos and insert
+their URLs into the context textarea with a click. To enable these
+browsing views, set the `ADMINFILES_YOUTUBE_USER`_,
+`ADMINFILES_VIMEO_USER`_, or `ADMINFILES_FLICKR_USER`_ and
+`ADMINFILES_FLICKR_API_KEY`_ settings (and make sure the
+`dependencies`_ are satisfied).
+
+To add support for browsing content from another site, just create a
+class view that inherits from ``adminfiles.views.OEmbedView`` and add
+its dotted path to the `ADMINFILES_BROWSER_VIEWS`_ setting. See the
+existing views in ``adminfiles/views.py`` for details.
+
+To list the available browsing views and their status (enabled or
+disabled, and why), ``django-adminfiles`` provides an
+``adminfiles_browser_views`` management command, which you can run
+with ``./manage.py adminfiles_browser_views``.
+
+.. _django-oembed: http://pypi.python.org/pypi/django-oembed
+
 Settings
 ========
 
@@ -347,6 +386,45 @@ attribute`_. The default value is ``('-upload_date')``; thumbnails
 ordered by date uploaded, most recent first.
 
 .. _"ordering" model Meta attribute:  http://docs.djangoproject.com/en/dev/ref/models/options/#ordering
+
+ADMINFILES_BROWSER_VIEWS
+------------------------
+
+List of dotted paths to file-browsing views to make available in the
+filepicker. The default setting includes all the views bundled with
+``django-adminfiles``::
+
+    ['adminfiles.views.AllView',
+    'adminfiles.views.ImagesView',
+    'adminfiles.views.AudioView',
+    'adminfiles.views.FilesView',
+    'adminfiles.views.FlickrView',
+    'adminfiles.views.YouTubeView',
+    'adminfiles.views.VimeoView']
+
+The last three may be disabled despite their inclusion in this setting
+if their `dependencies`_ are not satisfied or their required settings
+are not set.
+
+ADMINFILES_YOUTUBE_USER
+-----------------------
+
+Required for use of the Youtube video browser.
+
+ADMINFILES_VIMEO_USER
+---------------------
+
+Required for use of the Vimeo video browser.
+
+ADMINFILES_FLICKR_USER
+----------------------
+
+Required for use of the Flickr photo browser.
+
+ADMINFILES_FLICKR_API_KEY
+-------------------------
+
+Required for use of the Flickr photo browser.
 
 JQUERY_URL
 ----------
