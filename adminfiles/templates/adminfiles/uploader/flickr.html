@@ -3,9 +3,9 @@
 {% block files %}
 <li class="nav">
   {% if prev_page %}
-  <a class="prev" href="{{ prev_page }}">&laquo; {% trans "Previous" %}</a>
+  <a class="prev" href="{{ prev_page }}">&laquo; {% trans "Newer" %}</a>
   {% endif %}
-  <a class="next" href="{{ next_page }}">{% trans "More" %} &raquo;</a>
+  <a class="next" href="{{ next_page }}">{% trans "Older" %} &raquo;</a>
 </li>
 {% for p in photos %}
 <li class="item image flickr" style="background-image:url({{ p.url }})">
