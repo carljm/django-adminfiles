@@ -18,14 +18,6 @@ def render_uploads(content, template_path="adminfiles/render/"):
     the ``FileUpload`` instance and the key=value options found in the
     file reference.
 
-    The template used to render each upload is selected based on the
-    mime-type of the upload. For an upload with mime-type
-    "image/jpeg", assuming the default ``template_path`` of
-    "adminfiles/render", the template used would be the first one
-    found of the following: ``adminfiles/render/image/jpeg.html``,
-    ``adminfiles/render/image/default.html``, and
-    ``adminfiles/render/default.html``
-    
     So if "<<<my-uploaded-file:key=val:key2=val2>>>" is found in the
     content string, it will be replaced with the results of rendering
     the selected template with ``upload`` set to the ``FileUpload``
@@ -41,15 +33,31 @@ def render_uploads(content, template_path="adminfiles/render/"):
     """
     def _replace(match):
         upload, options = parse_match(match)
-        if upload is None:
-            return settings.ADMINFILES_STRING_IF_NOT_FOUND
-        templates = [join(upload.content_type, upload.sub_type),
-                     join(upload.content_type, "default"),
-                     "default"]
-        tpl = template.loader.select_template(
-            ["%s.html" % join(template_path, p) for p in templates])
-        return tpl.render(template.Context({'upload': upload,
-                                            'options': options}))
+        return render_upload(upload, template_path, **options)
     return oembed_replace(substitute_uploads(content, _replace))
 
 
+def render_upload(upload, template_path="adminfiles/render/", **options):
+    """
+    Render a single ``FileUpload`` model instance using the
+    appropriate rendering template and the given keyword options, and
+    return the rendered HTML.
+    
+    The template used to render each upload is selected based on the
+    mime-type of the upload. For an upload with mime-type
+    "image/jpeg", assuming the default ``template_path`` of
+    "adminfiles/render", the template used would be the first one
+    found of the following: ``adminfiles/render/image/jpeg.html``,
+    ``adminfiles/render/image/default.html``, and
+    ``adminfiles/render/default.html``
+    
+    """
+    if upload is None:
+        return settings.ADMINFILES_STRING_IF_NOT_FOUND
+    templates = [join(upload.content_type, upload.sub_type),
+                 join(upload.content_type, "default"),
+                 "default"]
+    tpl = template.loader.select_template(
+        ["%s.html" % join(template_path, p) for p in templates])
+    return tpl.render(template.Context({'upload': upload,
+                                        'options': options}))

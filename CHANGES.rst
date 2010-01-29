@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- add ``render_upload`` filter
+
 - add translation hooks and Polish translation: thanks Ludwik Trammer!
 
 - add support for linking full set of mime-type icons from stdicon.com.

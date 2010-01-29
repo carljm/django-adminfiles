@@ -195,6 +195,18 @@ following templates: ``adminfiles/alt_render/text/plain.html``,
 ``adminfiles/alt_render/text/default.html``, or
 ``adminfiles/alt_render/default.html``.
 
+render_upload template filter
+-----------------------------
+
+If you have a ``FileUpload`` model instance in your template and wish
+to render just that instance using the normal rendering logic, you can
+use the ``render_upload`` filter. This filter accepts options in the
+same "key=val:key2=val2" format used for passing options to
+inline-embedded files; the special option ``template_path`` specifies
+an alternate base path for finding rendering templates::
+
+    {{ my_upload|render_upload:"template_path=adminfiles/alt_render:class=special" }}
+
 pre-rendering at save time
 --------------------------
 

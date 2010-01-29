@@ -49,9 +49,18 @@ def parse_match(match):
         upload = FileUpload.objects.get(slug=match.group(1))
     except FileUpload.DoesNotExist:
         upload = None
+    options = parse_options(match.group(2))
+    return (upload, options)
+
+def parse_options(s):
+    """
+    Expects a string in the form "key=val:key2=val2" and returns a
+    dictionary.
+
+    """
     options = {}
-    for option in match.group(2).split(':'):
+    for option in s.split(':'):
         if '=' in option:
             key, val = option.split('=')
             options[key.strip()] = val.strip()
-    return (upload, options)
+    return options
