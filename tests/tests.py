@@ -260,7 +260,7 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
         self.failUnless('<a href="/media/adminfiles/somefile.txt"' in html)
         
     def test_default_template_renders_link_class(self):
-        html = render_uploads('<<<some-file:class=other classes>>>')
+        html = render_uploads(u'<<<some-file:class=other classes>>>')
         self.failUnless('class="other classes"' in html)
 
     def test_default_template_renders_link_title(self):
@@ -272,27 +272,27 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
         self.failUnless('Other name' in html)
 
     def test_render_uploads_template_filter(self):
-        tpl = template.Template('{% load adminfiles_tags %}'
-                                '{{ post.content|render_uploads|safe }}')
+        tpl = template.Template(u'{% load adminfiles_tags %}'
+                                u'{{ post.content|render_uploads|safe }}')
         html = tpl.render(template.Context({
-                    'post': Post(title='a post',
-                                 content='<<<some-file>>>')}))
+                    'post': Post(title=u'a post',
+                                 content=u'<<<some-file>>>')}))
         self.assertEquals(self.templates[1].name,
                           'adminfiles/render/default.html')
         self.failUnless('<a href' in html)
 
     def test_render_uploads_template_filter_alt_template(self):
         tpl = template.Template(
-            '{% load adminfiles_tags %}'
-            '{{ post.content|render_uploads:"alt" }}')
+            u'{% load adminfiles_tags %}'
+            u'{{ post.content|render_uploads:"alt" }}')
         html = tpl.render(template.Context({
-                    'post': Post(title='a post',
-                                 content='<<<some-file>>>')}))
+                    'post': Post(title=u'a post',
+                                 content=u'<<<some-file>>>')}))
         self.assertEquals(self.templates[1].name, 'alt/default.html')
         
     def test_render_upload_template_filter(self):
-        tpl = template.Template('{% load adminfiles_tags %}'
-                                '{{ img|render_upload }}')
+        tpl = template.Template(u'{% load adminfiles_tags %}'
+                                u'{{ img|render_upload }}')
         html = tpl.render(template.Context({'img': self.animage}))
         self.assertEquals(self.templates[1].name,
                           'adminfiles/render/image/default.html')
@@ -306,15 +306,15 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
 
     def test_render_upload_template_filter_alt_template(self):
         tpl = template.Template(
-            '{% load adminfiles_tags %}'
-            '{{ f|render_upload:"template_path=alt" }}')
+            u'{% load adminfiles_tags %}'
+            u'{{ f|render_upload:"template_path=alt" }}')
         html = tpl.render(template.Context({'f': self.somefile}))
         self.assertEquals(self.templates[1].name, 'alt/default.html')
         
     def test_render_upload_template_filter_alt_template_options(self):
         tpl = template.Template(
-            '{% load adminfiles_tags %}'
-            '{{ f|render_upload:"template_path=alt:class=yo" }}')
+            u'{% load adminfiles_tags %}'
+            u'{{ f|render_upload:"template_path=alt:class=yo" }}')
         html = tpl.render(template.Context({'f': self.somefile}))
         self.assertEquals(self.templates[1].name, 'alt/default.html')
         self.failUnless('class="yo"' in html)

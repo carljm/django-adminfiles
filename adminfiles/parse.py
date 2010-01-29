@@ -62,5 +62,5 @@ def parse_options(s):
     for option in s.split(':'):
         if '=' in option:
             key, val = option.split('=')
-            options[key.strip()] = val.strip()
+            options[str(key).strip()] = val.strip()
     return options

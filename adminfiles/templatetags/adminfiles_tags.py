@@ -33,7 +33,5 @@ def render_upload(upload, opts_str=''):
     Just wraps ``adminfiles.utils.render_upload``.
 
     """
-    return utils.render_upload(upload,
-                               **dict((str(k),v) for k,v
-                                      in parse_options(opts_str).iteritems()))
+    return utils.render_upload(upload, **parse_options(opts_str))
 render_upload.is_safe = True
