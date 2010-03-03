@@ -271,6 +271,18 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
         html = render_uploads('<<<some-file:title=Other name>>>')
         self.failUnless('Other name' in html)
 
+    def test_template_override(self):
+        html = render_uploads('<<<an-image:as=default>>>')
+        self.failUnless('<a href="/media/adminfiles/tiny.png"' in html)
+
+    def test_template_override_fallback(self):
+        html = render_uploads('<<<some-file:as=image/jpeg>>>')
+        self.failUnless('<img src="/media/adminfiles/somefile.txt"' in html)
+
+    def test_template_override_with_nonexisting(self):
+        html = render_uploads('<<<an-image:as=some/wonky>>>')
+        self.failUnless('<a href="/media/adminfiles/tiny.png"' in html)
+
     def test_render_uploads_template_filter(self):
         tpl = template.Template(u'{% load adminfiles_tags %}'
                                 u'{{ post.content|render_uploads|safe }}')

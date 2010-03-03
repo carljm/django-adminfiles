@@ -54,9 +54,15 @@ def render_upload(upload, template_path="adminfiles/render/", **options):
     """
     if upload is None:
         return settings.ADMINFILES_STRING_IF_NOT_FOUND
-    templates = [join(upload.content_type, upload.sub_type),
-                 join(upload.content_type, "default"),
-                 "default"]
+    template_name = options.pop('as', None)
+    if template_name:
+        templates = [template_name,
+                     "%s/default" % template_name.split('/')[0],
+                     "default"]
+    else:
+        templates = [join(upload.content_type, upload.sub_type),
+                     join(upload.content_type, "default"),
+                     "default"]
     tpl = template.loader.select_template(
         ["%s.html" % join(template_path, p) for p in templates])
     return tpl.render(template.Context({'upload': upload,

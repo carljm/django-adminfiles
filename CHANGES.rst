@@ -4,7 +4,13 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- add ``as`` template override keyword option
+
 - add ``render_upload`` filter
+
+- add YouTube, Flickr, Vimeo browsers
+
+- add OEmbed support
 
 - add translation hooks and Polish translation: thanks Ludwik Trammer!
 

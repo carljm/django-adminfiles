@@ -132,6 +132,14 @@ following that exists: ``adminfiles/render/image/jpeg.html``,
 ``adminfiles/render/image/default.html``,
 ``adminfiles/render/default.html``.
 
+If a file should be rendered as if it had a different mime type
+(e.g. an image you want to link to rather than display), pass the
+``as`` option with the mime type you want it rendered as (where either
+the sub-type or the entire mime-type can be replaced with
+``default``). For instance, with the default available templates if
+you wanted to link to an image file, you could use
+``<<<my-image:as=default>>>``.
+
 Two rendering templates are included with ``django-adminfiles``:
 ``adminfiles/render/image/default.html`` (used for any type of image)
 and ``adminfiles/render/default.html`` (used for any other type of

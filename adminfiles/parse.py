@@ -7,7 +7,7 @@ from adminfiles.models import FileUpload
 # Spaces are optional, key-val opts are optional, can be any number
 # extra indirection is for testability
 def _get_upload_re():
-    return re.compile(r'%s\s*([\w-]+)((\s*:\s*\w+\s*=\s*[\w\s]+)*)\s*%s'
+    return re.compile(r'%s\s*([\w-]+)((\s*:\s*\w+\s*=\s*.+?)*)\s*%s'
                       % (re.escape(settings.ADMINFILES_REF_START),
                          re.escape(settings.ADMINFILES_REF_END)))
 UPLOAD_RE = _get_upload_re()
