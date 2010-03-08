@@ -451,8 +451,8 @@ JQUERY_URL
 
 ``django-adminfiles`` requires the jQuery Javascript library.  By
 default, ``django-adminfiles`` links to the most recent minor version
-of jQuery 1.3 available at ajax.googleapis.com (via the URL
-``http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js``).
+of jQuery 1.4 available at ajax.googleapis.com (via the URL
+``http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js``).
 If you wish to use a different version of jQuery, or host it yourself,
 set the JQUERY_URL setting.  For example::
 
