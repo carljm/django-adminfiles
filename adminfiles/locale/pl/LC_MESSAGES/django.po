@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-adminfiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-23 02:20+0100\n"
-"PO-Revision-Date: 2010-01-23 02:20+0100\n"
+"POT-Creation-Date: 2010-03-06 20:18+0100\n"
+"PO-Revision-Date: 2010-03-06 20:20+0100\n"
 "Last-Translator: Ludwik Trammer <ludwik@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -58,62 +58,75 @@ msgid "Insert Link"
 msgstr "Wstaw odnośnik"
 
 #: settings.py:35
-#: templates/adminfiles/uploader/flickr.html:9
 msgid "Insert"
 msgstr "Wstaw"
 
 #: settings.py:36
-#: templates/adminfiles/uploader/flickr.html:10
 msgid "Insert (align left)"
 msgstr "Wstaw (po lewej)"
 
 #: settings.py:37
-#: templates/adminfiles/uploader/flickr.html:11
 msgid "Insert (align right)"
 msgstr "Wstaw (po prawej)"
 
-#: templates/adminfiles/uploader/base.html:20
+#: views.py:71
 msgid "All Uploads"
 msgstr "Wszystkie"
 
-#: templates/adminfiles/uploader/base.html:21
-msgid "Files"
-msgstr "Pliki"
-
-#: templates/adminfiles/uploader/base.html:22
+#: views.py:84
 msgid "Images"
 msgstr "Obrazki"
 
-#: templates/adminfiles/uploader/base.html:32
+#: views.py:91
+msgid "Audio"
+msgstr "Audio"
+
+#: views.py:98
+msgid "Files"
+msgstr "Pliki"
+
+#: templates/adminfiles/uploader/base.html:27
 msgid "Upload"
 msgstr "Dodaj"
 
-#: templates/adminfiles/uploader/base.html:33
+#: templates/adminfiles/uploader/base.html:30
 msgid "Refresh"
 msgstr "Odśwież"
 
-#: templates/adminfiles/uploader/base.html:44
+#: templates/adminfiles/uploader/base.html:42
 msgid "Select"
 msgstr "Wybierz"
 
-#: templates/adminfiles/uploader/base.html:55
+#: templates/adminfiles/uploader/base.html:53
 msgid "Delete"
 msgstr "Usuń"
 
-#: templates/adminfiles/uploader/base.html:56
-msgid "Edit"
-msgstr "Edytuj"
+#: templates/adminfiles/uploader/base.html:54
+msgid "Change"
+msgstr "Zmień"
 
-#: templates/adminfiles/uploader/youtube.html:7
+#: templates/adminfiles/uploader/flickr.html:6
+msgid "Newer"
+msgstr "Nowsze"
+
+#: templates/adminfiles/uploader/flickr.html:8
+msgid "Older"
+msgstr "Starsze"
+
+#: templates/adminfiles/uploader/flickr.html:15
+msgid "Insert Photo"
+msgstr "Wstaw zdjęcie"
+
+#: templates/adminfiles/uploader/video.html:7
 msgid "Close"
 msgstr "Zamknij"
 
-#: templates/adminfiles/uploader/youtube.html:9
+#: templates/adminfiles/uploader/video.html:9
 msgid "Insert Video"
 msgstr "Wstaw wideo"
 
+#~ msgid "Edit"
+#~ msgstr "Edytuj"
+
 #~ msgid "Insert (left)"
 #~ msgstr "Wstaw (po lewej)"
-#~ msgid "Insert (right)"
-#~ msgstr "Wstaw (po prawej)"
-
