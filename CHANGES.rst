@@ -4,6 +4,9 @@ CHANGES
 tip (unreleased)
 ----------------
 
+0.5.0 (2010.03.09)
+------------------
+
 - add ``as`` template override keyword option
 
 - add ``render_upload`` filter
