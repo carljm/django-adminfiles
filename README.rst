@@ -12,7 +12,9 @@ reference to it into the content area.
 Inline file references can be customized per-mime-type to automate the
 correct presentation of each file: <img> tags (with additional markup
 as needed) for images, links for downloadable files, even embedded
-players for audio or video files.
+players for audio or video files. See `the screencast`_.
+
+.. _the screencast: http://vimeo.com/8940852
 
 Installation
 ============
@@ -52,16 +54,18 @@ To use django-adminfiles in your Django project:
 
     2. Make the contents of the ``adminfiles/media/adminfiles``
        directory available at ``MEDIA_URL/adminfiles`` (or
-       ``ADMINFILES_MEDIA_URL/adminfiles/``, see
-       `ADMINFILES_MEDIA_URL`_).  This can be done by copying the
-       files, making a symlink, or through your webserver
-       configuration.
+       ``ADMINFILES_MEDIA_URL/adminfiles/``, see `ADMINFILES_MEDIA_URL`_). 
+       This can be done by through your webserver configuration, via an app
+       such as `django-staticfiles`_, or by copying the files or making a
+       symlink.
 
-    3. Add ``url(r'^adminfiles/', include('adminfiles.urls')`` in your
+    3. Add ``url(r'^adminfiles/', include('adminfiles.urls'))`` in your
        root URLconf.
 
     4. Inherit content model admin options from
        `FilePickerAdmin`_.
+
+.. _django-staticfiles: http://pypi.python.org/pypi/django-staticfiles
 
 FilePickerAdmin
 ===============
