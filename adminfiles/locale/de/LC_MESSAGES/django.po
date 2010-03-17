@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: django-adminfiles\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-17 21:13+0100\n"
+"PO-Revision-Date: 2010-03-17 12:19+0100\n"
+"Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#: models.py:21
+msgid "upload date"
+msgstr "Upload-Datum"
+
+#: models.py:22
+msgid "file"
+msgstr "Datei"
+
+#: models.py:23
+msgid "title"
+msgstr "Titel"
+
+#: models.py:24
+msgid "slug"
+msgstr "Kürzel"
+
+#: models.py:25
+msgid "description"
+msgstr "Beschreibung"
+
+#: models.py:30
+msgid "tags"
+msgstr "Tags"
+
+#: models.py:34
+msgid "file upload"
+msgstr "Datei-Upload"
+
+#: models.py:35
+msgid "file uploads"
+msgstr "Datei-Uploads"
+
+#: models.py:42
+msgid "mime type"
+msgstr "MIME-Type"
+
+#: settings.py:34
+msgid "Insert Link"
+msgstr "Link einfügen"
+
+#: settings.py:35
+msgid "Insert"
+msgstr "Einfügen"
+
+#: settings.py:36
+msgid "Insert (align left)"
+msgstr "Einfügen (linksbündig)"
+
+#: settings.py:37
+msgid "Insert (align right)"
+msgstr "Einfügen (rechtsbündig)"
+
+#: views.py:71
+msgid "All Uploads"
+msgstr "Alle Uploads"
+
+#: views.py:84
+msgid "Images"
+msgstr "Bilder"
+
+#: views.py:91
+msgid "Audio"
+msgstr "Audio"
+
+#: views.py:98
+msgid "Files"
+msgstr "Dateien"
+
+#: templates/adminfiles/uploader/base.html:27
+msgid "Upload"
+msgstr "Upload"
+
+#: templates/adminfiles/uploader/base.html:30
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: templates/adminfiles/uploader/base.html:42
+msgid "Select"
+msgstr "Auswählen"
+
+#: templates/adminfiles/uploader/base.html:53
+msgid "Delete"
+msgstr "Löschen"
+
+#: templates/adminfiles/uploader/base.html:54
+msgid "Change"
+msgstr "Ändern"
+
+#: templates/adminfiles/uploader/flickr.html:6
+msgid "Newer"
+msgstr "Neuer"
+
+#: templates/adminfiles/uploader/flickr.html:8
+msgid "Older"
+msgstr "Älter"
+
+#: templates/adminfiles/uploader/flickr.html:15
+msgid "Insert Photo"
+msgstr "Photo einfügen"
+
+#: templates/adminfiles/uploader/video.html:7
+msgid "Close"
+msgstr "Schließen"
+
+#: templates/adminfiles/uploader/video.html:9
+msgid "Insert Video"
+msgstr "Video einfügen"
