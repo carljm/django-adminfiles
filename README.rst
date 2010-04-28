@@ -65,6 +65,11 @@ To use django-adminfiles in your Django project:
     4. Inherit content model admin options from
        `FilePickerAdmin`_.
 
+In addition, you may want to set the ``THUMBNAIL_EXTENSION`` setting for
+`sorl-thumbnail`_ to ``"png"`` rather than the default ``"jpg"``, so that
+images with alpha transparency aren't broken when thumbnailed in the
+adminfiles file-picker.
+
 .. _django-staticfiles: http://pypi.python.org/pypi/django-staticfiles
 
 FilePickerAdmin
