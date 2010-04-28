@@ -453,12 +453,15 @@ Required for use of the Flickr photo browser.
 JQUERY_URL
 ----------
 
-``django-adminfiles`` requires the jQuery Javascript library.  By
-default, ``django-adminfiles`` links to the most recent minor version
-of jQuery 1.4 available at ajax.googleapis.com (via the URL
+``django-adminfiles`` requires the jQuery Javascript library.  For Django
+versions 1.2 or later, ``django-adminfiles`` by default uses the version of
+jQuery included with the Django admin.  For older versions, by default
+``django-adminfiles`` links to the most recent minor version of jQuery 1.4
+available at ajax.googleapis.com (via the URL
 ``http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js``).
-If you wish to use a different version of jQuery, or host it yourself,
-set the JQUERY_URL setting.  For example::
+
+If you wish to use a different version of jQuery, or host it yourself, set
+the JQUERY_URL setting.  For example::
 
     JQUERY_URL = 'jquery.min.js'
 

@@ -43,7 +43,7 @@ class FileUploadAdmin(admin.ModelAdmin):
             
         
 class FilePickerAdmin(admin.ModelAdmin):
-    adminfiles_fields = ()
+    adminfiles_fields = []
 
     def __init__(self, *args, **kwargs):
         super(FilePickerAdmin, self).__init__(*args, **kwargs)
@@ -60,7 +60,9 @@ class FilePickerAdmin(admin.ModelAdmin):
         return field
 
     class Media:
-        js = (JQUERY_URL, posixpath.join(ADMINFILES_MEDIA_URL,
-                                         'adminfiles/model.js'))
+        js = []
+        if JQUERY_URL is not None:
+            js = [JQUERY_URL]
+        js += [posixpath.join(ADMINFILES_MEDIA_URL, 'adminfiles/model.js')]
 
 admin.site.register(FileUpload, FileUploadAdmin)

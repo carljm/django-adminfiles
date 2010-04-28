@@ -1,13 +1,17 @@
 import posixpath
 
+import django
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-JQUERY_URL = getattr(
-    settings, 'JQUERY_URL',
-    'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js')
+if django.VERSION >= (1,2):
+    default_jquery = None
+else:
+    default_jquery = 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'
 
-if not ((':' in JQUERY_URL) or (JQUERY_URL.startswith('/'))):
+JQUERY_URL = getattr(settings, 'JQUERY_URL', default_jquery)
+
+if JQUERY_URL and not ((':' in JQUERY_URL) or (JQUERY_URL.startswith('/'))):
     JQUERY_URL = posixpath.join(settings.MEDIA_URL, JQUERY_URL)
 
 ADMINFILES_MEDIA_URL = getattr(settings, 'ADMINFILES_MEDIA_URL',

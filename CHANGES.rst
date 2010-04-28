@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- use built-in jQuery by default for Django 1.2+
+
 0.5.0 (2010.03.09)
 ------------------
 
