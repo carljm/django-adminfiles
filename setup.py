@@ -28,10 +28,8 @@ setup(
     name='django-adminfiles',
     version='0.5.0.post%s' % hgrev,
     description='File upload manager and picker for Django admin',
-    author='sgt.hulka',
-    author_email='sgt.hulka@gmail.com',
-    maintainer='Carl Meyer',
-    maintainer_email='carl@dirtcircle.com',
+    author='Carl Meyer',
+    author_email='carl@oddbird.net',
     long_description=long_description,
     url='http://bitbucket.org/carljm/django-adminfiles/',
     packages=['adminfiles', 'adminfiles.templatetags', \
