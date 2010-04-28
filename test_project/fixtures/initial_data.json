@@ -1,0 +1,20 @@
+[
+    {
+        "pk": 1, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "admin", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": true, 
+            "is_staff": true, 
+            "last_login": "2010-04-28 00:07:07", 
+            "groups": [], 
+            "user_permissions": [], 
+            "password": "sha1$52a46$4677c471a12ce2b2320a94adc0846506293b5afd", 
+            "email": "carl@oddbird.net", 
+            "date_joined": "2010-04-28 00:07:07"
+        }
+    }
+]
