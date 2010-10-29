@@ -3,3 +3,4 @@
 ^HGREV$
 ^TAGS$
 ^tests/media/adminfiles/.*_q
+^.tox/

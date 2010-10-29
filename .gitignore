@@ -2,3 +2,5 @@ dist/*
 django_adminfiles.egg-info/*
 HGREV
 TAGS
+tests/media/adminfiles/*_q
+.tox/*
