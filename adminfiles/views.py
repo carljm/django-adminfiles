@@ -20,7 +20,7 @@ class BaseView(object):
     def slug(self):
         """
         Return slug suitable for accessing this view in a URLconf.
-        
+
         """
         slug = self.__class__.__name__.lower()
         if slug.endswith('view'):
@@ -30,7 +30,7 @@ class BaseView(object):
     def link_text(self):
         """
         Return link text for this view.
-        
+
         """
         link = self.__class__.__name__
         if link.endswith('View'):
@@ -48,10 +48,10 @@ class BaseView(object):
         """
         Raise ``DisableView`` if the configuration necessary for this
         view is not active.
-        
+
         """
         pass
-    
+
     def context(self, request):
         return {'browsers': get_enabled_browsers(),
                 'field_id': request.GET['field'],
@@ -82,21 +82,21 @@ class AllView(BaseView):
 
 class ImagesView(AllView):
     link_text = _('Images')
-    
+
     def files(self):
         return super(ImagesView, self).files().filter(content_type='image')
 
 
 class AudioView(AllView):
     link_text = _('Audio')
-    
+
     def files(self):
         return super(AudioView, self).files().filter(content_type='audio')
 
 
 class FilesView(AllView):
     link_text = _('Files')
-        
+
     def files(self):
         not_files = ['video', 'image', 'audio']
         return super(FilesView, self).files().exclude(content_type__in=not_files)
@@ -122,8 +122,8 @@ class YouTubeView(OEmbedView):
         except AttributeError:
             raise DisableView('YouTubeView requires '
                               'ADMINFILES_YOUTUBE_USER setting')
-            
-    
+
+
     def context(self, request):
         context = super(YouTubeView, self).context(request)
         context['videos'] = self.videos()
@@ -148,7 +148,7 @@ class YouTubeView(OEmbedView):
 
 class FlickrView(OEmbedView):
     template_name = 'adminfiles/uploader/flickr.html'
-    
+
     def check(self):
         super(FlickrView, self).check()
         try:
@@ -163,7 +163,7 @@ class FlickrView(OEmbedView):
             raise DisableView('FlickrView requires '
                               'ADMINFILES_FLICKR_USER and '
                               'ADMINFILES_FLICKR_API_KEY settings')
-                              
+
     def context(self, request):
         context = super(FlickrView, self).context(request)
         page = int(request.GET.get('page', 1))
@@ -207,20 +207,25 @@ class VimeoView(OEmbedView):
         except AttributeError:
             raise DisableView('VimeoView requires '
                               'ADMINFILES_VIMEO_USER setting')
-    
+        try:
+            self.pages = django_settings.ADMINFILES_VIMEO_PAGES
+        except AttributeError:
+            self.pages = 1
+        if self.pages > 3:
+            self.pages = 3
+
     def context(self, request):
         context = super(VimeoView, self).context(request)
         context['videos'] = self.videos()
         return context
 
-    def videos(self):
+    def _get_videos(self, url):
         import urllib2
         try:
             import xml.etree.ElementTree as ET
         except ImportError:
             import elementtree.ElementTree as ET
-        request = urllib2.Request('http://vimeo.com/api/v2/%s/videos.xml'
-                                  % django_settings.ADMINFILES_VIMEO_USER)
+        request = urllib2.Request(url)
         request.add_header('User-Agent', 'django-adminfiles/0.x')
         root = ET.parse(urllib2.build_opener().open(request)).getroot()
         videos = []
@@ -232,6 +237,18 @@ class VimeoView(OEmbedView):
                     'thumb': v.find('thumbnail_small').text,
                     'url': v.find('url').text,
                     })
+        return videos
+
+    def videos(self):
+        url = ('http://vimeo.com/api/v2/%s/videos.xml'
+               % django_settings.ADMINFILES_VIMEO_USER)
+        videos = self._get_videos(url)
+        for page in range(2, self.pages + 1):
+            page_url = "%s?page=%s" % (url, page)
+            page_videos = self._get_videos(page_url)
+            if not page_videos:
+                break
+            videos += page_videos
         return videos
 
 
