@@ -4,7 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
-- use built-in jQuery by default for Django 1.2+
+- add support for multiple pages of Vimeo results via ADMINFILES_VIMEO_PAGES
+  setting (defaults to 1).
 
 0.5.0 (2010.03.09)
 ------------------
