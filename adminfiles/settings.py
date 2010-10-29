@@ -4,12 +4,8 @@ import django
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-if django.VERSION >= (1,2):
-    default_jquery = None
-else:
-    default_jquery = 'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'
-
-JQUERY_URL = getattr(settings, 'JQUERY_URL', default_jquery)
+JQUERY_URL = getattr(settings, 'JQUERY_URL',
+                     'http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js')
 
 if JQUERY_URL and not ((':' in JQUERY_URL) or (JQUERY_URL.startswith('/'))):
     JQUERY_URL = posixpath.join(settings.MEDIA_URL, JQUERY_URL)
@@ -23,7 +19,7 @@ ADMINFILES_THUMB_ORDER = getattr(settings, 'ADMINFILES_THUMB_ORDER',
                                  ('-upload_date',))
 
 ADMINFILES_USE_SIGNALS = getattr(settings, 'ADMINFILES_USE_SIGNALS', False)
-                                 
+
 ADMINFILES_REF_START = getattr(settings, 'ADMINFILES_REF_START', '<<<')
 
 ADMINFILES_REF_END = getattr(settings, 'ADMINFILES_REF_END', '>>>')
@@ -41,9 +37,9 @@ ADMINFILES_INSERT_LINKS = getattr(
                (_('Insert (align right)'), {'class': 'right'})]
      },
     )
-    
+
 ADMINFILES_STDICON_SET = getattr(settings, 'ADMINFILES_STDICON_SET', None)
-    
+
 ADMINFILES_BROWSER_VIEWS = getattr(settings, 'ADMINFILES_BROWSER_VIEWS',
                                    ['adminfiles.views.AllView',
                                     'adminfiles.views.ImagesView',

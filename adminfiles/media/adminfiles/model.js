@@ -10,4 +10,4 @@
 	           $(this).after('<iframe frameborder="0" style="border:none; width:755px; height:210px;" src="' + href + '"></iframe>');
 	       });
        });
- })((typeof(jQuery) != 'undefined') && jQuery || django.jQuery);
+ })(jQuery);
