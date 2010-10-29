@@ -445,6 +445,13 @@ ADMINFILES_VIMEO_USER
 
 Required for use of the Vimeo video browser.
 
+ADMINFILES_VIMEO_PAGES
+----------------------
+
+The Vimeo API returns 20 videos per page; this setting determines the
+maximum number of pages to fetch (defaults to 1, Vimeo-imposed maximum of
+3).
+
 ADMINFILES_FLICKR_USER
 ----------------------
 
