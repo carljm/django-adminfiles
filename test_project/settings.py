@@ -3,6 +3,8 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 
 DEBUG = True
 
+SITE_ID = 1
+
 DATABASE_ENGINE = 'sqlite3'
 DATABASE_NAME = os.path.join(BASE, 'adminfiles-test.db')
 
@@ -26,4 +28,5 @@ INSTALLED_APPS = (
     'adminfiles',
     'sorl.thumbnail',
     'testapp',
+    'oembed',
 )

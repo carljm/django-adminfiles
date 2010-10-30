@@ -4,7 +4,15 @@ from django import template
 from django.conf import settings
 
 if 'oembed' in settings.INSTALLED_APPS:
-    from oembed.core import replace as oembed_replace
+    try:
+        # djangoembed
+        from oembed.consumer import OEmbedConsumer
+        def oembed_replace(text):
+            consumer = OEmbedConsumer()
+            return consumer.parse(text)
+    except ImportError:
+        # django-oembed
+        from oembed.core import replace as oembed_replace
 else:
     oembed_replace = lambda s: s
 
@@ -27,8 +35,8 @@ def render_uploads(content, template_path="adminfiles/render/"):
     If the given slug is not found, the reference is replaced with the
     empty string.
 
-    If ``django-oembed`` is installed, also replaces OEmbed URLs with
-    the appropriate embed markup.
+    If ``djangoembed`` or ``django-oembed`` is installed, also replaces OEmbed
+    URLs with the appropriate embed markup.
     
     """
     def _replace(match):

@@ -35,13 +35,15 @@ Dependencies
 ``django-adminfiles`` requires `Django`_ 1.1 or later,
 `sorl-thumbnail`_ and the `Python Imaging Library`_.
 
-`django-oembed`_ is required for OEmbed functionality. `flickrapi`_ is
-required for browsing Flickr photos, `gdata`_ for Youtube videos.
+`djangoembed`_ or `django-oembed`_ is required for OEmbed
+functionality. `flickrapi`_ is required for browsing Flickr photos, `gdata`_
+for Youtube videos.
 
 .. _Django: http://www.djangoproject.com/
 .. _sorl-thumbnail: http://pypi.python.org/pypi/sorl-thumbnail
 .. _Python Imaging Library: http://www.pythonware.com/products/pil/
 .. _django-oembed: http://pypi.python.org/pypi/django-oembed
+.. _djangoembed: http://pypi.python.org/pypi/djangoembed
 .. _gdata: http://pypi.python.org/pypi/gdata
 .. _flickrapi: http://pypi.python.org/pypi/flickrapi
 
@@ -267,14 +269,14 @@ file).
 Embedding media from other sites
 ================================
 
-``django-adminfiles`` allows embedding media from any site that
-supports the OEmbed protocol. OEmbed support is provided via
-`django-oembed`_, which must be installed for embedding to work.
+``django-adminfiles`` allows embedding media from any site that supports the
+OEmbed protocol. OEmbed support is provided via `djangoembed`_ or
+`django-oembed`_, one of which must be installed for embedding to work.
 
-If `django-oembed`_ is installed, the `render_uploads template
-filter`_ will also automatically replace any OEmbed-capable URLs with
-the appropriate embed markup (so URLs from any site supported by
-`django-oembed`_ can simply be pasted in to the content manually).
+If a supported OEmbed application is installed, the `render_uploads template
+filter`_ will also automatically replace any OEmbed-capable URLs with the
+appropriate embed markup (so URLs from any site supported by the installed
+OEmbed application can simply be pasted in to the content manually).
 
 In addition, ``django-adminfiles`` provides views in its filepicker to
 browse Flickr photos, Youtube videos, and Vimeo videos and insert
@@ -293,8 +295,6 @@ To list the available browsing views and their status (enabled or
 disabled, and why), ``django-adminfiles`` provides an
 ``adminfiles_browser_views`` management command, which you can run
 with ``./manage.py adminfiles_browser_views``.
-
-.. _django-oembed: http://pypi.python.org/pypi/django-oembed
 
 Settings
 ========

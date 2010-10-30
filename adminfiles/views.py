@@ -104,8 +104,9 @@ class FilesView(AllView):
 class OEmbedView(BaseView):
     def check(self):
         if 'oembed' not in django_settings.INSTALLED_APPS:
-            raise DisableView('OEmbed views require django-oembed. '
-                              '(http://pypi.python.org/pypi/django-oembed)')
+            raise DisableView('OEmbed views require django-oembed or djangoembed. '
+                              '(http://pypi.python.org/pypi/django-oembed, '
+                              'http://pypi.python.org/pypi/djangoembed)')
 
 class YouTubeView(OEmbedView):
     template_name = 'adminfiles/uploader/video.html'
