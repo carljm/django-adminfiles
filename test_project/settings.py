@@ -5,8 +5,12 @@ DEBUG = True
 
 SITE_ID = 1
 
-DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = os.path.join(BASE, 'adminfiles-test.db')
+DATABASES = {
+    "default": {
+        "ENGINE": 'django.db.backends.sqlite3',
+        "NAME":os.path.join(BASE, 'adminfiles-test.db'),
+    }
+}
 
 MEDIA_ROOT = os.path.join(BASE, 'media')
 MEDIA_URL = '/media/'
