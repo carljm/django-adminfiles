@@ -56,17 +56,20 @@ To use django-adminfiles in your Django project:
     1. Add ``'adminfiles'`` to your ``INSTALLED_APPS`` setting. Also
        add ``'sorl.thumbnail'`` if you have not installed it already.
 
-    2. Make the contents of the ``adminfiles/media/adminfiles``
+    2. Run ``python manage.py syncdb`` to to create the adminfiles database
+       tables.
+
+    3. Make the contents of the ``adminfiles/media/adminfiles``
        directory available at ``MEDIA_URL/adminfiles`` (or
        ``ADMINFILES_MEDIA_URL/adminfiles/``, see `ADMINFILES_MEDIA_URL`_). 
        This can be done by through your webserver configuration, via an app
        such as `django-staticfiles`_, or by copying the files or making a
        symlink.
 
-    3. Add ``url(r'^adminfiles/', include('adminfiles.urls'))`` in your
+    4. Add ``url(r'^adminfiles/', include('adminfiles.urls'))`` in your
        root URLconf.
 
-    4. Inherit content model admin options from
+    5. Inherit content model admin options from
        `FilePickerAdmin`_.
 
 In addition, you may want to set the ``THUMBNAIL_EXTENSION`` setting for
