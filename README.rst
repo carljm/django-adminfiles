@@ -262,6 +262,13 @@ scope of ``django-adminfiles``. For instance, if using
     def markup_filter(markup):
         return markdown(render_uploads(markup))
 
+Don't put this directly in ``settings.py`` though, as that will cause circular
+imports. Place it instead in another file and import it from there. So if you
+for instance have the ``markup_filter`` function in a filed called ``utils.py``
+the setting might look like this:
+
+``MARKITUP_FILTER = ('utils.markup_filter', {})``
+
 Once this is done, set the `ADMINFILES_USE_SIGNALS`_ setting to
 True. Now ``django-adminfiles`` will automatically track all
 references to uploaded files in your content models. Anytime an
