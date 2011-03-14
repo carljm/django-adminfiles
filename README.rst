@@ -33,14 +33,15 @@ Dependencies
 ------------
 
 ``django-adminfiles`` requires `Django`_ 1.1 or later,
-`sorl-thumbnail`_ and the `Python Imaging Library`_.
+`sorl-thumbnail`_ 3.2.5 (not compatible with the rewritten 10.x/11.x series)
+and the `Python Imaging Library`_.
 
 `djangoembed`_ or `django-oembed`_ is required for OEmbed
 functionality. `flickrapi`_ is required for browsing Flickr photos, `gdata`_
 for Youtube videos.
 
 .. _Django: http://www.djangoproject.com/
-.. _sorl-thumbnail: http://pypi.python.org/pypi/sorl-thumbnail
+.. _sorl-thumbnail: http://pypi.python.org/pypi/sorl-thumbnail/3.2.5
 .. _Python Imaging Library: http://www.pythonware.com/products/pil/
 .. _django-oembed: http://pypi.python.org/pypi/django-oembed
 .. _djangoembed: http://pypi.python.org/pypi/djangoembed
@@ -52,7 +53,8 @@ Usage
 
 To use django-adminfiles in your Django project:
 
-    1. Add ``'adminfiles'`` to your ``INSTALLED_APPS`` setting.
+    1. Add ``'adminfiles'`` to your ``INSTALLED_APPS`` setting. Also
+       add ``'sorl.thumbnail'`` if you have not installed it already.
 
     2. Make the contents of the ``adminfiles/media/adminfiles``
        directory available at ``MEDIA_URL/adminfiles`` (or
