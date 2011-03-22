@@ -1,8 +1,10 @@
 CHANGES
 =======
 
-tip (unreleased)
-----------------
+0.5.1 (2011.03.22)
+------------------
+
+- add support for djangoembed as well as django-oembed.
 
 - add support for multiple pages of Vimeo results via ADMINFILES_VIMEO_PAGES
   setting (defaults to 1).

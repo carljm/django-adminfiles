@@ -1,6 +1,9 @@
 TODO
 ====
 
+- Fix run_tests and short DB names deprecation warnings when running tests 
+  on 1.3.
+
 - Test and document snipshot integration and select dropdown integration.
 
 - Add integration with plain FilePathField or FileField (for unobtrusive use
