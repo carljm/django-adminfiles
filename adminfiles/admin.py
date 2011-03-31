@@ -9,7 +9,8 @@ from adminfiles.settings import ADMINFILES_MEDIA_URL, JQUERY_URL
 from adminfiles.listeners import register_listeners
 
 class FileUploadAdmin(admin.ModelAdmin):
-    list_display = ('title', 'upload_date', 'upload', 'mime_type')
+    list_display = ['title', 'description', 'upload_date', 'upload', 'mime_type']
+    list_editable = ['description']
     prepopulated_fields = {'slug': ('title',)}
 # uncomment for snipshot photo editing feature
 #    class Media:
