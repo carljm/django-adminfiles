@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Django versions prior to 1.3 are no longer tested or supported.
+
 0.5.1 (2011.03.22)
 ------------------
 

@@ -7,10 +7,11 @@ sys.path.insert(0, parent)
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_settings'
 
-from django.test.simple import run_tests
-
 def runtests():
-    failures = run_tests(['tests'], verbosity=1, interactive=True)
+    from django.test.simple import DjangoTestSuiteRunner
+    runner = DjangoTestSuiteRunner(
+        verbosity=1, interactive=True, failfast=False)
+    failures = runner.run_tests(['tests'])
     sys.exit(failures)
 
 if __name__ == '__main__':

@@ -32,7 +32,7 @@ or get the `in-development version`_::
 Dependencies
 ------------
 
-``django-adminfiles`` requires `Django`_ 1.1 or later,
+``django-adminfiles`` requires `Django`_ 1.3 or later,
 `sorl-thumbnail`_ 3.2.5 (not compatible with the rewritten 10.x/11.x series)
 and the `Python Imaging Library`_.
 

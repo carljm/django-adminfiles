@@ -1,4 +1,5 @@
 {% extends "admin/base.html" %}
+{% load url from future %}
 {% load thumbnail %}
 {% load i18n %}
 {% block extrastyle %}
@@ -24,7 +25,7 @@
   </li>
   {% endfor %}
   <li class="upload">
-    <a href="{% url admin:adminfiles_fileupload_add %}" class="addlink" id="add_id_uploads" onclick="return showAddUploadPopup(this);">{% trans "Upload" %}</a>
+    <a href="{% url "admin:adminfiles_fileupload_add" %}" class="addlink" id="add_id_uploads" onclick="return showAddUploadPopup(this);">{% trans "Upload" %}</a>
   </li>
   <li>
     <a id="refresh" href="#"><img src="{{ADMINFILES_MEDIA_URL}}adminfiles/icon_refreshlink.gif" /> {% trans "Refresh" %}</a>
@@ -50,8 +51,8 @@
              {% endfor %}
 	     {% endifequal %}
            </ul>
-           <a href="{% url admin:adminfiles_fileupload_delete f.id %}" class="deletelink" id="ddd" onclick="return showEditPopup(this);">{% trans "Delete" %}</a>
-           <a href="{% url admin:adminfiles_fileupload_change f.id %}" class="changelink" id="eee" onclick="return showEditPopup(this);">{% trans "Change" %}</a>
+           <a href="{% url "admin:adminfiles_fileupload_delete" f.id %}" class="deletelink" id="ddd" onclick="return showEditPopup(this);">{% trans "Delete" %}</a>
+           <a href="{% url "admin:adminfiles_fileupload_change" f.id %}" class="changelink" id="eee" onclick="return showEditPopup(this);">{% trans "Change" %}</a>
        </div>
        <div class="upload-title">{{f.title}}<br />
          <small>{{f.upload_date|date:"F j, Y"}}</small><br />
