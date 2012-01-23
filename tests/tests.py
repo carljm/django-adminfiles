@@ -63,6 +63,14 @@ class FilePickerTests(FileUploadTestCase):
         response = self.client.get('/adminfiles/all/?field=test')
         self.assertContains(response, 'href="/media/adminfiles/tiny.png"')
         self.assertContains(response, 'href="/media/adminfiles/somefile.txt')
+
+    def test_browser_links(self):
+        """
+        Test correct rendering of browser links.
+
+        """
+        response = self.client.get('/adminfiles/all/?field=test')
+        self.assertContains(response, 'href="/adminfiles/images/?field=test')
             
     def test_images_picker_loads(self):
         response = self.client.get('/adminfiles/images/?field=test')
