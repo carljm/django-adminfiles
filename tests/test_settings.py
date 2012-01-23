@@ -8,7 +8,11 @@ INSTALLED_APPS = ('adminfiles', 'tests',
                   'django.contrib.auth',
                   'django.contrib.sessions',
                   'sorl.thumbnail')
-DATABASE_ENGINE = 'sqlite3'
+DATABASES = {
+    "default": {
+        "ENGINE": 'django.db.backends.sqlite3',
+    }
+}
 
 SITE_ID = 1
 
