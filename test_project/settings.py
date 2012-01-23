@@ -12,9 +12,11 @@ DATABASES = {
     }
 }
 
+STATIC_URL = ADMINFILES_MEDIA_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE, 'static')
 MEDIA_ROOT = os.path.join(BASE, 'media')
 MEDIA_URL = '/media/'
-ADMIN_MEDIA_PREFIX = '/media/admin/'
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 SECRET_KEY = '6wk#pb((9+oudihdco6m@#1hmr1qp#k+7a=p7c@#z91_^=en-!'
 
 ROOT_URLCONF = 'test_project.urls'
@@ -28,6 +30,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.staticfiles',
     'django.contrib.admin',
     'adminfiles',
     'sorl.thumbnail',
