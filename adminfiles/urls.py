@@ -12,5 +12,5 @@ urlpatterns = patterns('',
 for browser in get_enabled_browsers():
     slug = browser.slug()
     urlpatterns += patterns('',
-        url('%s/$' % slug, browser,
+        url('%s/$' % slug, browser.as_view(),
             name='adminfiles_%s' % slug))

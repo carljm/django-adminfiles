@@ -1,6 +1,9 @@
 ^dist/
+^build/
 ^django_adminfiles.egg-info/
 ^HGREV$
 ^TAGS$
 ^tests/media/adminfiles/.*_q
+^tests/media/cache/.*
 ^.tox/
+^.*.pyc$
