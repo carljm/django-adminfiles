@@ -46,7 +46,7 @@ class FilePickerTests(FileUploadTestCase):
         self.admin.is_superuser = True
         self.admin.is_active = True
         self.admin.save()
-        self.failUnless(self.client.login(username='admin', password='testpw'))
+        self.assertTrue(self.client.login(username='admin', password='testpw'))
         
     def tearDown(self):
         admin.site.unregister(Post)
@@ -90,8 +90,8 @@ class FilePickerTests(FileUploadTestCase):
         response = self.client.get('/adminfiles/all/?field=test')
         image_index = response.content.find('tiny.png')
         file_index = response.content.find('somefile.txt')
-        self.failUnless(image_index > 0)
-        self.failUnless(image_index < file_index)
+        self.assertTrue(image_index > 0)
+        self.assertTrue(image_index < file_index)
 
         settings.ADMINFILES_THUMB_ORDER = _old_order
             
@@ -153,7 +153,7 @@ class SignalTests(FileUploadTestCase):
 
         reloaded_post = Post.objects.get(title='Some title')
         
-        self.failUnless('A New Title' in reloaded_post.content)
+        self.assertTrue('A New Title' in reloaded_post.content)
         
 class TemplateTestCase(TestCase):
     """
@@ -241,47 +241,47 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
 
     def test_default_template_renders_image(self):
         html = render_uploads('<<<an-image>>>')
-        self.failUnless('<img src="/media/adminfiles/tiny.png"' in html)
+        self.assertTrue('<img src="/media/adminfiles/tiny.png"' in html)
 
     def test_default_template_renders_image_class(self):
         html = render_uploads('<<<an-image:class=some classes>>>')
-        self.failUnless('class="some classes"' in html)
+        self.assertTrue('class="some classes"' in html)
 
     def test_default_template_renders_image_alt(self):
         html = render_uploads('<<<an-image:alt=the alt text>>>')
-        self.failUnless('alt="the alt text"' in html)
+        self.assertTrue('alt="the alt text"' in html)
 
     def test_default_template_renders_image_title_as_alt(self):
         html = render_uploads('<<<an-image>>>')
-        self.failUnless('alt="An image"' in html)
+        self.assertTrue('alt="An image"' in html)
 
     def test_default_template_renders_link(self):
         html = render_uploads('<<<some-file>>>')
-        self.failUnless('<a href="/media/adminfiles/somefile.txt"' in html)
+        self.assertTrue('<a href="/media/adminfiles/somefile.txt"' in html)
         
     def test_default_template_renders_link_class(self):
         html = render_uploads(u'<<<some-file:class=other classes>>>')
-        self.failUnless('class="other classes"' in html)
+        self.assertTrue('class="other classes"' in html)
 
     def test_default_template_renders_link_title(self):
         html = render_uploads('<<<some-file>>>')
-        self.failUnless('Some file' in html)
+        self.assertTrue('Some file' in html)
 
     def test_default_template_renders_link_title(self):
         html = render_uploads('<<<some-file:title=Other name>>>')
-        self.failUnless('Other name' in html)
+        self.assertTrue('Other name' in html)
 
     def test_template_override(self):
         html = render_uploads('<<<an-image:as=default>>>')
-        self.failUnless('<a href="/media/adminfiles/tiny.png"' in html)
+        self.assertTrue('<a href="/media/adminfiles/tiny.png"' in html)
 
     def test_template_override_fallback(self):
         html = render_uploads('<<<some-file:as=image/jpeg>>>')
-        self.failUnless('<img src="/media/adminfiles/somefile.txt"' in html)
+        self.assertTrue('<img src="/media/adminfiles/somefile.txt"' in html)
 
     def test_template_override_with_nonexisting(self):
         html = render_uploads('<<<an-image:as=some/wonky>>>')
-        self.failUnless('<a href="/media/adminfiles/tiny.png"' in html)
+        self.assertTrue('<a href="/media/adminfiles/tiny.png"' in html)
 
     def test_render_uploads_template_filter(self):
         tpl = template.Template(u'{% load adminfiles_tags %}'
@@ -291,7 +291,7 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
                                  content=u'<<<some-file>>>')}))
         self.assertEquals(self.templates[1].name,
                           'adminfiles/render/default.html')
-        self.failUnless('<a href' in html)
+        self.assertTrue('<a href' in html)
 
     def test_render_uploads_template_filter_alt_template(self):
         tpl = template.Template(
@@ -308,13 +308,13 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
         html = tpl.render(template.Context({'img': self.animage}))
         self.assertEquals(self.templates[1].name,
                           'adminfiles/render/image/default.html')
-        self.failUnless('<img src' in html)
+        self.assertTrue('<img src' in html)
 
     def test_render_upload_template_filter_options(self):
         tpl = template.Template('{% load adminfiles_tags %}'
                                 '{{ img|render_upload:"alt=blah" }}')
         html = tpl.render(template.Context({'img': self.animage}))
-        self.failUnless('alt="blah"' in html)
+        self.assertTrue('alt="blah"' in html)
 
     def test_render_upload_template_filter_alt_template(self):
         tpl = template.Template(
@@ -329,5 +329,5 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
             u'{{ f|render_upload:"template_path=alt:class=yo" }}')
         html = tpl.render(template.Context({'f': self.somefile}))
         self.assertEquals(self.templates[1].name, 'alt/default.html')
-        self.failUnless('class="yo"' in html)
+        self.assertTrue('class="yo"' in html)
         
