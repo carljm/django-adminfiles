@@ -7,6 +7,7 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import View, TemplateView
 
 from adminfiles.models import FileUpload
 from adminfiles import settings
@@ -14,57 +15,61 @@ from adminfiles import settings
 class DisableView(Exception):
     pass
 
-class BaseView(object):
+class BaseView(TemplateView):
     template_name = 'adminfiles/uploader/base.html'
 
-    def slug(self):
+    def get_context_data(self, **kwargs):
+        context = super(BaseView, self).get_context_data(**kwargs)
+        context.update({
+            'browsers': get_enabled_browsers(),
+            'field_id': self.request.GET['field'],
+            'field_type': self.request.GET.get('field_type', 'textarea'),
+            'ADMINFILES_MEDIA_URL': settings.ADMINFILES_MEDIA_URL,
+            'ADMINFILES_REF_START': settings.ADMINFILES_REF_START,
+            'ADMINFILES_REF_END': settings.ADMINFILES_REF_END,
+            'JQUERY_URL': settings.JQUERY_URL
+        })
+
+        return context
+
+    @classmethod
+    def slug(cls):
         """
         Return slug suitable for accessing this view in a URLconf.
 
         """
-        slug = self.__class__.__name__.lower()
+        slug = cls.__name__.lower()
         if slug.endswith('view'):
             slug = slug[:-4]
         return slug
 
-    def link_text(self):
+    @classmethod
+    def link_text(cls):
         """
         Return link text for this view.
 
         """
-        link = self.__class__.__name__
+        link = cls.__name__
         if link.endswith('View'):
             link = link[:-4]
         return link
 
-    def url(self):
+    @classmethod
+    def url(cls):
         """
         Return URL for this view.
 
         """
-        return reverse('adminfiles_%s' % self.slug())
+        return reverse('adminfiles_%s' % cls.slug())
 
-    def check(self):
+    @classmethod
+    def check(cls):
         """
         Raise ``DisableView`` if the configuration necessary for this
         view is not active.
 
         """
         pass
-
-    def context(self, request):
-        return {'browsers': get_enabled_browsers(),
-                'field_id': request.GET['field'],
-                'field_type': request.GET.get('field_type', 'textarea'),
-                'ADMINFILES_MEDIA_URL': settings.ADMINFILES_MEDIA_URL,
-                'ADMINFILES_REF_START': settings.ADMINFILES_REF_START,
-                'ADMINFILES_REF_END': settings.ADMINFILES_REF_END,
-                'JQUERY_URL': settings.JQUERY_URL}
-
-    def __call__(self, request):
-        return render_to_response(self.template_name,
-                                  self.context(request),
-                                  context_instance=RequestContext(request))
 
 
 class AllView(BaseView):
@@ -73,10 +78,11 @@ class AllView(BaseView):
     def files(self):
         return FileUpload.objects.all()
 
-    def context(self, request):
-        context = super(AllView, self).context(request)
-        context['files'] = self.files().order_by(
-            *settings.ADMINFILES_THUMB_ORDER)
+    def get_context_data(self, **kwargs):
+        context = super(AllView, self).get_context_data(**kwargs)
+        context.update({
+            'files': self.files().order_by(*settings.ADMINFILES_THUMB_ORDER)
+        })
         return context
 
 
@@ -102,7 +108,8 @@ class FilesView(AllView):
         return super(FilesView, self).files().exclude(content_type__in=not_files)
 
 class OEmbedView(BaseView):
-    def check(self):
+    @classmethod
+    def check(cls):
         if 'oembed' not in django_settings.INSTALLED_APPS:
             raise DisableView('OEmbed views require django-oembed or djangoembed. '
                               '(http://pypi.python.org/pypi/django-oembed, '
@@ -111,8 +118,9 @@ class OEmbedView(BaseView):
 class YouTubeView(OEmbedView):
     template_name = 'adminfiles/uploader/video.html'
 
-    def check(self):
-        super(YouTubeView, self).check()
+    @classmethod
+    def check(cls):
+        super(YouTubeView, cls).check()
         try:
             from gdata.youtube.service import YouTubeService
         except ImportError:
@@ -124,10 +132,11 @@ class YouTubeView(OEmbedView):
             raise DisableView('YouTubeView requires '
                               'ADMINFILES_YOUTUBE_USER setting')
 
-
-    def context(self, request):
-        context = super(YouTubeView, self).context(request)
-        context['videos'] = self.videos()
+    def get_context_data(self, **kwargs):
+        context = super(YouTubeView, self).get_context_data(**kwargs)
+        context.update({
+            'videos': self.videos()
+        })
         return context
 
     def videos(self):
@@ -150,8 +159,9 @@ class YouTubeView(OEmbedView):
 class FlickrView(OEmbedView):
     template_name = 'adminfiles/uploader/flickr.html'
 
-    def check(self):
-        super(FlickrView, self).check()
+    @classmethod
+    def check(cls):
+        super(FlickrView, cls).check()
         try:
             import flickrapi
         except ImportError:
@@ -165,8 +175,8 @@ class FlickrView(OEmbedView):
                               'ADMINFILES_FLICKR_USER and '
                               'ADMINFILES_FLICKR_API_KEY settings')
 
-    def context(self, request):
-        context = super(FlickrView, self).context(request)
+    def get_context_data(self, **kwargs):
+        context = super(FlickrView, self).get_context_data(**kwargs)
         page = int(request.GET.get('page', 1))
         base_path = '%s?field=%s&page=' % (request.path, request.GET['field'])
         context['next_page'] = base_path + str(page + 1)
@@ -201,23 +211,26 @@ class FlickrView(OEmbedView):
 class VimeoView(OEmbedView):
     template_name = 'adminfiles/uploader/video.html'
 
-    def check(self):
-        super(VimeoView, self).check()
+    @classmethod
+    def check(cls):
+        super(VimeoView, cls).check()
         try:
             django_settings.ADMINFILES_VIMEO_USER
         except AttributeError:
             raise DisableView('VimeoView requires '
                               'ADMINFILES_VIMEO_USER setting')
         try:
-            self.pages = django_settings.ADMINFILES_VIMEO_PAGES
+            cls.pages = django_settings.ADMINFILES_VIMEO_PAGES
         except AttributeError:
-            self.pages = 1
-        if self.pages > 3:
-            self.pages = 3
+            cls.pages = 1
+        if cls.pages > 3:
+            cls.pages = 3
 
-    def context(self, request):
-        context = super(VimeoView, self).context(request)
-        context['videos'] = self.videos()
+    def get_context_data(self, **kwargs):
+        context = super(VimeoView, self).get_context_data(**kwargs)
+        context.update({
+            'videos':self.videos()
+        })
         return context
 
     def _get_videos(self, url):
@@ -286,7 +299,7 @@ def get_enabled_browsers():
             continue
         if not issubclass(view_class, BaseView):
             continue
-        browser = view_class()
+        browser = view_class
         try:
             browser.check()
         except DisableView:
