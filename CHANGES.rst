@@ -4,6 +4,9 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Updated to use Django 1.3's class-based views. Fixes #10. Thanks Andrés
+  Reyes Monge and Ales Zabala Alava.
+
 - Django versions prior to 1.3 are no longer tested or supported.
 
 0.5.1 (2011.03.22)
