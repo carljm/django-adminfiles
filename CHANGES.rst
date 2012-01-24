@@ -4,35 +4,42 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Added Spanish translation. Thanks Andrés Reyes Monge.
+
 - Updated to use Django 1.3's class-based views. Fixes #10. Thanks Andrés
   Reyes Monge and Ales Zabala Alava.
 
 - Django versions prior to 1.3 are no longer tested or supported.
 
+
 0.5.1 (2011.03.22)
 ------------------
 
-- add support for djangoembed as well as django-oembed.
+- Added support for djangoembed as well as django-oembed.
 
-- add support for multiple pages of Vimeo results via ADMINFILES_VIMEO_PAGES
-  setting (defaults to 1).
+- Added support for multiple pages of Vimeo results via
+  ADMINFILES_VIMEO_PAGES setting (defaults to 1).
+
+- Added German translation. Thanks Jannis Leidel.
+
+
 
 0.5.0 (2010.03.09)
 ------------------
 
-- add ``as`` template override keyword option
+- Added ``as`` template override keyword option
 
-- add ``render_upload`` filter
+- Added ``render_upload`` filter
 
-- add YouTube, Flickr, Vimeo browsers
+- Added YouTube, Flickr, Vimeo browsers
 
-- add OEmbed support
+- Added OEmbed support
 
-- add translation hooks and Polish translation: thanks Ludwik Trammer!
+- Added translation hooks and Polish translation: thanks Ludwik Trammer!
 
-- add support for linking full set of mime-type icons from stdicon.com.
+- Added support for linking full set of mime-type icons from stdicon.com.
 
-- make the JS reference-insertion options configurable.
+- Made the JS reference-insertion options configurable.
 
 - BACKWARDS-INCOMPATIBLE: default rendering template is now
   ``adminfiles/render/default.html`` instead of
@@ -40,40 +47,45 @@ tip (unreleased)
   override ``adminfiles/render/image/default.html`` instead of testing
   ``upload.is_image`` in default template.
 
-- add per-mime-type template rendering
+- Added per-mime-type template rendering
 
-- upgrade to jQuery 1.4
+- Upgraded to jQuery 1.4
 
-- fix bug where YouTube and Flickr links showed up even when disabled.
+- Fixed bug where YouTube and Flickr links showed up even when disabled.
 
-- add sync_upload_refs command
+- Added sync_upload_refs command
+
 
 0.3.4 (2009.12.03)
 ------------------
 
-- fix over-eager escaping in render_uploads template tag.
+- Fixed over-eager escaping in render_uploads template tag.
+
 
 0.3.3 (2009.12.02)
 ------------------
 
-- slugs for non-image files are inserted.
+- Fixed insertion of slugs for non-image files.
+
 
 0.3.2 (2009.12.02)
 ------------------
 
-- fix setup.py package_data so media and templates are installed from sdist.
+- Fixed setup.py package_data so media and templates are installed from sdist.
+
 
 0.3.1 (2009.11.25)
 ------------------
 
-- fix setup.py so ``tests`` package is not installed.
+- Fixed setup.py so ``tests`` package is not installed.
+
 
 0.3.0 (2009.11.23)
 ------------------
 
-- initial release as ``django-adminfiles``
+- Initial release as ``django-adminfiles``
 
-- added docs and test suite
+- Added docs and test suite
 
-- added reference parsing & rendering, template filter, signal handling
+- Added reference parsing & rendering, template filter, signal handling
 
