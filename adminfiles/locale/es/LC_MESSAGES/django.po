@@ -69,7 +69,7 @@ msgstr "Insertar (alineado a la izquierda)"
 
 #: settings.py:37
 msgid "Insert (align right)"
-msgstr "Insertar (alineado a la deracha)"
+msgstr "Insertar (alineado a la derecha)"
 
 #: views.py:76
 msgid "All Uploads"
