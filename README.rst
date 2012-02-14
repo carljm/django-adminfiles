@@ -33,7 +33,7 @@ Dependencies
 ------------
 
 ``django-adminfiles`` requires `Django`_ 1.3 or later,
-`sorl-thumbnail`_ 3.2.5 (not compatible with the rewritten 10.x/11.x series)
+`sorl-thumbnail`_ 11.12 (not compatible with old 3.x series)
 and the `Python Imaging Library`_.
 
 `djangoembed`_ or `django-oembed`_ is required for OEmbed
@@ -41,7 +41,7 @@ functionality. `flickrapi`_ is required for browsing Flickr photos, `gdata`_
 for Youtube videos.
 
 .. _Django: http://www.djangoproject.com/
-.. _sorl-thumbnail: http://pypi.python.org/pypi/sorl-thumbnail/3.2.5
+.. _sorl-thumbnail: http://pypi.python.org/pypi/sorl-thumbnail/11.12
 .. _Python Imaging Library: http://www.pythonware.com/products/pil/
 .. _django-oembed: http://pypi.python.org/pypi/django-oembed
 .. _djangoembed: http://pypi.python.org/pypi/djangoembed
