@@ -1,0 +1,128 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012
+# This file is distributed under the same license as the PACKAGE package.
+# Svyatoslav Bulbakha <ad3w.inbox@gmail.com>, 2012
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-14 15:35+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+
+#: models.py:21
+msgid "upload date"
+msgstr "дата загрузки"
+
+#: models.py:22
+msgid "file"
+msgstr "файл"
+
+#: models.py:23
+msgid "title"
+msgstr "название"
+
+#: models.py:24
+msgid "slug"
+msgstr "слаг"
+
+#: models.py:25
+msgid "description"
+msgstr "описание"
+
+#: models.py:30
+msgid "tags"
+msgstr "теги"
+
+#: models.py:34
+msgid "file upload"
+msgstr "загруженный файл"
+
+#: models.py:35
+msgid "file uploads"
+msgstr "загруженные файлы"
+
+#: models.py:42
+msgid "mime type"
+msgstr "MIME-тип"
+
+#: settings.py:34
+msgid "Insert Link"
+msgstr "Вставить ссылку"
+
+#: settings.py:35
+msgid "Insert"
+msgstr "Вставить"
+
+#: settings.py:36
+msgid "Insert (align left)"
+msgstr "Вставить (выровнять по левому краю)"
+
+#: settings.py:37
+msgid "Insert (align right)"
+msgstr "Вставить (выровнять по правому краю)"
+
+#: views.py:76
+msgid "All Uploads"
+msgstr "Все загрузки"
+
+#: views.py:90
+msgid "Images"
+msgstr "Изображения"
+
+#: views.py:97
+msgid "Audio"
+msgstr "Аудио"
+
+#: views.py:104
+msgid "Files"
+msgstr "Файлы"
+
+#: templates/adminfiles/uploader/base.html:28
+msgid "Upload"
+msgstr "Загрузить"
+
+#: templates/adminfiles/uploader/base.html:31
+msgid "Refresh"
+msgstr "Обновить"
+
+#: templates/adminfiles/uploader/base.html:43
+msgid "Select"
+msgstr "Выбрать"
+
+#: templates/adminfiles/uploader/base.html:54
+msgid "Delete"
+msgstr "Удалить"
+
+#: templates/adminfiles/uploader/base.html:55
+msgid "Change"
+msgstr "Изменить"
+
+#: templates/adminfiles/uploader/flickr.html:6
+msgid "Newer"
+msgstr "Новые"
+
+#: templates/adminfiles/uploader/flickr.html:8
+msgid "Older"
+msgstr "Старые"
+
+#: templates/adminfiles/uploader/flickr.html:15
+msgid "Insert Photo"
+msgstr "Вставить фотография"
+
+#: templates/adminfiles/uploader/video.html:7
+msgid "Close"
+msgstr "Закрыть"
+
+#: templates/adminfiles/uploader/video.html:9
+msgid "Insert Video"
+msgstr "Вставить видео"
