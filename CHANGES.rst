@@ -4,6 +4,10 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Updated to most recent sorl-thumbnail. Thanks Svyatoslav Bulbakha.
+
+- Added Russian translation. Thanks Svyatoslav Bulbakha.
+
 - Added Spanish translation. Thanks Andrés Reyes Monge.
 
 - Updated to use Django 1.3's class-based views. Fixes #10. Thanks Andrés
