@@ -64,7 +64,11 @@ class FileUpload(models.Model):
         return self._get_dimensions()[1]
     
     def save(self, *args, **kwargs):
-        (mime_type, encoding) = mimetypes.guess_type(self.upload.path)
+        try:
+            uri = self.upload.path
+        except NotImplementedError:
+            uri = self.upload.url
+        (mime_type, encoding) = mimetypes.guess_type(uri)
         try:
             [self.content_type, self.sub_type] = mime_type.split('/')
         except:
