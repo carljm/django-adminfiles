@@ -23,11 +23,10 @@ Install from PyPI with ``easy_install`` or ``pip``::
 
     pip install django-adminfiles
 
-or get the `in-development version`_::
+or get the in-development version::
 
-    pip install django-adminfiles==tip
+    pip install http://bitbucket.org/carljm/django-adminfiles/get/tip.gz
 
-.. _in-development version: http://bitbucket.org/carljm/django-adminfiles/get/tip.gz#egg=django_adminfiles-tip
 
 Dependencies
 ------------
