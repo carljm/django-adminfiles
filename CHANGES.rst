@@ -1,7 +1,7 @@
 CHANGES
 =======
 
-tip (unreleased)
+1.0 (2013.06.06)
 ----------------
 
 - BACKWARDS-INCOMPATIBLE: Django versions prior to 1.4 are no longer tested or supported.
