@@ -1,11 +1,9 @@
-import posixpath
-
 from django.http import HttpResponse
 
 from django.contrib import admin
 
 from adminfiles.models import FileUpload
-from adminfiles.settings import JQUERY_URL, STATIC_URL
+from adminfiles.settings import JQUERY_URL
 from adminfiles.listeners import register_listeners
 
 class FileUploadAdmin(admin.ModelAdmin):
@@ -14,8 +12,7 @@ class FileUploadAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 # uncomment for snipshot photo editing feature
 #    class Media:
-#        js = (JQUERY_URL, posixpath.join(STATIC_URL,
-#                                         'photo-edit.js'))
+#        js = (JQUERY_URL, 'photo-edit.js')
     def response_change(self, request, obj):
         if request.POST.has_key("_popup"):
             return HttpResponse('<script type="text/javascript">'
@@ -61,6 +58,6 @@ class FilePickerAdmin(admin.ModelAdmin):
         return field
 
     class Media:
-        js = [JQUERY_URL, posixpath.join(STATIC_URL, 'adminfiles/model.js')]
+        js = [JQUERY_URL, 'adminfiles/model.js']
 
 admin.site.register(FileUpload, FileUploadAdmin)
