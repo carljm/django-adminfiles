@@ -6,6 +6,10 @@ tip (unreleased)
 
 - BACKWARDS-INCOMPATIBLE: Django versions prior to 1.4 are no longer tested or supported.
 
+- BACKWARDS-INCOMPATIBLE: Removed the ``ADMINFILES_MEDIA_URL`` setting, use
+  ``STATIC_URL`` everywhere for static assets. Thanks Rudolph Froger for the
+  nudge.
+
 - Updated to most recent sorl-thumbnail. Thanks Svyatoslav Bulbakha.
 
 - Added Russian translation. Thanks Svyatoslav Bulbakha.

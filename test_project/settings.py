@@ -12,7 +12,7 @@ DATABASES = {
     }
 }
 
-STATIC_URL = ADMINFILES_MEDIA_URL = '/static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE, 'static')
 MEDIA_ROOT = os.path.join(BASE, 'media')
 MEDIA_URL = '/media/'

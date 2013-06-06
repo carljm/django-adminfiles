@@ -58,11 +58,10 @@ To use django-adminfiles in your Django project:
     2. Run ``python manage.py syncdb`` to to create the adminfiles database
        tables.
 
-    3. Make the contents of the ``adminfiles/media/adminfiles``
-       directory available at ``MEDIA_URL/adminfiles`` (or
-       ``ADMINFILES_MEDIA_URL/adminfiles/``, see `ADMINFILES_MEDIA_URL`_). 
-       This can be done by through your webserver configuration, via an app
-       such as `django-staticfiles`_, or by copying the files or making a
+    3. Make the contents of the ``adminfiles/static/adminfiles`` directory
+       available at ``STATIC_URL/adminfiles``.  This can be done by through
+       your webserver configuration, via an app such as
+       ``django.contrib.staticfiles``, or by copying the files or making a
        symlink.
 
     4. Add ``url(r'^adminfiles/', include('adminfiles.urls'))`` in your
@@ -76,7 +75,6 @@ In addition, you may want to set the ``THUMBNAIL_EXTENSION`` setting for
 images with alpha transparency aren't broken when thumbnailed in the
 adminfiles file-picker.
 
-.. _django-staticfiles: http://pypi.python.org/pypi/django-staticfiles
 
 FilePickerAdmin
 ===============
@@ -393,14 +391,6 @@ is a two-tuple, where the first entry is the user-visible name for the
 insertion option, and the second entry is a dictionary of options to
 be added to the inserted file reference.
 
-ADMINFILES_MEDIA_URL
---------------------
-
-Some projects separate user-uploaded media at ``MEDIA_URL`` from
-static assets. If you keep static assets at a URL other than
-``MEDIA_URL``, just set ``ADMINFILES_MEDIA_URL`` to that URL, and make
-sure the contents of the ``adminfiles/media/adminfiles`` directory are
-available at ``ADMINFILES_MEDIA_URL/adminfiles/``.
 
 ADMINFILES_UPLOAD_TO
 --------------------
@@ -473,19 +463,14 @@ Required for use of the Flickr photo browser.
 JQUERY_URL
 ----------
 
-``django-adminfiles`` requires the jQuery Javascript library.  For Django
-versions 1.2 or later, ``django-adminfiles`` by default uses the version of
-jQuery included with the Django admin.  For older versions, by default
-``django-adminfiles`` links to the most recent minor version of jQuery 1.4
-available at ajax.googleapis.com (via the URL
-``http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js``).
+``django-adminfiles`` requires the jQuery Javascript library.  By default,
+``django-adminfiles`` uses the latest version of jQuery 1.4 hosted by Google,
+via the URL http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js.
 
-If you wish to use a different version of jQuery, or host it yourself, set
-the JQUERY_URL setting.  For example::
+If you wish to use a different version of jQuery, or host it yourself, set the
+``JQUERY_URL`` setting. ``JQUERY_URL`` can be absolute or relative; if relative
+it is relative to ``STATIC_URL``. For example::
 
     JQUERY_URL = 'jquery.min.js'
 
-This will use the jQuery available at MEDIA_URL/jquery.min.js. Note
-that a relative ``JQUERY_URL`` is always relative to ``MEDIA_URL``, it
-does not use ``ADMINFILES_MEDIA_URL``.
-
+This will use the jQuery available at ``STATIC_URL/jquery.min.js``.

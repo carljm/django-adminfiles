@@ -1,13 +1,10 @@
-import urllib, urlparse, datetime
+import urllib
 
-from django.shortcuts import render_to_response
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 from django.conf import settings as django_settings
-from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import View, TemplateView
+from django.views.generic import TemplateView
 
 from adminfiles.models import FileUpload
 from adminfiles import settings
@@ -24,7 +21,6 @@ class BaseView(TemplateView):
             'browsers': get_enabled_browsers(),
             'field_id': self.request.GET['field'],
             'field_type': self.request.GET.get('field_type', 'textarea'),
-            'ADMINFILES_MEDIA_URL': settings.ADMINFILES_MEDIA_URL,
             'ADMINFILES_REF_START': settings.ADMINFILES_REF_START,
             'ADMINFILES_REF_END': settings.ADMINFILES_REF_END,
             'JQUERY_URL': settings.JQUERY_URL
