@@ -47,13 +47,13 @@ class FilePickerTests(FileUploadTestCase):
         self.admin.is_active = True
         self.admin.save()
         self.assertTrue(self.client.login(username='admin', password='testpw'))
-        
+
     def tearDown(self):
         admin.site.unregister(Post)
-        
+
     def test_picker_class_applied(self):
         response = self.client.get('/admin/tests/post/add/')
-        self.assertContains(response, 'name="content" class="vLargeTextField adminfilespicker"')
+        self.assertContains(response, 'class="vLargeTextField adminfilespicker"')
 
     def test_picker_loads(self):
         """
@@ -71,30 +71,30 @@ class FilePickerTests(FileUploadTestCase):
         """
         response = self.client.get('/adminfiles/all/?field=test')
         self.assertContains(response, 'href="/adminfiles/images/?field=test')
-            
+
     def test_images_picker_loads(self):
         response = self.client.get('/adminfiles/images/?field=test')
         self.assertContains(response, 'href="/media/adminfiles/tiny.png"')
         self.assertNotContains(response, 'href="/media/adminfiles/somefile.txt')
-            
+
     def test_files_picker_loads(self):
         response = self.client.get('/adminfiles/files/?field=test')
         self.assertNotContains(response, 'href="/media/adminfiles/tiny.png"')
         self.assertContains(response, 'href="/media/adminfiles/somefile.txt')
-        
+
     def test_custom_links(self):
         _old_links = settings.ADMINFILES_INSERT_LINKS.copy()
         settings.ADMINFILES_INSERT_LINKS['text/plain'] = [('Crazy insert', {'yo': 'thing'})]
-       
+
         response = self.client.get('/adminfiles/all/?field=test')
         self.assertContains(response, 'rel="some-file:yo=thing"')
-        
+
         settings.ADMINFILES_INSERT_LINKS = _old_links
 
     def test_thumb_order(self):
         _old_order = settings.ADMINFILES_THUMB_ORDER
         settings.ADMINFILES_THUMB_ORDER = ('title',)
-        
+
         response = self.client.get('/adminfiles/all/?field=test')
         image_index = response.content.find('tiny.png')
         file_index = response.content.find('somefile.txt')
@@ -102,7 +102,7 @@ class FilePickerTests(FileUploadTestCase):
         self.assertTrue(image_index < file_index)
 
         settings.ADMINFILES_THUMB_ORDER = _old_order
-            
+
 class SignalTests(FileUploadTestCase):
     """
     Test tracking of uploaded file references, and auto-resave of
@@ -155,14 +155,14 @@ class SignalTests(FileUploadTestCase):
         def _render_on_save(sender, instance, **kwargs):
             instance.content = render_uploads(instance.content)
         pre_save.connect(_render_on_save, sender=Post)
-                                   
+
         self.somefile.title = 'A New Title'
         self.somefile.save()
 
         reloaded_post = Post.objects.get(title='Some title')
-        
+
         self.assertTrue('A New Title' in reloaded_post.content)
-        
+
 class TemplateTestCase(TestCase):
     """
     A TestCase that stores information about rendered templates, much
@@ -173,7 +173,7 @@ class TemplateTestCase(TestCase):
                                 **kwargs):
         self.templates.append(template)
         self.contexts.append(context)
-    
+
     def setUp(self):
         self.templates = []
         self.contexts = ContextList()
@@ -190,7 +190,7 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
     def setUp(self):
         super(RenderTests, self).setUp()
         self.populate()
-    
+
     def test_render_template_used(self):
         render_uploads('<<<some-file>>>')
         self.assertEquals(self.templates[0].name,
@@ -209,11 +209,11 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
     def test_render_whitespace(self):
         render_uploads('<<< some-file \n>>>')
         self.assertEquals(len(self.templates), 1)
-        
+
     def test_render_amidst_content(self):
         render_uploads('Some test here<<< some-file \n>>>and more here')
         self.assertEquals(len(self.templates), 1)
-        
+
     def test_render_upload_in_context(self):
         render_uploads('<<<some-file>>>')
         self.assertEquals(self.contexts['upload'].upload.name,
@@ -266,7 +266,7 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
     def test_default_template_renders_link(self):
         html = render_uploads('<<<some-file>>>')
         self.assertTrue('<a href="/media/adminfiles/somefile.txt"' in html)
-        
+
     def test_default_template_renders_link_class(self):
         html = render_uploads(u'<<<some-file:class=other classes>>>')
         self.assertTrue('class="other classes"' in html)
@@ -309,7 +309,7 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
                     'post': Post(title=u'a post',
                                  content=u'<<<some-file>>>')}))
         self.assertEquals(self.templates[1].name, 'alt/default.html')
-        
+
     def test_render_upload_template_filter(self):
         tpl = template.Template(u'{% load adminfiles_tags %}'
                                 u'{{ img|render_upload }}')
@@ -330,7 +330,7 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
             u'{{ f|render_upload:"template_path=alt" }}')
         html = tpl.render(template.Context({'f': self.somefile}))
         self.assertEquals(self.templates[1].name, 'alt/default.html')
-        
+
     def test_render_upload_template_filter_alt_template_options(self):
         tpl = template.Template(
             u'{% load adminfiles_tags %}'
@@ -338,4 +338,4 @@ class RenderTests(TemplateTestCase, FileUploadTestCase):
         html = tpl.render(template.Context({'f': self.somefile}))
         self.assertEquals(self.templates[1].name, 'alt/default.html')
         self.assertTrue('class="yo"' in html)
-        
+
