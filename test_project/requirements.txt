@@ -1,0 +1,10 @@
+-e ..
+
+Django==1.5.1
+PIL==1.1.7
+djangoembed==0.1.1
+BeautifulSoup==3.2.1
+httplib2==0.8
+simplejson==3.3.0
+sorl-thumbnail==11.12
+wsgiref==0.1.2

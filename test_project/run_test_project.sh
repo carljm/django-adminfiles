@@ -1,9 +1,10 @@
 #!/bin/bash
 
 ./manage.py syncdb --noinput
-pushd media
-ln -s ../../adminfiles/media/adminfiles .
+pushd static
+ln -s ../../adminfiles/static/adminfiles .
 popd
 ./manage.py runserver
 rm adminfiles-test.db
-rm media/adminfiles
+rm static/adminfiles
+rm -rf media/*
