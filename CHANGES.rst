@@ -4,6 +4,9 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Fix MANIFEST.in so static assets are included with release tarball.
+
+
 1.0 (2013.06.06)
 ----------------
 
