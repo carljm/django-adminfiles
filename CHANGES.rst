@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Fix for non-local file storages. Thanks vitaly4uk.
+
 - Fix MANIFEST.in so static assets are included with release tarball.
 
 
