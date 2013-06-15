@@ -1,12 +1,13 @@
 CHANGES
 =======
 
-tip (unreleased)
-----------------
+1.0.1 (2013.06.15)
+------------------
 
 - Fix for non-local file storages. Thanks vitaly4uk.
 
-- Fix MANIFEST.in so static assets are included with release tarball.
+- Fix MANIFEST.in so static assets are included with release tarball. Thanks
+  StillNewb for the report.
 
 
 1.0 (2013.06.06)
